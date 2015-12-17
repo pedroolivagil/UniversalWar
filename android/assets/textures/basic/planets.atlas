@@ -1,0 +1,116 @@
+planets.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+acid
+  rotate: false
+  xy: 260, 518
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+earth
+  rotate: false
+  xy: 2, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ginteky
+  rotate: false
+  xy: 514, 518
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+green
+  rotate: false
+  xy: 518, 2
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+jupiter
+  rotate: false
+  xy: 2, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+luna
+  rotate: false
+  xy: 518, 256
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+mars
+  rotate: false
+  xy: 768, 510
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+morado
+  rotate: false
+  xy: 2, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+pipiolo
+  rotate: false
+  xy: 768, 764
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+pluton
+  rotate: false
+  xy: 260, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+purple
+  rotate: false
+  xy: 772, 2
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+saturno
+  rotate: false
+  xy: 772, 256
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+star
+  rotate: false
+  xy: 260, 772
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+tankard
+  rotate: false
+  xy: 260, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+venus
+  rotate: false
+  xy: 2, 776
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1
+west
+  rotate: false
+  xy: 514, 772
+  size: 252, 252
+  orig: 256, 256
+  offset: 2, 2
+  index: -1

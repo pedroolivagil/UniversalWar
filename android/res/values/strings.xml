@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Universal War</string>
+    <string name="msg1">En este sitio se usan identificadores de dispositivo para personalizar el contenido y los anuncios, con el fin de ofrecer funciones de medios sociales y para analizar el tráfico. Además, compartimos estos identificadores y otra información sobre su dispositivo con nuestros partners de medios sociales, de publicidad y de analisis web.</string>
+    <string name="msg2">Sobre las Cookies...</string>
+    <string name="msg3">Aceptar</string>
+
+</resources>

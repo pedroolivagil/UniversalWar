@@ -1,0 +1,284 @@
+powers.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bold_silver
+  rotate: false
+  xy: 172, 139
+  size: 19, 30
+  orig: 19, 30
+  offset: 0, 0
+  index: -1
+bolt_bronze
+  rotate: false
+  xy: 193, 139
+  size: 19, 30
+  orig: 19, 30
+  offset: 0, 0
+  index: -1
+bolt_gold
+  rotate: false
+  xy: 140, 171
+  size: 19, 30
+  orig: 19, 30
+  offset: 0, 0
+  index: -1
+pill_blue
+  rotate: false
+  xy: 161, 171
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+pill_green
+  rotate: false
+  xy: 161, 194
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+pill_red
+  rotate: false
+  xy: 185, 171
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+pill_yellow
+  rotate: false
+  xy: 185, 194
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+powerupBlue
+  rotate: false
+  xy: 2, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupBlue_bolt
+  rotate: false
+  xy: 38, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupBlue_bomb
+  rotate: false
+  xy: 74, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupBlue_multibomb
+  rotate: false
+  xy: 110, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupBlue_shield
+  rotate: false
+  xy: 146, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupBlue_star
+  rotate: false
+  xy: 182, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen
+  rotate: false
+  xy: 2, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen_bolt
+  rotate: false
+  xy: 2, 72
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen_bomb
+  rotate: false
+  xy: 2, 107
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen_multibomb
+  rotate: false
+  xy: 2, 142
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen_shield
+  rotate: false
+  xy: 2, 177
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen_star
+  rotate: false
+  xy: 38, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed
+  rotate: false
+  xy: 74, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_bolt
+  rotate: false
+  xy: 110, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_bomb
+  rotate: false
+  xy: 146, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_multibomb
+  rotate: false
+  xy: 182, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_shield
+  rotate: false
+  xy: 38, 72
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_star
+  rotate: false
+  xy: 38, 107
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupYellow
+  rotate: false
+  xy: 38, 142
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupYellow_bolt
+  rotate: false
+  xy: 38, 177
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupYellow_bomb
+  rotate: false
+  xy: 74, 72
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupYellow_multibomb
+  rotate: false
+  xy: 110, 72
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupYellow_shield
+  rotate: false
+  xy: 146, 72
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupYellow_star
+  rotate: false
+  xy: 182, 72
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+shield_bronze
+  rotate: false
+  xy: 108, 139
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+shield_gold
+  rotate: false
+  xy: 108, 171
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+shield_silver
+  rotate: false
+  xy: 140, 139
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+star_bronze
+  rotate: false
+  xy: 108, 107
+  size: 31, 30
+  orig: 31, 30
+  offset: 0, 0
+  index: -1
+star_gold
+  rotate: false
+  xy: 141, 107
+  size: 31, 30
+  orig: 31, 30
+  offset: 0, 0
+  index: -1
+star_silver
+  rotate: false
+  xy: 174, 107
+  size: 31, 30
+  orig: 31, 30
+  offset: 0, 0
+  index: -1
+things_bronze
+  rotate: false
+  xy: 74, 107
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+things_gold
+  rotate: false
+  xy: 74, 141
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+things_silver
+  rotate: false
+  xy: 74, 175
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

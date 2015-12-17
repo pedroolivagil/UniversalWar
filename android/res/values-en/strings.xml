@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Universal War</string>
+    <string name="msg1">On this site device identifiers are used to personalize content and ads, in order to provide social media features and to analyze traffic. We also share these identifiers and other information on your device with our social media partners, advertising and web analytics.</string>
+    <string name="msg2">About Cookies...</string>
+    <string name="msg3">I agree</string>
+</resources>
