@@ -24,6 +24,7 @@ public abstract class Allied extends GameActor {
     float dir; // direccion de la nave
     GeneralScreen screen;
     private int posY = 110 + 60;
+    private boolean active;
 
     public Allied(GeneralScreen screen, TextureRegion tRegion) {
         super(tRegion);
@@ -33,6 +34,7 @@ public abstract class Allied extends GameActor {
         vel = 500;
         setPosition((GameLogic.getScreenWidth() - getWidth()) / 2, -getHeight());
         enter();
+        setActive(true);
     }
 
     public static int getHealth() {
@@ -56,6 +58,14 @@ public abstract class Allied extends GameActor {
         }
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -71,18 +81,22 @@ public abstract class Allied extends GameActor {
         }
 
         if (alive) {
-            moveBy(dir * vel * delta, 0);
+            if (isActive()) {
+                moveBy(dir * vel * delta, 0);
+            }
             x = getX();
             y = getY();
             polygon.setPosition(x - 310, posY + getHeight() - 20);
-            // comprobamos que la nave no de salga de la pantalla
-            if (getX() < 5) {
-                setX(10.1f);
-            } else if (getX() > (GameLogic.getScreenWidth() - (getWidth() + 5))) {
-                setX(GameLogic.getScreenWidth() - (getWidth() + 10));
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                shoot();
+            if (isActive()) {
+                // comprobamos que la nave no de salga de la pantalla
+                if (getX() < 5) {
+                    setX(10.1f);
+                } else if (getX() > (GameLogic.getScreenWidth() - (getWidth() + 5))) {
+                    setX(GameLogic.getScreenWidth() - (getWidth() + 10));
+                }
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                    shoot();
+                }
             }
         }
     }
@@ -139,10 +153,18 @@ public abstract class Allied extends GameActor {
         return this;
     }
 
-    public Allied enter(int posY) {
+    public Allied enter(float posY) {
         clearActions();
         addAction(
                 Actions.moveTo(getX(), posY + getHeight(), .8f)
+        );
+        return this;
+    }
+
+    public Allied enter(float posX, float posY) {
+        clearActions();
+        addAction(
+                Actions.moveTo(posX, posY + getHeight(), .8f)
         );
         return this;
     }

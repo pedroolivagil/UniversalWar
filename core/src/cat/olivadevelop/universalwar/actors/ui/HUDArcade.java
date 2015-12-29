@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 
 import cat.olivadevelop.universalwar.actors.allied.Allied;
+import cat.olivadevelop.universalwar.actors.allied.Genesis;
 import cat.olivadevelop.universalwar.actors.bullets.Bullet;
 import cat.olivadevelop.universalwar.actors.bullets.BulletOrange;
 import cat.olivadevelop.universalwar.actors.bullets.MegaBullet;
@@ -397,10 +399,11 @@ public class HUDArcade extends ActorGame {
         if (screen._groupAllied.hasChildren()) {
             if (isBoolMisile()) {
                 screen._stage.addActor(new SuperBullet(screen,
-                                screen._groupAllied.getChildren().first().getX() + (screen._groupAllied.getChildren().first().getWidth() / 2) + getWidth() / 2 - 5,
+                                screen._groupAllied.getChildren().first().getX() + (screen._groupAllied.getChildren().first().getWidth() / 2) + getWidth() / 2 - 30,
                                 screen._groupAllied.getChildren().first().getY() + 2,
                                 Bullet.BULLET_UP)
                 );
+                screen._groupAllied.toFront();
                 setBoolMisile(false);
                 timeMisile = getTimeGame();
             }
@@ -411,10 +414,11 @@ public class HUDArcade extends ActorGame {
         if (screen._groupAllied.hasChildren()) {
             if (isBoolSuperMisile()) {
                 screen._stage.addActor(new MegaBullet(screen,
-                                screen._groupAllied.getChildren().first().getX() + (screen._groupAllied.getChildren().first().getWidth() / 2) + getWidth() / 2 - 5,
+                                screen._groupAllied.getChildren().first().getX() + (screen._groupAllied.getChildren().first().getWidth() / 2) + getWidth() / 2 + 20,
                                 screen._groupAllied.getChildren().first().getY() + 2,
                                 Bullet.BULLET_UP)
                 );
+                screen._groupAllied.toFront();
                 setBoolSuperMisile(false);
                 timeSuperMisile = getTimeGame();
             }
@@ -436,12 +440,14 @@ public class HUDArcade extends ActorGame {
     private void actionShield() {
         if (screen._groupAllied.hasChildren()) {
             if (isBoolShield()) {
-                if (screen._groupShields.hasChildren()) {
-                    Shield.addImpacts(5);
-                    setBoolShield(false);
-                    timeShield = getTimeGame();
-                } else {
-                    screen._groupShields.addActor(new ShieldBronze(screen));
+                if (Shield.getImpacts() < Shield.getMaxImpacts()) {
+                    if (screen._groupShields.hasChildren()) {
+                        Shield.addImpacts(5);
+                        setBoolShield(false);
+                        timeShield = getTimeGame();
+                    } else {
+                        screen._groupShields.addActor(new ShieldBronze(screen));
+                    }
                 }
             }
         }
@@ -459,6 +465,7 @@ public class HUDArcade extends ActorGame {
                                         screen._groupAllied.getChildren().first().getY() + 2,
                                         Bullet.BULLET_UP)
                         );
+                        screen._groupAllied.toFront();
                     }
                 }, 0, .2f, 50);
                 tmr.start();
@@ -471,8 +478,49 @@ public class HUDArcade extends ActorGame {
     private void actionHelp() {
         if (screen._groupAllied.hasChildren()) {
             if (isBoolHelp()) {
-                setBoolHelp(false);
-                timeHelp = getTimeGame();
+                if (screen._groupAllied.getChildren().first().getName().equals("SpaceShipOne")) {
+                    final Genesis g1 = new Genesis(screen);
+                    final Genesis g2 = new Genesis(screen);
+                    g1.setActive(false);
+                    g2.setActive(false);
+                    g1.enter(60, 60);
+                    g2.enter(getScreenWidth() - 60 - g2.getWidth(), 60);
+                    screen._stage.addActor(g1);
+                    screen._stage.addActor(g2);
+                    Timer tmr = new Timer();
+                    tmr.scheduleTask(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            g1.shoot();
+                            g2.shoot();
+                            g1.toFront();
+                            g2.toFront();
+                            screen._groupAllied.toFront();
+                        }
+                    }, 0, .2f, 40);
+                    tmr.scheduleTask(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            g1.exit();
+                            g2.exit();
+                        }
+                    }, .2f * 40);
+                    tmr.start();
+                    g1.addAction(
+                            Actions.sequence(
+                                    Actions.delay(2),
+                                    Actions.moveTo(getScreenWidth() - 60 - g2.getWidth(), 60, .2f * 45)
+                            )
+                    );
+                    g2.addAction(
+                            Actions.sequence(
+                                    Actions.delay(2),
+                                    Actions.moveTo(60, 60, .2f * 45)
+                            )
+                    );
+                    setBoolHelp(false);
+                    timeHelp = getTimeGame();
+                }
             }
         }
     }

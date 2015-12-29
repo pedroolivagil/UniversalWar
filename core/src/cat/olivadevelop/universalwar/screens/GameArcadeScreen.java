@@ -1,16 +1,13 @@
 package cat.olivadevelop.universalwar.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Timer;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
-import cat.olivadevelop.universalwar.actors.allied.Allied;
 import cat.olivadevelop.universalwar.actors.allied.Genesis;
 import cat.olivadevelop.universalwar.actors.allied.SpaceShipOne;
 import cat.olivadevelop.universalwar.actors.enemies.AdvancedEnemy;
@@ -184,29 +181,6 @@ public class GameArcadeScreen extends GeneralScreen {
         showWindowPause();
         if (GameLogic.isShowADS()) {
             game.actionResolver.showOrLoadInterstital();
-        }
-    }
-
-    @Override
-    public void actionOtherButton(InputEvent event, int keycode) {
-        if (keycode == Input.Keys.P) {
-            Allied a = _groupAllied.findActor("Genesis");
-            if (a == null) {
-                _groupAllied.addActor(getShip2().enter(45));
-                a = _groupAllied.findActor("SpaceShipOne");
-                if (a != null) {
-                    a.exit();
-                }
-            }
-        } else if (keycode == Input.Keys.O) {
-            Allied a = _groupAllied.findActor("SpaceShipOne");
-            if (a == null) {
-                _groupAllied.addActor(getShip1().enter(45));
-                a = _groupAllied.findActor("Genesis");
-                if (a != null) {
-                    a.exit();
-                }
-            }
         }
     }
 

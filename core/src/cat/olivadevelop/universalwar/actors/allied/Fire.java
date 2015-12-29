@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cat.olivadevelop.universalwar.tools.ActorGame;
+import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 
@@ -40,6 +41,7 @@ public class Fire extends ActorGame {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        batch.setColor(ColorGame.WHITE);
         super.draw(batch, parentAlpha);
         elapsedTime += Gdx.graphics.getDeltaTime();
         batch.draw(animation.getKeyFrame(elapsedTime, true), getX() - getWidth() / 2, getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
