@@ -6,6 +6,7 @@ import cat.olivadevelop.universalwar.actors.bullets.Bullet;
 import cat.olivadevelop.universalwar.actors.bullets.BulletDarkPink;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
+import cat.olivadevelop.universalwar.tools.Listener;
 
 /**
  * Created by Oliva on 15/04/2015.
@@ -35,6 +36,12 @@ public class Genesis extends Allied {
         setName("Genesis");
         fire = new Fire(screen, getX(), getY(), 0);
         screen._stage.addActor(fire);
+        addListener(new Listener() {
+            @Override
+            public void action() {
+                shoot();
+            }
+        });
     }
 
     @Override

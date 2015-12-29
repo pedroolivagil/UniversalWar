@@ -31,4 +31,9 @@ public class LabelGame extends Label {
         setAlignment(Align.center);
         return this;
     }
+
+    public LabelGame setPositionXY(float x, float y) {
+        setPosition(x, y);
+        return this;
+    }
 }

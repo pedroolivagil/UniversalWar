@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import cat.olivadevelop.universalwar.actors.bullets.Bullet;
 import cat.olivadevelop.universalwar.actors.bullets.BulletRed;
 import cat.olivadevelop.universalwar.actors.drops.HeartDropBronze;
+import cat.olivadevelop.universalwar.actors.drops.ShieldGoldDrop;
 import cat.olivadevelop.universalwar.actors.drops.ShieldSilverDrop;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
@@ -36,9 +37,12 @@ public class Boss extends Enemy {
     @Override
     public void drop() {
         super.drop();
-        for (int z = 0; z < 10; z++) {
-            screen._stage.addActor(new HeartDropBronze(screen, this.getX() + MathUtils.random(-60, 60), this.getY() + MathUtils.random(-10, 20)));
+        for (int z = 0; z < 5; z++) {
+            screen._stage.addActor(new HeartDropBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
-        screen._stage.addActor(new ShieldSilverDrop(screen, this.getX(), this.getY()));
+        if (calcDrop() <= 3) {
+            screen._stage.addActor(new ShieldGoldDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+        }
+        screen._stage.addActor(new ShieldSilverDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
     }
 }

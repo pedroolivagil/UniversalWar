@@ -19,7 +19,7 @@ import cat.olivadevelop.universalwar.actors.enemies.Boss;
 import cat.olivadevelop.universalwar.actors.enemies.Enemy;
 import cat.olivadevelop.universalwar.actors.enemies.SuperBoss;
 import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
-import cat.olivadevelop.universalwar.actors.ui.HUD;
+import cat.olivadevelop.universalwar.actors.ui.HUDArcade;
 import cat.olivadevelop.universalwar.actors.ui.Planet;
 import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
@@ -33,6 +33,7 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getTimer;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setCountEnemiesDispached;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setPauseGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setScoreGame;
@@ -75,15 +76,17 @@ public class GameArcadeScreen extends GeneralScreen {
     }
 
     public void showWindowPause() {
-        windowPause.setVisible(true);
-        windowPause.toFront();
-        _hud.getTimer().stop();
-        setPauseGame(true);
+        if (!wExit.isVisible()) {
+            windowPause.setVisible(true);
+            windowPause.toFront();
+            getTimer().stop();
+            setPauseGame(true);
+        }
     }
 
     public void hideWindowPause() {
-        _hud.getTimer().start();
         windowPause.setVisible(false);
+        getTimer().start();
         setPauseGame(false);
     }
 
@@ -228,7 +231,7 @@ public class GameArcadeScreen extends GeneralScreen {
         _stage.addActor(_groupEnemy);
         _stage.addActor(_groupShields);
         _stage.addActor(windowPause);
-        _hud = new HUD(this);
+        _hud = new HUDArcade(this);
         _stage.addActor(_hud);
         _hud.toFront();
         addAllieds();
@@ -271,7 +274,7 @@ public class GameArcadeScreen extends GeneralScreen {
             }
         });
         Table tGameOver = new Table();
-        tGameOver.row().pad(10).padTop(60);
+        tGameOver.row().pad(10);
         tGameOver.add(btnContinue).height(btnContinue.getHeight() * btnContinue.getScale()).width(btnContinue.getWidth() * btnContinue.getScale()).pad(15);
         tGameOver.add(btnExitGame).height(btnExitGame.getHeight() * btnExitGame.getScale()).width(btnExitGame.getWidth() * btnExitGame.getScale()).pad(15);
         wExit = new WindowGame(this, getString("windowGOverTtl").toUpperCase());
@@ -282,18 +285,20 @@ public class GameArcadeScreen extends GeneralScreen {
         wExit.setPosition(getScreenWidth() / 2 - wExit.getWidth() / 2, getScreenHeight() / 2 - wExit.getHeight() / 2);
         wExit.setVisible(false);
         wExit.setResizable(false);
-        wExit.add(tGameOver);
+        wExit.add(tGameOver).padTop(100);
         _stage.addActor(wExit);
     }
 
     private void showWindowGameOver() {
         setPauseGame(true);
+        getTimer().stop();
         wExit.setVisible(true);
         wExit.toFront();
     }
 
     private void hideWindowGameOver() {
         setPauseGame(false);
+        getTimer().start();
         wExit.setVisible(false);
         wExit.toBack();
     }

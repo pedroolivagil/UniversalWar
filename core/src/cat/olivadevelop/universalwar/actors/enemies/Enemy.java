@@ -123,7 +123,11 @@ public class Enemy extends GameActor {
     }
 
     public float calcDrop() {
-        return (float) MathUtils.random(1, 100);
+        return MathUtils.random(0.00f, 100.00f);
+    }
+
+    public float calcPosition() {
+        return MathUtils.random(-100, 100);
     }
 
     public int getMaxHealth() {

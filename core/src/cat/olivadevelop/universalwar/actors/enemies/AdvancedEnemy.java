@@ -8,7 +8,6 @@ import cat.olivadevelop.universalwar.actors.drops.HeartDropBronze;
 import cat.olivadevelop.universalwar.actors.drops.PointsUpGold;
 import cat.olivadevelop.universalwar.actors.drops.PointsUpSilver;
 import cat.olivadevelop.universalwar.actors.drops.ShieldBronzeDrop;
-import cat.olivadevelop.universalwar.actors.drops.ShieldGoldDrop;
 import cat.olivadevelop.universalwar.actors.drops.ShieldSilverDrop;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
@@ -41,22 +40,19 @@ public class AdvancedEnemy extends Enemy {
     public void drop() {
         super.drop();
         if (calcDrop() <= 10) {
-            screen._stage.addActor(new HeartDropBronze(screen, this.getX(), this.getY()));
+            screen._stage.addActor(new HeartDropBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 10) {
-            screen._stage.addActor(new ShieldBronzeDrop(screen, this.getX(), this.getY()));
+            screen._stage.addActor(new ShieldBronzeDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 8) {
-            screen._stage.addActor(new ShieldSilverDrop(screen, this.getX(), this.getY()));
-        }
-        if (calcDrop() <= 3) {
-            screen._stage.addActor(new ShieldGoldDrop(screen, this.getX(), this.getY()));
+            screen._stage.addActor(new ShieldSilverDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 7) {
-            screen._stage.addActor(new PointsUpSilver(screen, this.getX(), this.getY()));
+            screen._stage.addActor(new PointsUpSilver(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 2) {
-            screen._stage.addActor(new PointsUpGold(screen, this.getX(), this.getY()));
+            screen._stage.addActor(new PointsUpGold(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
     }
 }

@@ -39,8 +39,11 @@ public class SuperBoss extends Enemy {
     public void drop() {
         super.drop();
         for (int z = 0; z < 10; z++) {
-            screen._stage.addActor(new HeartDropBronze(screen, this.getX() + MathUtils.random(-60, 60), this.getY() + MathUtils.random(-10, 20)));
+            screen._stage.addActor(new HeartDropBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
-        screen._stage.addActor(new ShieldGoldDrop(screen, this.getX() + MathUtils.random(-80, 80), this.getY() + MathUtils.random(-20, 20)));
+        if (calcDrop() <= 3) {
+            screen._stage.addActor(new ShieldGoldDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+        }
+        screen._stage.addActor(new ShieldGoldDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
     }
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.Timer;
 
 import java.util.Locale;
 
@@ -27,16 +28,19 @@ public abstract class GameLogic implements Disposable {
     // Bundle
     private static I18NBundle bundle;
     // Variables
+    private static String[] serverData = new String[]{"hl258.dinaserver.com", "universalwar", "masterwar", "20081991Aa"};
+    private static Timer timer;
     private static boolean pauseGame;
+    private static boolean showADS;
+    private static double timeGame;
     private static int screenWidth;
     private static int screenHeight;
     private static int scoreGame;
     private static int livesGame;
-    private static double timeGame;
+    private static int timeMin;
+    private static int timeSec;
     private static int countEnemiesDispached;
-    private static boolean showADS;
     private static int maxEnemiesIntoGroup;
-    private static String[] serverData = new String[]{"hl258.dinaserver.com", "universalwar", "masterwar", "20081991Aa"};
     // Skin
     private static Skin skin;
     private static Skin skin_mini;
@@ -49,7 +53,7 @@ public abstract class GameLogic implements Disposable {
     private static TextureAtlas fires;
     private static Texture medExpTex;
     private static Texture minExpTex;
-
+    private static Texture buttons;
     // Sounds
     private static Sound SOUND_SHOOT_NORMAL;
     private static Sound SOUND_SHOOT_LASER;
@@ -73,6 +77,7 @@ public abstract class GameLogic implements Disposable {
         meteors = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/meteors.atlas");
         medExpTex = new Texture("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/other/exp_medium.png");
         minExpTex = new Texture("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/other/exp_mini.png");
+        buttons = new Texture("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/other/buttons.png");
         // Sounds
         SOUND_SHOOT_NORMAL = Gdx.audio.newSound(Gdx.files.internal(("sounds/shoot_normal.mp3")));
         SOUND_SHOOT_LASER = Gdx.audio.newSound(Gdx.files.internal(("sounds/shoot_laser.mp3")));
@@ -217,6 +222,10 @@ public abstract class GameLogic implements Disposable {
         return medExpTex;
     }
 
+    public static Texture getButtons() {
+        return buttons;
+    }
+
     public static NinePatchDrawable getBotonMenuDrawable() {
         return new NinePatchDrawable(new NinePatch(getUi("botonMenu"), 7, 7, 7, 7));
     }
@@ -268,6 +277,25 @@ public abstract class GameLogic implements Disposable {
         GameLogic.livesGame = livesGame;
     }
 
+    /* Vars Time*/
+    public static void setTimeDefault() {
+        GameLogic.timeMin = 0;
+        GameLogic.timeSec = 0;
+        timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                setTimeGame(getTimeGame() + 1);
+                actTimeGame();
+            }
+        }, 0, 1);
+        timer.start();
+    }
+
+    public static Timer getTimer() {
+        return timer;
+    }
+
     public static double getTimeGame() {
         return timeGame;
     }
@@ -276,6 +304,32 @@ public abstract class GameLogic implements Disposable {
         GameLogic.timeGame = timeGame;
     }
 
+    public static void actTimeGame() {
+        if (getTimeGame() % 60 == 0) {
+            setTimeMin(getTimeMin() + 1);
+            setTimeSec(0);
+        } else {
+            setTimeSec(getTimeSec() + 1);
+        }
+    }
+
+    public static int getTimeMin() {
+        return GameLogic.timeMin;
+    }
+
+    public static void setTimeMin(int timeMin) {
+        GameLogic.timeMin = timeMin;
+    }
+
+    public static int getTimeSec() {
+        return GameLogic.timeSec;
+    }
+
+    public static void setTimeSec(int timeSec) {
+        GameLogic.timeSec = timeSec;
+    }
+
+    /* Vars */
     public static void addToScore(int points) {
         GameLogic.scoreGame += points;
     }
@@ -353,5 +407,6 @@ public abstract class GameLogic implements Disposable {
         SOUND_SHOOT_PLASMA.dispose();
         SOUND_EXPLODE.dispose();
         //SOUND_AMBIENT.dispose();
+        getTimer().clear();
     }
 }

@@ -22,16 +22,37 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 public class Shockwave extends ActorGame {
 
     Circle circle;
+    float time;
+    int speed;
 
     public Shockwave(GeneralScreen screen, float x, float y) {
         super(screen);
+        init(x, y, .8f);
+    }
+
+    public Shockwave(GeneralScreen screen, float x, float y, float time) {
+        super(screen);
+        init(x, y, time);
+    }
+
+    private void init(float x, float y, float time) {
         texture = getUi("shockwave");
         setPosition(x, y);
         setWidth(2);
         setHeight(2);
+        setSpeed(1);
         setOrigin(getWidth() / 2, getHeight() / 2);
         circle = new Circle(x, y, 2);
-        addAction(sequence(delay(.8f), color(new Color(0, 0, 0, 0), .5f), removeActor()));
+        this.time = time;
+        addAction(sequence(delay(time), color(new Color(0, 0, 0, 0), .5f), removeActor()));
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public void expand(float num) {
@@ -50,7 +71,7 @@ public class Shockwave extends ActorGame {
     @Override
     public void act(float delta) {
         super.act(delta);
-        expand(220 * delta);
+        expand((220 * getSpeed()) * delta);
         Enemy enemy;
         for (Actor a : screen._groupEnemy.getChildren()) {
             enemy = (Enemy) a;

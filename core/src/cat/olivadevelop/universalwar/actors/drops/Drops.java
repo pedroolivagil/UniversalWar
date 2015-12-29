@@ -36,8 +36,8 @@ public class Drops extends Image {
                         Actions.delay(.5f,
                                 Actions.repeat(2,
                                         Actions.parallel(
-                                                Actions.scaleBy(.3f, .3f, .3f),
-                                                Actions.scaleTo(1f, 1f, .1f)
+                                                Actions.scaleBy(.2f, .2f, .3f),
+                                                Actions.scaleTo(.7f, .7f, .1f)
                                         )
                                 )
                         )

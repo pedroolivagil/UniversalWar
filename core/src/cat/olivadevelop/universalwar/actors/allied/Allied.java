@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import cat.olivadevelop.universalwar.actors.explosions.ExplosionMedium;
-import cat.olivadevelop.universalwar.actors.ui.HUD;
 import cat.olivadevelop.universalwar.tools.GameActor;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
@@ -24,7 +23,7 @@ public abstract class Allied extends GameActor {
     public Fire fire;
     float dir; // direccion de la nave
     GeneralScreen screen;
-    private int posY = HUD.tableBottomHeight + 60;
+    private int posY = 110 + 60;
 
     public Allied(GeneralScreen screen, TextureRegion tRegion) {
         super(tRegion);
@@ -50,7 +49,11 @@ public abstract class Allied extends GameActor {
     }
 
     public static void addLiveGame(int lives) {
-        health += lives;
+        for (int z = 0; z < lives; z++) {
+            if (health < maxHealth) {
+                health += 1;
+            }
+        }
     }
 
     @Override
@@ -78,7 +81,7 @@ public abstract class Allied extends GameActor {
             } else if (getX() > (GameLogic.getScreenWidth() - (getWidth() + 5))) {
                 setX(GameLogic.getScreenWidth() - (getWidth() + 10));
             }
-            if (Gdx.input.justTouched() | Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 shoot();
             }
         }
@@ -107,11 +110,9 @@ public abstract class Allied extends GameActor {
         screen._stage.addActor(new ExplosionMedium(this));
         addAction(
                 Actions.sequence(
-                        Actions.delay(1f),
+                        Actions.delay(.5f),
                         Actions.scaleTo(0f, 0f, 0f),
-                        Actions.delay(2f,
-                                Actions.removeActor()
-                        )
+                        Actions.removeActor()
                 )
         );
     }

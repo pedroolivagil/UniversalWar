@@ -2,11 +2,13 @@ package cat.olivadevelop.universalwar.screens;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.async.AsyncTask;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
+import cat.olivadevelop.universalwar.tools.AsyncGame;
 import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.ConnectDB;
@@ -41,8 +43,15 @@ public class ScoreScreen extends GeneralScreen {
     @Override
     public void show() {
         super.show();
-        contentScreen();
-        listeners();
+        AsyncGame async = new AsyncGame(this);
+        async.submit(new AsyncTask<Object>() {
+            @Override
+            public Object call() throws Exception {
+                contentScreen();
+                listeners();
+                return true;
+            }
+        });
     }
 
     public void contentScreen() {

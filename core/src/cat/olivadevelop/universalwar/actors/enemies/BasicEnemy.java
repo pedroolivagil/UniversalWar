@@ -37,10 +37,10 @@ public class BasicEnemy extends Enemy {
     public void drop() {
         super.drop();
         if (calcDrop() <= 5) {
-            screen._stage.addActor(new PointsUpBronze(screen, this.getX(), this.getY()));
+            screen._stage.addActor(new PointsUpBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 2) {
-            screen._stage.addActor(new PointsUpSilver(screen, this.getX(), this.getY()));
+            screen._stage.addActor(new PointsUpSilver(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
     }
 }

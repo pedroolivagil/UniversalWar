@@ -23,6 +23,8 @@ public class ColorGame extends Color {
     public static Color DARK_GREEN;
     public static Color PURPLE_BULLET;
     public static Color STAR_YELLOW;
+    public static Color TURQUESE_MENU;
+    public static Color BLUE_HEALTH_BAR;
 
     public static void initColorGame() {
         Gdx.app.log("Color LOAD", "True");
@@ -46,6 +48,7 @@ public class ColorGame extends Color {
             DARK_GREEN = valueOf("254203");
             PURPLE_BULLET = Color.PURPLE;
             STAR_YELLOW = valueOf("fffdde");
+            BLUE_HEALTH_BAR = valueOf("3b96d8");
         } else if (theme.equals(GameLogic.COLOR_BWHITE)) {
             RED = valueOf("FFFFFF");
             ORANGE = valueOf("FFFFFF");
@@ -66,6 +69,7 @@ public class ColorGame extends Color {
             DARK_GREEN = valueOf("FFFFFF");
             PURPLE_BULLET = valueOf("FFFFFF");
             STAR_YELLOW = valueOf("FFFFFF");
+            TURQUESE_MENU = valueOf("FFFFFF");
         }
     }
 }
