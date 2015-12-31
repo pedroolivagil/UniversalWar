@@ -52,8 +52,8 @@ public abstract class GameLogic implements Disposable {
     private static TextureAtlas meteors;
     private static TextureAtlas fires;
     private static Texture medExpTex;
-    private static Texture minExpTex;
     private static Texture buttons;
+    private static Texture animHealth;
     // Sounds
     private static Sound SOUND_SHOOT_NORMAL;
     private static Sound SOUND_SHOOT_LASER;
@@ -76,8 +76,8 @@ public abstract class GameLogic implements Disposable {
         fires = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/fires.atlas");
         meteors = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/meteors.atlas");
         medExpTex = new Texture("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/other/exp_medium.png");
-        minExpTex = new Texture("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/other/exp_mini.png");
         buttons = new Texture("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/other/buttons.png");
+        animHealth = new Texture("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/other/healthUp.png");
         // Sounds
         SOUND_SHOOT_NORMAL = Gdx.audio.newSound(Gdx.files.internal(("sounds/shoot_normal.mp3")));
         SOUND_SHOOT_LASER = Gdx.audio.newSound(Gdx.files.internal(("sounds/shoot_laser.mp3")));
@@ -214,10 +214,6 @@ public abstract class GameLogic implements Disposable {
         return fires.findRegion(region);
     }
 
-    public static Texture getExplosionMini() {
-        return minExpTex;
-    }
-
     public static Texture getExplosionMedium() {
         return medExpTex;
     }
@@ -226,12 +222,28 @@ public abstract class GameLogic implements Disposable {
         return buttons;
     }
 
+    public static Texture getAnimHealth() {
+        return animHealth;
+    }
+
     public static NinePatchDrawable getBotonMenuDrawable() {
         return new NinePatchDrawable(new NinePatch(getUi("botonMenu"), 7, 7, 7, 7));
     }
 
     public static NinePatchDrawable getBotonMenu2Drawable() {
         return new NinePatchDrawable(new NinePatch(getUi("botonMenu2"), 7, 7, 7, 7));
+    }
+
+    public static TextureRegion[] getSprites(int cols, int rows, Texture t) {
+        TextureRegion[][] tmp = TextureRegion.split(t, t.getWidth() / cols, t.getHeight() / rows);
+        TextureRegion[] Frames = new TextureRegion[cols * rows];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Frames[index++] = tmp[i][j];
+            }
+        }
+        return Frames;
     }
 
     // Sounds
@@ -400,7 +412,6 @@ public abstract class GameLogic implements Disposable {
         meteors.dispose();
 
         medExpTex.dispose();
-        minExpTex.dispose();
 
         SOUND_SHOOT_NORMAL.dispose();
         SOUND_SHOOT_LASER.dispose();

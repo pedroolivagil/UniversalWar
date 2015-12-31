@@ -11,6 +11,6 @@ public class ShockwaveBlue extends Shockwave {
     public ShockwaveBlue(GeneralScreen screen, float x, float y) {
         super(screen, x, y, .5f);
         setColor(ColorGame.BLUE_CYAN);
-        setSpeed(4);
+        setSpeed(2);
     }
 }

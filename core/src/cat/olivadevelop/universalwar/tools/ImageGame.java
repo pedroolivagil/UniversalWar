@@ -21,6 +21,15 @@ public class ImageGame extends Image {
         centerOrigin();
     }
 
+    public ImageGame(TextureRegion region, float x, float y, float w, float h) {
+        super(region);
+        setX(x);
+        setY(y);
+        setWidth(w);
+        setHeight(h);
+        centerOrigin();
+    }
+
     private void centerOrigin() {
         setOrigin(getWidth() / 2, getHeight() / 2);
     }

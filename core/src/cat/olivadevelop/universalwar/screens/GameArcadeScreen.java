@@ -2,9 +2,11 @@ package cat.olivadevelop.universalwar.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
@@ -15,7 +17,6 @@ import cat.olivadevelop.universalwar.actors.enemies.BasicEnemy;
 import cat.olivadevelop.universalwar.actors.enemies.Boss;
 import cat.olivadevelop.universalwar.actors.enemies.Enemy;
 import cat.olivadevelop.universalwar.actors.enemies.SuperBoss;
-import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
 import cat.olivadevelop.universalwar.actors.ui.HUDArcade;
 import cat.olivadevelop.universalwar.actors.ui.Planet;
 import cat.olivadevelop.universalwar.tools.ButtonGame;
@@ -24,10 +25,12 @@ import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.Listener;
 import cat.olivadevelop.universalwar.tools.WindowGame;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.getAnimHealth;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getBotonMenu2Drawable;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getCountEnemiesDispached;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getSprites;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimer;
@@ -47,6 +50,9 @@ public class GameArcadeScreen extends GeneralScreen {
     ButtonGame btnContinue;
     ButtonGame btnExitGame;
     private WindowGame wExit;
+    private static Animation hAnim;
+    private static Table tImgHealth;
+    private float elapsedTime;
 
     public GameArcadeScreen(UniversalWarGame game) {
         super(game);
@@ -122,7 +128,7 @@ public class GameArcadeScreen extends GeneralScreen {
     }
 
     private void addShields() {
-        _groupShields.addActor(new ShieldBronze(this));
+        //_groupShields.addActor(new ShieldBronze(this));
     }
 
     public void setWindowPause() {
@@ -229,6 +235,14 @@ public class GameArcadeScreen extends GeneralScreen {
     }
 
     private void setWindowGameOver() {
+        hAnim = new Animation(1 / 6, getSprites(6, 1, getAnimHealth()));
+        tImgHealth = new Table();
+        tImgHealth.setBackground(new TextureRegionDrawable(hAnim.getKeyFrame(elapsedTime, true)));
+        tImgHealth.setHeight(50);
+        tImgHealth.setWidth(50);
+        tImgHealth.row().expand();
+        tImgHealth.debugAll();
+
         btnContinue = new ButtonGame(getString("windowBtnCont"), .5f);
         btnExitGame = new ButtonGame(getString("windowBtnExit"), .5f);
         btnContinue.addListener(new Listener() {
@@ -259,7 +273,9 @@ public class GameArcadeScreen extends GeneralScreen {
         wExit.setPosition(getScreenWidth() / 2 - wExit.getWidth() / 2, getScreenHeight() / 2 - wExit.getHeight() / 2);
         wExit.setVisible(false);
         wExit.setResizable(false);
-        wExit.add(tGameOver).padTop(100);
+        wExit.add(tImgHealth).height(50).width(50).padTop(60);
+        wExit.row();
+        wExit.add(tGameOver).padTop(10);
         _stage.addActor(wExit);
     }
 

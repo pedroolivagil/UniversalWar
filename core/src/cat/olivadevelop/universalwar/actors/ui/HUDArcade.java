@@ -17,6 +17,7 @@ import cat.olivadevelop.universalwar.actors.bullets.Bullet;
 import cat.olivadevelop.universalwar.actors.bullets.BulletOrange;
 import cat.olivadevelop.universalwar.actors.bullets.MegaBullet;
 import cat.olivadevelop.universalwar.actors.bullets.SuperBullet;
+import cat.olivadevelop.universalwar.actors.enemies.Enemy;
 import cat.olivadevelop.universalwar.actors.shields.Shield;
 import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
 import cat.olivadevelop.universalwar.tools.ActorGame;
@@ -28,12 +29,15 @@ import cat.olivadevelop.universalwar.tools.Listener;
 
 import static cat.olivadevelop.universalwar.tools.GameLogic.getBotonMenu2Drawable;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getButtons;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getCountEnemiesDispached;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getEnemy;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getNumberFormated;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getPowers;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScoreGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getSprites;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeMin;
@@ -46,7 +50,11 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeDefault;
  */
 public class HUDArcade extends ActorGame {
 
-    private int time = 1;
+    private int time1 = 30;
+    private int time2 = 60;
+    private int time3 = 90;
+    private int time4 = 120;
+    private int time5 = 150;
     private int barsWidth = 270;
     private int barsHeight = 50;
     private int divisor = 10;
@@ -86,6 +94,7 @@ public class HUDArcade extends ActorGame {
     private ImageGame iHealth;      // recargar salud
     private ImageGame iBurst;  // disparar ráfaga de balas
     private Animation anim;
+    private LabelGame lblCounter;
 
     public HUDArcade(final GeneralScreen screen) {
         super(screen);
@@ -127,6 +136,14 @@ public class HUDArcade extends ActorGame {
         tShoot.setY(tBottom.getX() + tBottom.getHeight() - 10);
         tShoot.add(i).width(getScreenWidth()).height(getScreenHeight() / 2 - 50);
         screen._stage.addActor(tShoot);
+
+        Group gDefeated = new Group();
+        lblCounter = new LabelGame("0", .4f, ColorGame.GREEN);
+        lblCounter.setX(38);
+        gDefeated.addActor(lblCounter);
+        gDefeated.addActor(new ImageGame(getEnemy(Enemy.BASIC[5]), 0, 47, 28, 28));
+        gDefeated.setPosition(10, 65);
+        screen._stage.addActor(gDefeated);
     }
 
     public void settTop() {
@@ -176,8 +193,8 @@ public class HUDArcade extends ActorGame {
         gShield.setWidth(barsWidth);
         gShield.setHeight(barsHeight);
 
-        sBarBg = new ImageGame(new NinePatch(getUi("bg_bar_red"), 18, 18, 18, 18));
-        sBar = new ImageGame(new NinePatch(getUi("bar_red"), 18, 18, 18, 18));
+        sBarBg = new ImageGame(new NinePatch(getUi("bg_bar_red"), 9, 9, 9, 9));
+        sBar = new ImageGame(new NinePatch(getUi("bar_red"), 9, 9, 9, 9));
         sLbl = new LabelGame(getString("lShield"), .5f);
         sLbl.setPosition(70, -32);
         sBarBg.setWidth(barsWidth);
@@ -220,26 +237,7 @@ public class HUDArcade extends ActorGame {
         tbBtns.add(iShield).width(50).height(50).padLeft(pad).padRight(pad);
         tbBtns.add(iBurst).width(50).height(50).padLeft(pad).padRight(pad);
 
-        anim = new Animation(1 / 13f, getSprites(1, 8));
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        elapsedTime += Gdx.graphics.getDeltaTime();
-        tbBtns.setBackground(new TextureRegionDrawable(anim.getKeyFrame(elapsedTime, true)));
-    }
-
-    private TextureRegion[] getSprites(int cols, int rows) {
-        TextureRegion[][] tmp = TextureRegion.split(getButtons(), getButtons().getWidth() / cols, getButtons().getHeight() / rows);
-        TextureRegion[] Frames = new TextureRegion[cols * rows];
-        int index = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                Frames[index++] = tmp[i][j];
-            }
-        }
-        return Frames;
+        anim = new Animation(1 / 13f, getSprites(1, 8, getButtons()));
     }
 
     public void actLabelTime() {
@@ -278,6 +276,10 @@ public class HUDArcade extends ActorGame {
         }
     }
 
+    public void actCounter() {
+        lblCounter.setText(getNumberFormated(getCountEnemiesDispached()));
+    }
+
     public boolean isBoolShield() {
         return boolShield;
     }
@@ -285,9 +287,9 @@ public class HUDArcade extends ActorGame {
     public void setBoolShield(boolean boolShield) {
         this.boolShield = boolShield;
         if (!boolShield) {
-            iShield.setColor(.5f, .5f, .5f, .5f);
+            iShield.setColor(1, 1, 1, .6f);
         } else {
-            iShield.setColor(1, 1, 1, 2);
+            iShield.setColor(1, 1, 1, 1);
         }
     }
 
@@ -298,9 +300,9 @@ public class HUDArcade extends ActorGame {
     public void setBoolHealth(boolean boolHealth) {
         this.boolHealth = boolHealth;
         if (!boolHealth) {
-            iHealth.setColor(.5f, .5f, .5f, .5f);
+            iHealth.setColor(1, 1, 1, .6f);
         } else {
-            iHealth.setColor(1, 1, 1, 2);
+            iHealth.setColor(1, 1, 1, 1);
         }
     }
 
@@ -311,9 +313,9 @@ public class HUDArcade extends ActorGame {
     public void setBoolMisile(boolean boolMisile) {
         this.boolMisile = boolMisile;
         if (!boolMisile) {
-            iMissil.setColor(.5f, .5f, .5f, .5f);
+            iMissil.setColor(1, 1, 1, .6f);
         } else {
-            iMissil.setColor(1, 1, 1, 2);
+            iMissil.setColor(1, 1, 1, 1);
         }
     }
 
@@ -324,9 +326,9 @@ public class HUDArcade extends ActorGame {
     public void setBoolSuperMisile(boolean boolSuperMisile) {
         this.boolSuperMisile = boolSuperMisile;
         if (!boolSuperMisile) {
-            iSuperMissil.setColor(.5f, .5f, .5f, .5f);
+            iSuperMissil.setColor(1, 1, 1, .6f);
         } else {
-            iSuperMissil.setColor(1, 1, 1, 2);
+            iSuperMissil.setColor(1, 1, 1, 1);
         }
     }
 
@@ -337,9 +339,9 @@ public class HUDArcade extends ActorGame {
     public void setBoolHelp(boolean boolHelp) {
         this.boolHelp = boolHelp;
         if (!boolHelp) {
-            iHelp.setColor(.5f, .5f, .5f, .5f);
+            iHelp.setColor(1, 1, 1, .6f);
         } else {
-            iHelp.setColor(1, 1, 1, 2);
+            iHelp.setColor(1, 1, 1, 1);
         }
     }
 
@@ -350,9 +352,9 @@ public class HUDArcade extends ActorGame {
     public void setBoolBurst(boolean boolBurst) {
         this.boolBurst = boolBurst;
         if (!boolBurst) {
-            iBurst.setColor(.5f, .5f, .5f, .5f);
+            iBurst.setColor(1, 1, 1, .6f);
         } else {
-            iBurst.setColor(1, 1, 1, 2);
+            iBurst.setColor(1, 1, 1, 1);
         }
     }
 
@@ -443,11 +445,11 @@ public class HUDArcade extends ActorGame {
                 if (Shield.getImpacts() < Shield.getMaxImpacts()) {
                     if (screen._groupShields.hasChildren()) {
                         Shield.addImpacts(5);
-                        setBoolShield(false);
-                        timeShield = getTimeGame();
                     } else {
                         screen._groupShields.addActor(new ShieldBronze(screen));
                     }
+                    setBoolShield(false);
+                    timeShield = getTimeGame();
                 }
             }
         }
@@ -526,23 +528,23 @@ public class HUDArcade extends ActorGame {
     }
 
     private void checkButtons() {
-        if (timeMisile == getTimeGame() - time) {
-            setBoolMisile(true);
+        if (timeShield == getTimeGame() - time1) {
+            setBoolShield(true);
         }
-        if (timeBurst == getTimeGame() - time) {
-            setBoolBurst(true);
-        }
-        if (timeHealth == getTimeGame() - time) {
+        if (timeHealth == getTimeGame() - time2) {
             setBoolHealth(true);
         }
-        if (timeHelp == getTimeGame() - time) {
+        if (timeMisile == getTimeGame() - time2) {
+            setBoolMisile(true);
+        }
+        if (timeHelp == getTimeGame() - time3) {
             setBoolHelp(true);
         }
-        if (timeSuperMisile == getTimeGame() - time) {
-            setBoolSuperMisile(true);
+        if (timeBurst == getTimeGame() - time4) {
+            setBoolBurst(true);
         }
-        if (timeShield == getTimeGame() - time) {
-            setBoolShield(true);
+        if (timeSuperMisile == getTimeGame() - time4) {
+            setBoolSuperMisile(true);
         }
     }
 
@@ -551,6 +553,7 @@ public class HUDArcade extends ActorGame {
         super.act(delta);
         actLabelTime();
         actLabelScore();
+        actCounter();
         toFront();
         tTop.toFront();
         tBottom.toFront();
@@ -559,5 +562,12 @@ public class HUDArcade extends ActorGame {
         checkButtons();
         tShoot.toFront();
         tbBtns.toFront();
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        tbBtns.setBackground(new TextureRegionDrawable(anim.getKeyFrame(elapsedTime, true)));
     }
 }
