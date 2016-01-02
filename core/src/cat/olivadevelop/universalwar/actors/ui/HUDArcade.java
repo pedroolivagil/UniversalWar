@@ -10,9 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.async.AsyncTask;
+
+import java.sql.ResultSet;
 
 import cat.olivadevelop.universalwar.actors.allied.Allied;
 import cat.olivadevelop.universalwar.actors.allied.Genesis;
+import cat.olivadevelop.universalwar.actors.allied.SpaceShipOne;
 import cat.olivadevelop.universalwar.actors.bullets.Bullet;
 import cat.olivadevelop.universalwar.actors.bullets.BulletOrange;
 import cat.olivadevelop.universalwar.actors.bullets.MegaBullet;
@@ -20,17 +24,25 @@ import cat.olivadevelop.universalwar.actors.bullets.SuperBullet;
 import cat.olivadevelop.universalwar.actors.enemies.Enemy;
 import cat.olivadevelop.universalwar.actors.shields.Shield;
 import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
+import cat.olivadevelop.universalwar.screens.GameArcadeScreen;
+import cat.olivadevelop.universalwar.screens.MainMenuScreen;
 import cat.olivadevelop.universalwar.tools.ActorGame;
+import cat.olivadevelop.universalwar.tools.AsyncGame;
+import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.ColorGame;
+import cat.olivadevelop.universalwar.tools.ConnectDB;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.ImageGame;
 import cat.olivadevelop.universalwar.tools.LabelGame;
 import cat.olivadevelop.universalwar.tools.Listener;
+import cat.olivadevelop.universalwar.tools.WindowGame;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.getAnimHealth;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getBotonMenu2Drawable;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getButtons;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getCountEnemiesDispached;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getEnemy;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getId_obj_health;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getNumberFormated;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getPowers;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScoreGame;
@@ -42,7 +54,10 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeMin;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeSec;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getTimer;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUi;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getUserID;
+import static cat.olivadevelop.universalwar.tools.GameLogic.setPauseGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeDefault;
 
 /**
@@ -50,6 +65,7 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeDefault;
  */
 public class HUDArcade extends ActorGame {
 
+    private final ImageGame ipauseBG;
     private int time1 = 30;
     private int time2 = 60;
     private int time3 = 90;
@@ -95,9 +111,25 @@ public class HUDArcade extends ActorGame {
     private ImageGame iBurst;  // disparar ráfaga de balas
     private Animation anim;
     private LabelGame lblCounter;
+    private Animation healthAnimation;
+    private ButtonGame btnContinue;
+    private ButtonGame btnExitGame;
+    private WindowGame wExit;
+    private GameArcadeScreen scn;
+    private ButtonGame tbBack;
+    private ButtonGame tbExit;
+    private Table tablePause;
+    private WindowGame windowPause;
+    private ImageGame iFinalLivesAnim;
+    private LabelGame lblFinalLives;
+    private ResultSet query;
+    private int quantityExtraLives;
+    private AsyncGame async;
 
     public HUDArcade(final GeneralScreen screen) {
         super(screen);
+        this.scn = (GameArcadeScreen) screen;
+        healthAnimation = new Animation(1 / 15f, getSprites(6, 4, getAnimHealth()));
         timeMisile = 0;
         timeBurst = 0;
         timeHealth = 0;
@@ -144,6 +176,45 @@ public class HUDArcade extends ActorGame {
         gDefeated.addActor(new ImageGame(getEnemy(Enemy.BASIC[5]), 0, 47, 28, 28));
         gDefeated.setPosition(10, 65);
         screen._stage.addActor(gDefeated);
+        setWindowGameOver();
+        setWindowPause();
+        screen._stage.addActor(windowPause);
+        ipauseBG = new ImageGame(getUi("black"), 0, 0, getScreenWidth(), getScreenHeight());
+        ipauseBG.setVisible(false);
+        screen._stage.addActor(ipauseBG);
+        async = new AsyncGame(screen);
+        setExtraLives();
+    }
+
+    public void setExtraLives() {
+        async.submit(new AsyncTask<Object>() {
+            @Override
+            public Object call() throws Exception {
+                ConnectDB conn = new ConnectDB();
+                query = conn.query("SELECT quantity FROM uw_userbag WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
+                if (query.next()) {
+                    quantityExtraLives = query.getInt("quantity");
+                }
+                conn.close();
+                return true;
+            }
+        });
+    }
+
+    public void updateExtraLives() {
+        async.submit(new AsyncTask<Object>() {
+            @Override
+            public Object call() throws Exception {
+                ConnectDB conn = new ConnectDB();
+                conn.insert("UPDATE uw_userbag SET quantity = (quantity-1) WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
+                query = conn.query("SELECT quantity FROM uw_userbag WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
+                if (query.next()) {
+                    quantityExtraLives = query.getInt("quantity");
+                }
+                conn.close();
+                return true;
+            }
+        });
     }
 
     public void settTop() {
@@ -222,7 +293,7 @@ public class HUDArcade extends ActorGame {
         iSuperMissil = new ImageGame(getPowers("powerupRed_multibomb"));
         iShield = new ImageGame(getPowers("powerupRed_shield"));
         iHealth = new ImageGame(getPowers("powerupRed_bolt"));
-        iHelp = new ImageGame(getPowers("powerupRed_star"));
+        iHelp = new ImageGame(getPowers("powerupRed_help"));
         iBurst = new ImageGame(getPowers("powerupRed_star"));
 
         int pad = 10;
@@ -273,6 +344,15 @@ public class HUDArcade extends ActorGame {
             hBar.toFront();
             hLbl.toFront();
             hBar.setWidth((barsWidth / Allied.getMaxHealth()) * Allied.getHealth() - 8);
+        }
+    }
+
+    public void actLblExtraLives() {
+        lblFinalLives.setText("x" + quantityExtraLives);
+        if (quantityExtraLives <= 0) {
+            btnContinue.setColor(ColorGame.DARK_BLUE);
+        } else {
+            btnContinue.setColor(ColorGame.WHITE);
         }
     }
 
@@ -548,6 +628,126 @@ public class HUDArcade extends ActorGame {
         }
     }
 
+    private void setWindowGameOver() {
+        iFinalLivesAnim = new ImageGame(healthAnimation.getKeyFrame(elapsedTime, true));
+        lblFinalLives = new LabelGame("", .7f, ColorGame.GREEN_POINTS);
+        btnContinue = new ButtonGame(getString("windowBtnCont"), .5f);
+        btnExitGame = new ButtonGame(getString("windowBtnExit"), .5f);
+        btnContinue.addListener(new Listener() {
+            @Override
+            public void action() {
+                if (quantityExtraLives > 0) {
+                    hideWindowGameOver();
+                    updateExtraLives();
+                    GameArcadeScreen.ship1 = new SpaceShipOne(screen);
+                    GameArcadeScreen.ship2 = new Genesis(screen);
+                    scn.addAllieds();
+                    scn.addShields();
+                }
+            }
+        });
+        btnExitGame.addListener(new Listener() {
+            @Override
+            public void action() {
+                exitGame();
+            }
+        });
+        Table tGameOver = new Table();
+        tGameOver.row().pad(10);
+        tGameOver.add(btnContinue).height(btnContinue.getHeight() * btnContinue.getScale()).width(btnContinue.getWidth() * btnContinue.getScale()).pad(15);
+        tGameOver.add(btnExitGame).height(btnExitGame.getHeight() * btnExitGame.getScale()).width(btnExitGame.getWidth() * btnExitGame.getScale()).pad(15);
+        wExit = new WindowGame(screen, getString("windowGOverTtl").toUpperCase());
+        wExit.setBackground(getBotonMenu2Drawable());
+        wExit.setWidth(getScreenWidth());
+        wExit.setHeight(240);
+        wExit.setOrigin(wExit.getWidth() / 2, wExit.getHeight() / 2);
+        wExit.setPosition(getScreenWidth() / 2 - wExit.getWidth() / 2, getScreenHeight() / 2 - wExit.getHeight() / 2);
+        wExit.setVisible(false);
+        wExit.setResizable(false);
+        wExit.row().padTop(50);
+        wExit.add().width(150);
+        wExit.add(iFinalLivesAnim).height(70).width(70);
+        wExit.add(lblFinalLives);
+        wExit.add().width(150);
+        wExit.row();
+        wExit.add(tGameOver).padTop(-10).colspan(4);
+        screen._stage.addActor(wExit);
+    }
+
+    public void showWindowGameOver() {
+        setPauseGame(true);
+        getTimer().stop();
+        ipauseBG.setVisible(true);
+        ipauseBG.toFront();
+        wExit.setVisible(true);
+        wExit.toFront();
+    }
+
+    public void hideWindowGameOver() {
+        setPauseGame(false);
+        getTimer().start();
+        ipauseBG.setVisible(false);
+        wExit.setVisible(false);
+    }
+
+    private void setWindowPause() {
+        tbBack = new ButtonGame(getString("windowTbBack"), .5f);
+        tbExit = new ButtonGame(getString("windowTbExit"), .5f);
+        tbBack.addListener(new Listener() {
+            @Override
+            public void action() {
+                hideWindowPause();
+            }
+        });
+        tbExit.addListener(new Listener() {
+            @Override
+            public void action() {
+                /**
+                 * Preguntar si realmente quiere salir o no
+                 */
+                screen.game.setScreen(screen.game._gameOverScreen);
+            }
+        });
+        tablePause = new Table();
+        tablePause.row().pad(20).padTop(40);
+        tablePause.add(MainMenuScreen._groupSound).height(MainMenuScreen.imageOff.getHeight() * MainMenuScreen._groupSound.getScaleX()).width(MainMenuScreen.imageOff.getWidth() * MainMenuScreen._groupSound.getScaleX()).colspan(2);
+        tablePause.row().pad(20);
+        tablePause.add(tbBack).height(tbBack.getHeight() * tbBack.getScale()).width(tbBack.getWidth() * tbBack.getScale()).pad(15);
+        tablePause.add(tbExit).height(tbExit.getHeight() * tbExit.getScale()).width(tbExit.getWidth() * tbExit.getScale()).pad(15);
+        windowPause = new WindowGame(screen, getString("windowTitle").toUpperCase());
+        windowPause.setBackground(getBotonMenu2Drawable());
+        windowPause.setWidth(getScreenWidth());
+        windowPause.setHeight(280);
+        windowPause.setOrigin(windowPause.getWidth() / 2, windowPause.getHeight() / 2);
+        windowPause.setPosition(getScreenWidth() / 2 - windowPause.getWidth() / 2, getScreenHeight() / 2 - windowPause.getHeight() / 2);
+        windowPause.setVisible(false);
+        windowPause.setResizable(false);
+        windowPause.add(tablePause);
+    }
+
+    public void showWindowPause() {
+        if (!wExit.isVisible()) {
+            ipauseBG.setVisible(true);
+            ipauseBG.toFront();
+            windowPause.setVisible(true);
+            windowPause.toFront();
+            getTimer().stop();
+            setPauseGame(true);
+        }
+    }
+
+    public void hideWindowPause() {
+        ipauseBG.setVisible(false);
+        windowPause.setVisible(false);
+        getTimer().start();
+        setPauseGame(false);
+    }
+
+    public final void exitGame() {
+        scn.clearGroups();
+        screen.game.setScreen(screen.game._gameOverScreen);
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -555,19 +755,23 @@ public class HUDArcade extends ActorGame {
         actLabelScore();
         actCounter();
         toFront();
-        tTop.toFront();
-        tBottom.toFront();
         actHealthBar();
         actShieldBar();
         checkButtons();
+        actLblExtraLives();
+        tTop.toFront();
+        tBottom.toFront();
         tShoot.toFront();
         tbBtns.toFront();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        batch.setColor(ColorGame.WHITE);
+        batch.enableBlending();
         super.draw(batch, parentAlpha);
         elapsedTime += Gdx.graphics.getDeltaTime();
         tbBtns.setBackground(new TextureRegionDrawable(anim.getKeyFrame(elapsedTime, true)));
+        iFinalLivesAnim.setDrawable(new TextureRegionDrawable(healthAnimation.getKeyFrame(elapsedTime, true)));
     }
 }

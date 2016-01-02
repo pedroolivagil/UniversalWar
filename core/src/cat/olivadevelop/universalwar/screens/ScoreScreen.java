@@ -20,6 +20,7 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getBotonMenu2Drawabl
 import static cat.olivadevelop.universalwar.tools.GameLogic.getNumberFormated;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getUserID;
 
 /**
  * Created by OlivaDevelop on 26/05/2015.
@@ -73,7 +74,7 @@ public class ScoreScreen extends GeneralScreen {
         scoresTable = new Table();
         scoresTable.setBackground(getBotonMenu2Drawable());
         ConnectDB conn = new ConnectDB();
-        scores = conn.query("SELECT score FROM scores WHERE id_device LIKE '" + game.getIdDevice() + "' ORDER BY score DESC Limit 6;");
+        scores = conn.query("SELECT points FROM uw_points WHERE id_customer = " + getUserID() + " ORDER BY points DESC Limit 6;");
         x = 2;
         try {
             if (!scores.next()) {
@@ -83,16 +84,17 @@ public class ScoreScreen extends GeneralScreen {
                 tableScore.row();
                 tableScore.add(new LabelGame(getString("lTitle"), .4f)).height(30);
                 tableScore.row();
-                tableScore.add(new LabelGame(getNumberFormated(Integer.parseInt(scores.getString("score"))), 1f, ColorGame.RED));
+                tableScore.add(new LabelGame(getNumberFormated(Integer.parseInt(scores.getString("points"))), 1f, ColorGame.RED));
                 scoresTable.row().expandX();
                 scoresTable.add(new LabelGame(getString("lSubTitle"), .4f)).colspan(2);
                 while (scores.next()) {
                     scoresTable.row().expandX();
                     scoresTable.add(new LabelGame(x + "a", .3f, ColorGame.BLUE_CYAN)).width(50);
-                    scoresTable.add(new LabelGame(getNumberFormated(Integer.parseInt(scores.getString("score"))), .5f).center()).width(600).padRight(25);
+                    scoresTable.add(new LabelGame(getNumberFormated(Integer.parseInt(scores.getString("points"))), .5f).center()).width(600).padRight(25);
                     x++;
                 }
             }
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

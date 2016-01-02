@@ -15,10 +15,10 @@ import cat.olivadevelop.universalwar.tools.Listener;
 
 import static cat.olivadevelop.universalwar.tools.GameLogic.getBotonMenu2Drawable;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getNumberFormated;
-import static cat.olivadevelop.universalwar.tools.GameLogic.getPrefs;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScoreGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getUserID;
 
 /**
  * Created by OlivaDevelop on 22/04/2015.
@@ -43,7 +43,8 @@ public class GameOverScreen extends GeneralScreen {
             @Override
             public Object call() throws Exception {
                 ConnectDB conn = new ConnectDB();
-                conn.insert("INSERT INTO scores(username,score,time,id_device) VALUES('" + getPrefs().getString("userName", "UW_Anonymous") + "'," + getScoreGame() + "," + getTimeGame() + ",'" + game.getIdDevice() + "')");
+                conn.insert("INSERT INTO uw_points(id_customer, points, time) VALUES (" + getUserID() + "," + getScoreGame() + "," + getTimeGame() + ")");
+                conn.close();
                 return true;
             }
         });

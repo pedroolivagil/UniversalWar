@@ -26,21 +26,6 @@ public class ConnectDB {
     }
 
     public ResultSet query(String query) {
-        /*try {
-            Class.forName("com.mysql.jdbc.Driver");
-            this.conn = DriverManager.getConnection(this.url, this.user, this.pass);
-            //Gdx.app.log("Server", "Connected");
-            this.estado = this.conn.createStatement();
-            this.result = this.estado.executeQuery(query);
-            //conn.close();
-        } catch (SQLException e) {
-            //Gdx.app.log("Server", "Error MYSQL");
-            e.printStackTrace();
-        } catch (Exception e) {
-            //Gdx.app.log("Server", "Error: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return this.result;*/
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.conn = DriverManager.getConnection(this.url, this.user, this.pass);

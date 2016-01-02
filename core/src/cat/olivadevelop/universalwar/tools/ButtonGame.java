@@ -35,7 +35,6 @@ public class ButtonGame extends Group {
         setHeight(image.getHeight());
 
         addActors(new Actor[]{label, image});
-        //label.toFront();
     }
 
     public void addActors(Actor[] actor) {

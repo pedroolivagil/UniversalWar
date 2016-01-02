@@ -2,11 +2,8 @@ package cat.olivadevelop.universalwar.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
@@ -17,23 +14,14 @@ import cat.olivadevelop.universalwar.actors.enemies.BasicEnemy;
 import cat.olivadevelop.universalwar.actors.enemies.Boss;
 import cat.olivadevelop.universalwar.actors.enemies.Enemy;
 import cat.olivadevelop.universalwar.actors.enemies.SuperBoss;
+import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
 import cat.olivadevelop.universalwar.actors.ui.HUDArcade;
 import cat.olivadevelop.universalwar.actors.ui.Planet;
-import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
-import cat.olivadevelop.universalwar.tools.Listener;
-import cat.olivadevelop.universalwar.tools.WindowGame;
 
-import static cat.olivadevelop.universalwar.tools.GameLogic.getAnimHealth;
-import static cat.olivadevelop.universalwar.tools.GameLogic.getBotonMenu2Drawable;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getCountEnemiesDispached;
-import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
-import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
-import static cat.olivadevelop.universalwar.tools.GameLogic.getSprites;
-import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
-import static cat.olivadevelop.universalwar.tools.GameLogic.getTimer;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setCountEnemiesDispached;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setPauseGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setScoreGame;
@@ -45,14 +33,8 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeGame;
 public class GameArcadeScreen extends GeneralScreen {
 
     private static float enemyRound;
-    private static SpaceShipOne ship1;
-    private static Genesis ship2;
-    ButtonGame btnContinue;
-    ButtonGame btnExitGame;
-    private WindowGame wExit;
-    private static Animation hAnim;
-    private static Table tImgHealth;
-    private float elapsedTime;
+    public static SpaceShipOne ship1;
+    public static Genesis ship2;
 
     public GameArcadeScreen(UniversalWarGame game) {
         super(game);
@@ -76,21 +58,6 @@ public class GameArcadeScreen extends GeneralScreen {
 
     public static Genesis getShip2() {
         return ship2;
-    }
-
-    public void showWindowPause() {
-        if (!wExit.isVisible()) {
-            windowPause.setVisible(true);
-            windowPause.toFront();
-            getTimer().stop();
-            setPauseGame(true);
-        }
-    }
-
-    public void hideWindowPause() {
-        windowPause.setVisible(false);
-        getTimer().start();
-        setPauseGame(false);
     }
 
     private void addPlanets() {
@@ -123,50 +90,15 @@ public class GameArcadeScreen extends GeneralScreen {
         }
     }
 
-    private void addAllieds() {
+    public void addAllieds() {
         _groupAllied.addActor(getShip1());
     }
 
-    private void addShields() {
-        //_groupShields.addActor(new ShieldBronze(this));
+    public void addShields() {
+        _groupShields.addActor(new ShieldBronze(this));
     }
 
-    public void setWindowPause() {
-        tbBack = new ButtonGame(getString("windowTbBack"), .5f);
-        tbExit = new ButtonGame(getString("windowTbExit"), .5f);
-        tbBack.addListener(new Listener() {
-            @Override
-            public void action() {
-                hideWindowPause();
-            }
-        });
-        tbExit.addListener(new Listener() {
-            @Override
-            public void action() {
-                /**
-                 * Preguntar si realmente quiere salir o no
-                 */
-                game.setScreen(game._gameOverScreen);
-            }
-        });
-        tablePause = new Table();
-        tablePause.row().pad(20).padTop(40);
-        tablePause.add(MainMenuScreen._groupSound).height(MainMenuScreen.imageOff.getHeight() * MainMenuScreen._groupSound.getScaleX()).width(MainMenuScreen.imageOff.getWidth() * MainMenuScreen._groupSound.getScaleX()).colspan(2);
-        tablePause.row().pad(20);
-        tablePause.add(tbBack).height(tbBack.getHeight() * tbBack.getScale()).width(tbBack.getWidth() * tbBack.getScale()).pad(15);
-        tablePause.add(tbExit).height(tbExit.getHeight() * tbExit.getScale()).width(tbExit.getWidth() * tbExit.getScale()).pad(15);
-        windowPause = new WindowGame(this, getString("windowTitle").toUpperCase());
-        windowPause.setBackground(getBotonMenu2Drawable());
-        windowPause.setWidth(getScreenWidth());
-        windowPause.setHeight(280);
-        windowPause.setOrigin(windowPause.getWidth() / 2, windowPause.getHeight() / 2);
-        windowPause.setPosition(getScreenWidth() / 2 - windowPause.getWidth() / 2, getScreenHeight() / 2 - windowPause.getHeight() / 2);
-        windowPause.setVisible(false);
-        windowPause.setResizable(false);
-        windowPause.add(tablePause);
-    }
-
-    private void clearGroups() {
+    public void clearGroups() {
         if (_groupAllied.hasChildren()) {
             _groupAllied.clearChildren();
         }
@@ -184,7 +116,7 @@ public class GameArcadeScreen extends GeneralScreen {
     @Override
     public void actionBackButton() {
         super.actionBackButton();
-        showWindowPause();
+        _hud.showWindowPause();
         if (GameLogic.isShowADS()) {
             game.actionResolver.showOrLoadInterstital();
         }
@@ -202,15 +134,12 @@ public class GameArcadeScreen extends GeneralScreen {
         setScoreGame(0);
         setTimeGame(0);
         clearGroups();
-        setWindowPause();
-        setWindowGameOver();
         ship1 = new SpaceShipOne(this);
         ship2 = new Genesis(this);
         _stage.addActor(_groupPlanets);
         _stage.addActor(_groupAllied);
         _stage.addActor(_groupEnemy);
         _stage.addActor(_groupShields);
-        _stage.addActor(windowPause);
         _hud = new HUDArcade(this);
         _stage.addActor(_hud);
         _hud.toFront();
@@ -223,6 +152,8 @@ public class GameArcadeScreen extends GeneralScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(26f / 255, 26f / 255, 37f / 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glDisable(GL20.GL_BLEND);
+        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         _stage.draw();
         if (!GameLogic.isPause()) {
             _stage.act(delta);
@@ -230,69 +161,9 @@ public class GameArcadeScreen extends GeneralScreen {
         addActors();
         MainMenuScreen.checkAudio();
         if (!_groupAllied.hasChildren()) {
-            showWindowGameOver();
+            _hud.showWindowGameOver();
         }
     }
-
-    private void setWindowGameOver() {
-        hAnim = new Animation(1 / 6, getSprites(6, 1, getAnimHealth()));
-        tImgHealth = new Table();
-        tImgHealth.setBackground(new TextureRegionDrawable(hAnim.getKeyFrame(elapsedTime, true)));
-        tImgHealth.setHeight(50);
-        tImgHealth.setWidth(50);
-        tImgHealth.row().expand();
-        tImgHealth.debugAll();
-
-        btnContinue = new ButtonGame(getString("windowBtnCont"), .5f);
-        btnExitGame = new ButtonGame(getString("windowBtnExit"), .5f);
-        btnContinue.addListener(new Listener() {
-            @Override
-            public void action() {
-                hideWindowGameOver();
-                ship1 = new SpaceShipOne(GameArcadeScreen.this);
-                ship2 = new Genesis(GameArcadeScreen.this);
-                addAllieds();
-                addShields();
-            }
-        });
-        btnExitGame.addListener(new Listener() {
-            @Override
-            public void action() {
-                exitGame();
-            }
-        });
-        Table tGameOver = new Table();
-        tGameOver.row().pad(10);
-        tGameOver.add(btnContinue).height(btnContinue.getHeight() * btnContinue.getScale()).width(btnContinue.getWidth() * btnContinue.getScale()).pad(15);
-        tGameOver.add(btnExitGame).height(btnExitGame.getHeight() * btnExitGame.getScale()).width(btnExitGame.getWidth() * btnExitGame.getScale()).pad(15);
-        wExit = new WindowGame(this, getString("windowGOverTtl").toUpperCase());
-        wExit.setBackground(getBotonMenu2Drawable());
-        wExit.setWidth(getScreenWidth());
-        wExit.setHeight(220);
-        wExit.setOrigin(wExit.getWidth() / 2, wExit.getHeight() / 2);
-        wExit.setPosition(getScreenWidth() / 2 - wExit.getWidth() / 2, getScreenHeight() / 2 - wExit.getHeight() / 2);
-        wExit.setVisible(false);
-        wExit.setResizable(false);
-        wExit.add(tImgHealth).height(50).width(50).padTop(60);
-        wExit.row();
-        wExit.add(tGameOver).padTop(10);
-        _stage.addActor(wExit);
-    }
-
-    private void showWindowGameOver() {
-        setPauseGame(true);
-        getTimer().stop();
-        wExit.setVisible(true);
-        wExit.toFront();
-    }
-
-    private void hideWindowGameOver() {
-        setPauseGame(false);
-        getTimer().start();
-        wExit.setVisible(false);
-        wExit.toBack();
-    }
-
     private void addActors() {
         addEnemies();
         addPlanets();
@@ -308,18 +179,10 @@ public class GameArcadeScreen extends GeneralScreen {
         }
     }
 
-    public final void exitGame() {
-        /**
-         * Crear un menu tipo pausa para elejir si quiere continuar usando un supercorazon o finalizar la partida
-         */
-        game.setScreen(game._gameOverScreen);
-        clearGroups();
-    }
-
     @Override
     public void pause() {
         Timer.instance().stop();
-        showWindowPause();
+        _hud.showWindowPause();
         if (GameLogic.isShowADS()) {
             game.actionResolver.showOrLoadInterstital();
         }
@@ -335,6 +198,6 @@ public class GameArcadeScreen extends GeneralScreen {
     @Override
     public void hide() {
         Timer.instance().stop();
-        showWindowPause();
+        _hud.showWindowPause();
     }
 }

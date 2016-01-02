@@ -1,5 +1,6 @@
 package cat.olivadevelop.universalwar.tools;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -20,6 +21,12 @@ public class ActorGame extends Actor implements Disposable {
     public ActorGame(GeneralScreen screen) {
         this.screen = screen;
         shape = new ShapeRenderer();
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        batch.enableBlending();
+        super.draw(batch, parentAlpha);
     }
 
     @Override

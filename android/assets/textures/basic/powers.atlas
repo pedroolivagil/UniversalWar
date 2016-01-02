@@ -1,52 +1,53 @@
 powers.png
+size: 506, 106
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 bold_silver
   rotate: false
-  xy: 172, 139
+  xy: 299, 72
   size: 19, 30
   orig: 19, 30
   offset: 0, 0
   index: -1
 bolt_bronze
   rotate: false
-  xy: 193, 139
+  xy: 320, 72
   size: 19, 30
   orig: 19, 30
   offset: 0, 0
   index: -1
 bolt_gold
   rotate: false
-  xy: 140, 171
+  xy: 341, 72
   size: 19, 30
   orig: 19, 30
   offset: 0, 0
   index: -1
 pill_blue
   rotate: false
-  xy: 161, 171
+  xy: 362, 72
   size: 22, 21
   orig: 22, 21
   offset: 0, 0
   index: -1
 pill_green
   rotate: false
-  xy: 161, 194
+  xy: 386, 72
   size: 22, 21
   orig: 22, 21
   offset: 0, 0
   index: -1
 pill_red
   rotate: false
-  xy: 185, 171
+  xy: 410, 72
   size: 22, 21
   orig: 22, 21
   offset: 0, 0
   index: -1
 pill_yellow
   rotate: false
-  xy: 185, 194
+  xy: 434, 72
   size: 22, 21
   orig: 22, 21
   offset: 0, 0
@@ -60,224 +61,252 @@ powerupBlue
   index: -1
 powerupBlue_bolt
   rotate: false
-  xy: 38, 2
+  xy: 2, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 powerupBlue_bomb
   rotate: false
-  xy: 74, 2
+  xy: 38, 2
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
-powerupBlue_multibomb
-  rotate: false
-  xy: 110, 2
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-powerupBlue_shield
-  rotate: false
-  xy: 146, 2
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-powerupBlue_star
-  rotate: false
-  xy: 182, 2
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-powerupGreen
-  rotate: false
-  xy: 2, 37
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-powerupGreen_bolt
-  rotate: false
-  xy: 2, 72
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-powerupGreen_bomb
-  rotate: false
-  xy: 2, 107
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-powerupGreen_multibomb
-  rotate: false
-  xy: 2, 142
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-powerupGreen_shield
-  rotate: false
-  xy: 2, 177
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-powerupGreen_star
+powerupBlue_help
   rotate: false
   xy: 38, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
-powerupRed
+powerupBlue_multibomb
+  rotate: false
+  xy: 74, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupBlue_shield
   rotate: false
   xy: 74, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
-powerupRed_bolt
+powerupBlue_star
+  rotate: false
+  xy: 110, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen
   rotate: false
   xy: 110, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
-powerupRed_bomb
+powerupGreen_bolt
+  rotate: false
+  xy: 146, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen_bomb
   rotate: false
   xy: 146, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
-powerupRed_multibomb
+powerupGreen_help
+  rotate: false
+  xy: 182, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen_multibomb
   rotate: false
   xy: 182, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
+powerupGreen_shield
+  rotate: false
+  xy: 218, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupGreen_star
+  rotate: false
+  xy: 218, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed
+  rotate: false
+  xy: 254, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_bolt
+  rotate: false
+  xy: 254, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_bomb
+  rotate: false
+  xy: 290, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_help
+  rotate: false
+  xy: 290, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupRed_multibomb
+  rotate: false
+  xy: 326, 2
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
 powerupRed_shield
   rotate: false
-  xy: 38, 72
+  xy: 326, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 powerupRed_star
   rotate: false
-  xy: 38, 107
+  xy: 362, 2
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 powerupYellow
   rotate: false
-  xy: 38, 142
+  xy: 362, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 powerupYellow_bolt
   rotate: false
-  xy: 38, 177
+  xy: 398, 2
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 powerupYellow_bomb
   rotate: false
-  xy: 74, 72
+  xy: 398, 37
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+powerupYellow_help
+  rotate: false
+  xy: 434, 2
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 powerupYellow_multibomb
   rotate: false
-  xy: 110, 72
+  xy: 470, 2
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 powerupYellow_shield
   rotate: false
-  xy: 146, 72
+  xy: 434, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 powerupYellow_star
   rotate: false
-  xy: 182, 72
+  xy: 470, 37
   size: 34, 33
   orig: 34, 33
   offset: 0, 0
   index: -1
 shield_bronze
   rotate: false
-  xy: 108, 139
+  xy: 203, 72
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 shield_gold
   rotate: false
-  xy: 108, 171
+  xy: 235, 72
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 shield_silver
   rotate: false
-  xy: 140, 139
+  xy: 267, 72
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 star_bronze
   rotate: false
-  xy: 108, 107
+  xy: 104, 72
   size: 31, 30
   orig: 31, 30
   offset: 0, 0
   index: -1
 star_gold
   rotate: false
-  xy: 141, 107
+  xy: 137, 72
   size: 31, 30
   orig: 31, 30
   offset: 0, 0
   index: -1
 star_silver
   rotate: false
-  xy: 174, 107
+  xy: 170, 72
   size: 31, 30
   orig: 31, 30
   offset: 0, 0
   index: -1
 things_bronze
   rotate: false
-  xy: 74, 107
+  xy: 2, 72
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 things_gold
   rotate: false
-  xy: 74, 141
+  xy: 36, 72
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 things_silver
   rotate: false
-  xy: 74, 175
+  xy: 70, 72
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -28,7 +28,8 @@ public abstract class GameLogic implements Disposable {
     // Bundle
     private static I18NBundle bundle;
     // Variables
-    private static String[] serverData = new String[]{"hl258.dinaserver.com", "universalwar", "masterwar", "20081991Aa"};
+    //private static String[] serverData = new String[]{"hl258.dinaserver.com", "universalwar", "masterwar", "20081991Aa"};
+    private static String[] serverData = new String[]{"hl317.dinaserver.com", "ps_cc26d4a67a8ef5c2", "ps-cc26d4a67a8ef", "vNI3ihYN"};
     private static Timer timer;
     private static boolean pauseGame;
     private static boolean showADS;
@@ -60,6 +61,10 @@ public abstract class GameLogic implements Disposable {
     private static Sound SOUND_SHOOT_PLASMA;
     private static Sound SOUND_EXPLODE;
     //private static Sound SOUND_AMBIENT;
+
+    // User Vars
+    private static int userID = 2;
+    private static int id_obj_health = 20;
 
     public static void loadUI() {
         // Textures
@@ -268,6 +273,13 @@ public abstract class GameLogic implements Disposable {
     }*/
 
     // Variables
+    public static int getUserID() {
+        return userID;
+    }
+
+    public static int getId_obj_health() {
+        return id_obj_health;
+    }
 
     public static String getServerData(int pos) {
         return serverData[pos];

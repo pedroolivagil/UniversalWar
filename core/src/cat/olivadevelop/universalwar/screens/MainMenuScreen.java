@@ -88,7 +88,7 @@ public class MainMenuScreen extends GeneralScreen {
             getSoundAmbient().loop();
         }*/
         buttonMute();
-        game.setScreen(game._gameArcadeScreen);
+        game.setScreen(game._settingsScreen);
     }
 
     private void buttonMute() {
