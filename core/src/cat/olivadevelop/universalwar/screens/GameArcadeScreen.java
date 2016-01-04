@@ -32,9 +32,9 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeGame;
  */
 public class GameArcadeScreen extends GeneralScreen {
 
-    private static float enemyRound;
     public static SpaceShipOne ship1;
     public static Genesis ship2;
+    private static float enemyRound;
 
     public GameArcadeScreen(UniversalWarGame game) {
         super(game);
@@ -164,6 +164,7 @@ public class GameArcadeScreen extends GeneralScreen {
             _hud.showWindowGameOver();
         }
     }
+
     private void addActors() {
         addEnemies();
         addPlanets();

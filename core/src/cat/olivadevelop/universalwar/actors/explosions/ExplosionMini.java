@@ -22,7 +22,7 @@ public class ExplosionMini extends Actor {
 
     public ExplosionMini(float x, float y, float rotation) {
         texture = GameLogic.getExplosionMedium();
-        animation = new Animation(1 /40f, getSprites(8, 6, texture));
+        animation = new Animation(1 / 40f, getSprites(8, 6, texture));
         setPosition(x, y);
         setRotation(rotation);
         setHeight(texture.getHeight() / 6);

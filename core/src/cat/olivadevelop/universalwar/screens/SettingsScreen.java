@@ -2,10 +2,8 @@ package cat.olivadevelop.universalwar.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.async.AsyncTask;
@@ -18,12 +16,10 @@ import cat.olivadevelop.universalwar.tools.AsyncGame;
 import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.ConnectDB;
-import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.ImageGame;
 import cat.olivadevelop.universalwar.tools.LabelGame;
 import cat.olivadevelop.universalwar.tools.Listener;
-import cat.olivadevelop.universalwar.tools.SelectBoxGame;
 import cat.olivadevelop.universalwar.tools.TextFieldGame;
 
 import static cat.olivadevelop.universalwar.tools.GameLogic.encrypt;
@@ -83,7 +79,8 @@ public class SettingsScreen extends GeneralScreen {
         tbSignUp.addListener(new Listener() {
             @Override
             public void action() {
-                game.setScreen(game._signUpScreen);
+                //game.setScreen(game._signUpScreen);
+                Gdx.net.openURI("http://codeduo.cat/index.php?controller=authentication");
             }
         });
         tbSignUp.setWidth(700);
@@ -121,25 +118,6 @@ public class SettingsScreen extends GeneralScreen {
             setTabSign();
         }
 
-        LabelGame lTheme = new LabelGame(getString("lTheme"), .5f);
-        lTheme.setWidth(20);
-
-        /** añadir lack and white solo si se ha comprado la app **/
-        String[] items = new String[]{"  Default"/*, "  Black & White"*/};
-        final SelectBoxGame select = new SelectBoxGame(getSkin_mini());
-        select.setItems(items);
-        select.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.log("Selected", select.getSelected());
-                if (select.getSelected().trim().equals("Default")) {
-                    GameLogic.setTheme("basic");
-                } else {
-                    GameLogic.setTheme("blackandwhite");
-                }
-            }
-        });
-
         Table tableSettings = new Table(getSkin());
         tableSettings.setFillParent(true);
         tableSettings.add(title);
@@ -151,7 +129,7 @@ public class SettingsScreen extends GeneralScreen {
         tableSettings.add(new LabelGame(getString("lNewTitle"), .5f)).center();
         tableSettings.row().height(110);
         tableSettings.add(new LabelGame(getString("lNewAccount"), .3f)).center();
-        tableSettings.row().expandX();
+        tableSettings.row().expandX().padTop(10);
         tableSettings.add(tbSignUp).height(tbSignUp.getHeight() * tbSignUp.getScale()).padRight(31);
         tableSettings.row().height(50).expand();
         tableSettings.add(tbBack).height(tbBack.getHeight() * tbBack.getScale()).padRight(31);
@@ -174,12 +152,12 @@ public class SettingsScreen extends GeneralScreen {
         hideDialog();
     }
 
-    public void showDialog(){
+    public void showDialog() {
         ipauseBG.setVisible(true);
         dialog.show(_stage);
     }
 
-    public void hideDialog(){
+    public void hideDialog() {
         ipauseBG.setVisible(false);
         dialog.hide();
     }
@@ -203,7 +181,7 @@ public class SettingsScreen extends GeneralScreen {
         tableContent.row().expandX().pad(10);
         tableContent.add(new LabelGame(getString("btnSign"), .5f)).center();
         tableContent.row().height(80).width(600);
-        tableContent.add(new LabelGame(getString("welcome") + ", " + getUserName() + " " + getUserLast(), .7f, ColorGame.ORANGE)).expand().center();
+        tableContent.add(new LabelGame(getString("welcome") + ", " + getUserName() + " " + getUserLast(), .6f, ColorGame.ORANGE)).expand().center();
         tableContent.row().height(80).expandX().padBottom(50);
         tableContent.add(btnSignOut).center().padRight(20);
     }
