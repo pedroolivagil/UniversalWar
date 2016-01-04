@@ -113,10 +113,4 @@ public class ScoreScreen extends GeneralScreen {
             }
         });
     }
-
-    @Override
-    public void dispose() {
-        game._highScoreScreen.dispose();
-        super.dispose();
-    }
 }

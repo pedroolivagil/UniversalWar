@@ -13,6 +13,10 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Timer;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
 import java.util.Locale;
 
 /**
@@ -20,7 +24,8 @@ import java.util.Locale;
  */
 public abstract class GameLogic implements Disposable {
 
-    public static String prefsName = "localPreferences";
+    public final static String prefsName = "localPreferences";
+    public final static String COOKIE_KEY = "5d77314492c1e10daa3a2366ca1b7103578d856c3a5c89e30b879ad4";
     // Textures
     public static String COLOR_BASIC = "basic";
     public static String COLOR_BWHITE = "blackandwhite";
@@ -28,7 +33,6 @@ public abstract class GameLogic implements Disposable {
     // Bundle
     private static I18NBundle bundle;
     // Variables
-    //private static String[] serverData = new String[]{"hl258.dinaserver.com", "universalwar", "masterwar", "20081991Aa"};
     private static String[] serverData = new String[]{"hl317.dinaserver.com", "ps_cc26d4a67a8ef5c2", "ps-cc26d4a67a8ef", "vNI3ihYN"};
     private static Timer timer;
     private static boolean pauseGame;
@@ -63,7 +67,7 @@ public abstract class GameLogic implements Disposable {
     //private static Sound SOUND_AMBIENT;
 
     // User Vars
-    private static int userID = 2;
+    private static ResultSet userQuery;
     private static int id_obj_health = 20;
 
     public static void loadUI() {
@@ -271,14 +275,70 @@ public abstract class GameLogic implements Disposable {
     /*public static Sound getSoundAmbient() {
         return SOUND_AMBIENT;
     }*/
+    public static int getUserID() {
+        return getPrefs().getInteger("userID", 0);
+    }
 
     // Variables
-    public static int getUserID() {
-        return userID;
+    public static void setUserID(int userID) {
+        getPrefs().putInteger("userID", userID);
+        getPrefs().flush();
     }
+
+    public static String getUserName() {
+        return getPrefs().getString("userName", "");
+    }
+
+    // Variables
+    public static void setUserName(String userName) {
+        getPrefs().putString("userName", userName);
+        getPrefs().flush();
+    }
+
+    public static String getUserLast() {
+        return getPrefs().getString("userLast", "");
+    }
+
+    // Variables
+    public static void setUserLast(String userLast) {
+        getPrefs().putString("userLast", userLast);
+        getPrefs().flush();
+    }
+
+    public static String getUserMail() {
+        return getPrefs().getString("userMail", "");
+    }
+
+    // Variables
+    public static void setUserMail(String userMail) {
+        getPrefs().putString("userMail", userMail);
+        getPrefs().flush();
+    }
+
 
     public static int getId_obj_health() {
         return id_obj_health;
+    }
+
+    public static String getMD5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger number = new BigInteger(1, messageDigest);
+            String hashtext = number.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String encrypt(String passwd) {
+        String pass = COOKIE_KEY + "" + passwd;
+        return getMD5(pass);
     }
 
     public static String getServerData(int pos) {

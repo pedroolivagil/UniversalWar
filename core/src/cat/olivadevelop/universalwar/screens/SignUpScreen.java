@@ -9,6 +9,7 @@ import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.LabelGame;
 import cat.olivadevelop.universalwar.tools.Listener;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.encrypt;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 
@@ -41,9 +42,11 @@ public class SignUpScreen extends GeneralScreen {
         LabelGame title = new LabelGame(getString("lOptions").toUpperCase(), 1, ColorGame.GREEN_POINTS);
         Table tableSettings = new Table(getSkin());
         tableSettings.setFillParent(true);
-        tableSettings.add(title).colspan(2);
+        tableSettings.add(title);
+        tableSettings.row();
+        tableSettings.add(new LabelGame(encrypt("20081991"), .3f));
         tableSettings.row().padBottom(50).expand();
-        tableSettings.add(tbBack).colspan(2).height(tbBack.getHeight() * tbBack.getScale());
+        tableSettings.add(tbBack).height(tbBack.getHeight() * tbBack.getScale());
 
         _stage.addActor(tableSettings);
     }

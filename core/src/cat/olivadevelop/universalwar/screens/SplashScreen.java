@@ -47,10 +47,4 @@ public class SplashScreen extends GeneralScreen {
         _stage.act(delta);
         _stage.draw();
     }
-
-    @Override
-    public void dispose() {
-        game._splashScreen.dispose();
-        super.dispose();
-    }
 }

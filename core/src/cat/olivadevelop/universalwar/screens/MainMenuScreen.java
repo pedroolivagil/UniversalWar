@@ -88,7 +88,6 @@ public class MainMenuScreen extends GeneralScreen {
             getSoundAmbient().loop();
         }*/
         buttonMute();
-        game.setScreen(game._settingsScreen);
     }
 
     private void buttonMute() {
@@ -191,11 +190,5 @@ public class MainMenuScreen extends GeneralScreen {
     public void render(float delta) {
         super.render(delta);
         checkAudio();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        game._mainMenuScreen.dispose();
     }
 }
