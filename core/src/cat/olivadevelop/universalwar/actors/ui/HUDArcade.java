@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -298,8 +297,6 @@ public class HUDArcade extends ActorGame {
 
         int pad = 10;
         tbBtns = new Table(getSkin());
-        tbBtns.setBackground(new TextureRegionDrawable(new TextureRegion(getButtons())));
-        //tbBtns.setWidth(getScreenWidth());
         tbBtns.row().height(barsHeight);
         tbBtns.add(iHelp).width(50).height(50).padLeft(pad).padRight(pad);
         tbBtns.add(iHealth).width(50).height(50).padLeft(pad).padRight(pad);
