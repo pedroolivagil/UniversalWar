@@ -46,9 +46,9 @@ public class AndroidLauncher extends AndroidApplication implements Publicidad {
         layout.setLayoutParams(params);
 
         AdView admobView = createAdView();
-        if (settings.getBoolean("localReg", true)) {
-            layout.addView(admobView);
-        }
+        /*if (settings.getBoolean("localReg", true)) {
+            //layout.addView(admobView);
+        }*/
         GameLogic.setShowADS(settings.getBoolean("localReg", true));
         View gameView = createGameView(config);
         layout.addView(gameView);

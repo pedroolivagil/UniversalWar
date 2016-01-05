@@ -1,6 +1,7 @@
 package cat.olivadevelop.universalwar.actors.enemies;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Timer;
 
 import cat.olivadevelop.universalwar.actors.bullets.Bullet;
 import cat.olivadevelop.universalwar.actors.bullets.BulletRed;
@@ -14,6 +15,8 @@ import cat.olivadevelop.universalwar.tools.GeneralScreen;
  */
 public class SuperBoss extends Enemy {
 
+    private Timer t;
+
     public SuperBoss(GeneralScreen screen, String ship) {
         super(screen, GameLogic.getEnemy(ship));
         score = 50000;
@@ -21,18 +24,24 @@ public class SuperBoss extends Enemy {
         setScale(2f);
         setHealth(30);
         setShowLive(true);
+        setBoss(true);
     }
 
     @Override
     public void shoot() {
         super.shoot();
-        screen._stage.addActor(new BulletRed(screen, getX() - 20 + getWidth() / 2, getY() + 5, Bullet.BULLET_DOWN));
-        screen._stage.addActor(new BulletRed(screen, getX() - 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
-        screen._stage.addActor(new BulletRed(screen, getX() + 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
-        screen._stage.addActor(new BulletRed(screen, getX() + 20 + getWidth() / 2, getY() + 5, Bullet.BULLET_DOWN));
-        if (GameLogic.isAudioOn()) {
-            GameLogic.getSoundShootLaser().play();
-        }
+        t = new Timer();
+        t.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                screen._stage.addActor(new BulletRed(screen, getX() - 20 + getWidth() / 2, getY() + 5, Bullet.BULLET_DOWN));
+                screen._stage.addActor(new BulletRed(screen, getX() - 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
+                if (GameLogic.isAudioOn()) {
+                    GameLogic.getSoundShootLaser().play();
+                }
+            }
+        }, 0, .3f, 2);
+        t.start();
     }
 
     @Override

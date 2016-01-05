@@ -186,34 +186,38 @@ public class HUDArcade extends ActorGame {
     }
 
     public void setExtraLives() {
-        async.submit(new AsyncTask<Object>() {
-            @Override
-            public Object call() throws Exception {
-                ConnectDB conn = new ConnectDB();
-                query = conn.query("SELECT quantity FROM uw_userbag WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
-                if (query.next()) {
-                    quantityExtraLives = query.getInt("quantity");
+        if (getUserID() > 0) {
+            async.submit(new AsyncTask<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    ConnectDB conn = new ConnectDB();
+                    query = conn.query("SELECT quantity FROM uw_userbag WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
+                    if (query.next()) {
+                        quantityExtraLives = query.getInt("quantity");
+                    }
+                    conn.close();
+                    return true;
                 }
-                conn.close();
-                return true;
-            }
-        });
+            });
+        }
     }
 
     public void updateExtraLives() {
-        async.submit(new AsyncTask<Object>() {
-            @Override
-            public Object call() throws Exception {
-                ConnectDB conn = new ConnectDB();
-                conn.insert("UPDATE uw_userbag SET quantity = (quantity-1) WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
-                query = conn.query("SELECT quantity FROM uw_userbag WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
-                if (query.next()) {
-                    quantityExtraLives = query.getInt("quantity");
+        if (getUserID() > 0) {
+            async.submit(new AsyncTask<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    ConnectDB conn = new ConnectDB();
+                    conn.insert("UPDATE uw_userbag SET quantity = (quantity-1) WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
+                    query = conn.query("SELECT quantity FROM uw_userbag WHERE id_object = " + getId_obj_health() + " AND id_customer = " + getUserID());
+                    if (query.next()) {
+                        quantityExtraLives = query.getInt("quantity");
+                    }
+                    conn.close();
+                    return true;
                 }
-                conn.close();
-                return true;
-            }
-        });
+            });
+        }
     }
 
     public void settTop() {

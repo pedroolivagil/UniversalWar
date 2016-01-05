@@ -3,7 +3,7 @@ package cat.olivadevelop.universalwar.actors.enemies;
 import com.badlogic.gdx.math.MathUtils;
 
 import cat.olivadevelop.universalwar.actors.bullets.Bullet;
-import cat.olivadevelop.universalwar.actors.bullets.BulletRed;
+import cat.olivadevelop.universalwar.actors.bullets.BulletYellow;
 import cat.olivadevelop.universalwar.actors.drops.HeartDropBronze;
 import cat.olivadevelop.universalwar.actors.drops.ShieldGoldDrop;
 import cat.olivadevelop.universalwar.actors.drops.ShieldSilverDrop;
@@ -19,16 +19,17 @@ public class Boss extends Enemy {
         super(screen, GameLogic.getEnemy(ship));
         score = 5000;
         time = MathUtils.random(7, 8);
-        setScale(1.5f);
-        setHealth(14);
+        setScale(1.2f);
+        setHealth(15);
         setShowLive(true);
+        setBoss(true);
     }
 
     @Override
     public void shoot() {
         super.shoot();
-        screen._stage.addActor(new BulletRed(screen, getX() - 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
-        screen._stage.addActor(new BulletRed(screen, getX() + 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
+        screen._stage.addActor(new BulletYellow(screen, getX() - 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
+        screen._stage.addActor(new BulletYellow(screen, getX() + 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
         if (GameLogic.isAudioOn()) {
             GameLogic.getSoundShootLaser().play();
         }

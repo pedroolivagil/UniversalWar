@@ -40,6 +40,7 @@ public class Enemy extends GameActor {
     float newY;
     private boolean showLive;
     private float width;
+    private boolean boss;
 
     public Enemy(GeneralScreen screen, TextureRegion tRegion) {
         super(tRegion);
@@ -50,6 +51,7 @@ public class Enemy extends GameActor {
         setScale(1);
         width = getWidth() * getScaleX();
         showLive = false;
+        setBoss(false);
     }
 
     private float calcDegree(float newX, float newY) {
@@ -65,12 +67,11 @@ public class Enemy extends GameActor {
             batch.end();
             shape.setProjectionMatrix(batch.getProjectionMatrix());
             shape.begin(ShapeRenderer.ShapeType.Filled);
-            shape.setColor(ColorGame.DARK_GREEN);
-            shape.rect(polygon.getX(), polygon.getY() - (10 + (12 * getScaleX())), ((width) / 2), 8 / 2f, width, 8, getScaleX(), getScaleY(), 0);
-            shape.setColor(ColorGame.GREEN);
-            for (int z = 0; z < getHealth(); z++) {
-                shape.rect(-10 + polygon.getX() + ((width / getMaxHealth() + 2) * z), polygon.getY() - (11 + (10 * getScaleX())), (width / getMaxHealth() / 2), 5 / 2f, width / getMaxHealth(), 5, getScaleX(), getScaleY(), 0);
-            }
+            shape.setColor(ColorGame.BLUE_CYAN);
+            //shape.rect(polygon.getX(), polygon.getY() - (10 + (12 * getScaleX())), ((width) / 2), 8 / 2f, width, 8, getScaleX(), getScaleY(), 0);
+            shape.rect(polygon.getX() - (getWidth() * .15f), polygon.getY() - (getHeight() * .5f), 120, 10);
+            shape.setColor(ColorGame.DARK_BLUE);
+            shape.rect(polygon.getX() - (getWidth() * .15f) + 1, polygon.getY() - (getHeight() * .5f) + 1, (120 / maxHealth) * getHealth(), 8);
             shape.end();
             batch.begin();
         }
@@ -91,8 +92,12 @@ public class Enemy extends GameActor {
                 if (screen._groupAllied.hasChildren()) {
                     Allied a = (Allied) screen._groupAllied.getChildren().first();
                     if (a.alive) {
-                        if (MathUtils.random(0, 2) == 1) {
+                        if (isBoss()) {
                             shoot();
+                        } else {
+                            if (MathUtils.random(0, 2) == 1) {
+                                shoot();
+                            }
                         }
                     }
                 }
@@ -149,5 +154,13 @@ public class Enemy extends GameActor {
 
     public void setShowLive(boolean showLive) {
         this.showLive = showLive;
+    }
+
+    public boolean isBoss() {
+        return boss;
+    }
+
+    public void setBoss(boolean boss) {
+        this.boss = boss;
     }
 }

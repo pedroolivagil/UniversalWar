@@ -32,6 +32,7 @@ public class UniversalWarGame extends Game {
     public UniversalWarGame(Publicidad aResolver, String idDevice) {
         setIdDevice(idDevice);
         actionResolver = aResolver;
+        GameLogic.setScreenHeight(1280);
         GameLogic.setScreenWidth(720);
     }
 
