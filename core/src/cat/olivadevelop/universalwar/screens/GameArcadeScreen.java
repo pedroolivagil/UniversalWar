@@ -168,12 +168,12 @@ public class GameArcadeScreen extends GeneralScreen {
     private void addActors() {
         addEnemies();
         addPlanets();
-        if (getCountEnemiesDispached() % /*100*/4 == 0 && getCountEnemiesDispached() != 0) {
+        if (getCountEnemiesDispached() % 100 == 0 && getCountEnemiesDispached() != 0) {
             _groupEnemy.addActor(new Boss(this, Enemy.BASIC[MathUtils.random(0, Enemy.BASIC.length - 1)]));
             GameLogic.addToScore(10000);
             setCountEnemiesDispached(getCountEnemiesDispached() + 1);
         }
-        if (getCountEnemiesDispached() % /*501*/2 == 0 && getCountEnemiesDispached() != 0) {
+        if (getCountEnemiesDispached() % 501 == 0 && getCountEnemiesDispached() != 0) {
             _groupEnemy.addActor(new SuperBoss(this, Enemy.BOSS[MathUtils.random(0, Enemy.BOSS.length - 1)]));
             GameLogic.addToScore(100000);
             setCountEnemiesDispached(getCountEnemiesDispached() + 1);

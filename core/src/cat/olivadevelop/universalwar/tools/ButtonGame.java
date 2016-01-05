@@ -28,12 +28,10 @@ public class ButtonGame extends Group {
     private void create(String text) {
         label = new Label(text.toUpperCase(), GameLogic.getSkin());
         image = new Image(getUi("botonMenu"));
-
         image.setWidth(label.getWidth() + (label.getWidth() * .1f));
         image.setHeight(label.getHeight());
         setWidth(image.getWidth());
         setHeight(image.getHeight());
-
         addActors(new Actor[]{label, image});
     }
 

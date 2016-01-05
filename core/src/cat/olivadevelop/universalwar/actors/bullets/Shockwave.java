@@ -76,7 +76,7 @@ public class Shockwave extends ActorGame {
         for (Actor a : screen._groupEnemy.getChildren()) {
             enemy = (Enemy) a;
             if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {
-                enemy.kicked();
+                enemy.kicked(1);
             }
         }
     }

@@ -667,7 +667,7 @@ public class HUDArcade extends ActorGame {
         wExit.setResizable(false);
         wExit.row().padTop(50);
         wExit.add().width(150);
-        wExit.add(iFinalLivesAnim).height(70).width(70);
+        wExit.add(iFinalLivesAnim).height(70).width(70).padRight(20);
         wExit.add(lblFinalLives);
         wExit.add().width(150);
         wExit.row();
@@ -703,9 +703,6 @@ public class HUDArcade extends ActorGame {
         tbExit.addListener(new Listener() {
             @Override
             public void action() {
-                /**
-                 * Preguntar si realmente quiere salir o no
-                 */
                 screen.game.setScreen(screen.game._gameOverScreen);
             }
         });

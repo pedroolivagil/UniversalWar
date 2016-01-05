@@ -2,16 +2,19 @@ package cat.olivadevelop.universalwar.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
+import cat.olivadevelop.universalwar.actors.ui.Planet;
 import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.ImageGame;
+import cat.olivadevelop.universalwar.tools.LabelGame;
 import cat.olivadevelop.universalwar.tools.Listener;
 
 import static cat.olivadevelop.universalwar.tools.GameLogic.getPlanets;
@@ -19,6 +22,8 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUi;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getUserLast;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getUserName;
 
 /**
  * Created by OlivaDevelop on 26/05/2015.
@@ -52,8 +57,8 @@ public class MainMenuScreen extends GeneralScreen {
         super.show();
         Group title = new Group();
         ImageGame subTitle = new ImageGame(getUi("title"));
-        ImageGame planet = new ImageGame(getPlanets("jupiter"));
-        //planet.setScale(.5f);
+        //ImageGame planet = new ImageGame(getPlanets("jupiter"));
+        ImageGame planet = new ImageGame(getPlanets(Planet.planets[MathUtils.random(0, Planet.planets.length - 1)]));
 
         title.setWidth(subTitle.getWidth());
         title.setHeight(planet.getHeight());
@@ -81,14 +86,12 @@ public class MainMenuScreen extends GeneralScreen {
 
         // actions
         title.addAction(Actions.moveTo(getScreenWidth() / 2 - title.getWidth() / 2, getScreenHeight() - title.getHeight() / 2 - 100, 1.2f, Interpolation.bounce));
-        //subTitle.addAction(Actions.forever(Actions.sequence(Actions.scaleBy(.1f, .1f, .5f), Actions.scaleTo(1f, 1f, .5f))));
         planet.addAction(Actions.forever(Actions.rotateBy(-10f, .9f)));
 
         /*if (GameLogic.isAudioOn()) {
             getSoundAmbient().loop();
         }*/
         buttonMute();
-        game.setScreen(game._gameArcadeScreen);
     }
 
     private void buttonMute() {
@@ -167,6 +170,8 @@ public class MainMenuScreen extends GeneralScreen {
         table.setHeight(getScreenHeight());
         table.setOrigin(getScreenWidth() / 2, getScreenHeight() / 2);
 
+        table.row().padBottom(10);
+        table.add(new LabelGame(getString("welcome") + ", " + getUserName() + " " + getUserLast(), .35f, ColorGame.WHITE)).height(start.getHeight() * start.getScale()).padLeft(25);
         table.row().padBottom(10);
         table.add(start).height(start.getHeight() * start.getScale());
         table.row().padBottom(10);

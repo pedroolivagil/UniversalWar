@@ -55,7 +55,7 @@ public class GameActor extends Image implements Disposable {
         clearActions();
     }
 
-    public void kicked() {
+    public void kicked(int damage) {
         addAction(Actions.sequence(Actions.color(Color.RED, 0f), Actions.color(Color.WHITE, 1f)));
     }
 

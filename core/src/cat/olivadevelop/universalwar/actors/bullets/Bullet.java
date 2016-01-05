@@ -24,6 +24,7 @@ public class Bullet extends Image {
     GeneralScreen screen;
     private float vel;
     private float posBulletFinal;
+    private int damage;
 
     public Bullet(GeneralScreen screen, float x, float y, float vel) {
         super(GameLogic.getUi("bullet"));
@@ -33,6 +34,15 @@ public class Bullet extends Image {
         this.vel = vel;
         setPosition(x, y);
         setScale(.7f);
+        setDamage(1);
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     @Override
@@ -49,9 +59,7 @@ public class Bullet extends Image {
         } else {
             circle.setPosition(getX() + (getWidth() / 2), getY() + getHeight() + 10);
         }
-
         moveBy(0, vel * delta);
-
         if (getY() < -getHeight() || getY() > GameLogic.getScreenHeight()) {
             remove();
         }
@@ -60,7 +68,7 @@ public class Bullet extends Image {
             for (Actor a : screen._groupEnemy.getChildren()) {
                 enemy = (Enemy) a;
                 if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {//Bala inpacta en enemic
-                    enemy.kicked();
+                    enemy.kicked(getDamage());
                     removeBullet();
                 }
             }
@@ -71,7 +79,9 @@ public class Bullet extends Image {
                 for (Actor a : screen._groupShields.getChildren()) {
                     shield = (Shield) a;
                     if (IntersectorGame.overlaps(shield.circle, circle)) {
-                        shield.hitShield();
+                        for (int z = 0; z < getDamage(); z++) {
+                            shield.hitShield();
+                        }
                         removeBullet();
                     }
                 }
@@ -79,7 +89,7 @@ public class Bullet extends Image {
                 for (Actor a : screen._groupAllied.getChildren()) {
                     allied = (Allied) a;
                     if (allied.alive && IntersectorGame.overlaps(allied.polygon, circle)) {
-                        allied.kicked();
+                        allied.kicked(getDamage());
                         removeBullet();
                     }
                 }

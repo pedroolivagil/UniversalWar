@@ -106,9 +106,11 @@ public class Enemy extends GameActor {
     }
 
     @Override
-    public void kicked() {
-        super.kicked();
-        health--;
+    public void kicked(int damage) {
+        super.kicked(damage);
+        for (int z = 0; z < damage; z++) {
+            health--;
+        }
         if (health <= 0) {
             death();
         }

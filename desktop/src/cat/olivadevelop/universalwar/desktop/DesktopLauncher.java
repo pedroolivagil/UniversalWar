@@ -3,6 +3,7 @@ package cat.olivadevelop.universalwar.desktop;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import cat.olivadevelop.universalwar.UniversalWarGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 public class DesktopLauncher {

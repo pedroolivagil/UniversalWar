@@ -146,7 +146,7 @@ public class SettingsScreen extends GeneralScreen {
     public void setDialog() {
         dialog = new Dialog("", getSkin_mini());
         dialog.setBackground(new NinePatchDrawable(new NinePatch(getUi("bg_bar_blue"), 9, 9, 9, 9)));
-        dialog.text("Iniciando sesión...");
+        dialog.text(getString("lSignIn"));
         ipauseBG = new ImageGame(getUi("black"), 0, 0, getScreenWidth(), getScreenHeight());
         _stage.addActor(ipauseBG);
         hideDialog();

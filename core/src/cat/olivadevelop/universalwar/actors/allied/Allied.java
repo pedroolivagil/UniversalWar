@@ -102,8 +102,8 @@ public abstract class Allied extends GameActor {
     }
 
     @Override
-    public void kicked() {
-        super.kicked();
+    public void kicked(int damage) {
+        super.kicked(damage);
         try {
             if (GameLogic.getLivesGame() == 0) {
                 Gdx.input.vibrate(1000);
@@ -113,7 +113,9 @@ public abstract class Allied extends GameActor {
         } catch (Exception e) {
             Gdx.app.log("VIBRATE", " --ERROR-- Can't vibrate");
         }
-        lostLiveGame();
+        for (int z = 0; z < damage; z++) {
+            lostLiveGame();
+        }
         if (getHealth() <= 0) {
             this.death();
         }
