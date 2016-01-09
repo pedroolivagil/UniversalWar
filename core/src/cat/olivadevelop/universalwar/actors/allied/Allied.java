@@ -95,7 +95,9 @@ public abstract class Allied extends GameActor {
                     setX(GameLogic.getScreenWidth() - (getWidth() + 10));
                 }
                 if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                    shoot();
+                    if(screen._groupAllied.hasChildren()) {
+                        shoot();
+                    }
                 }
             }
         }

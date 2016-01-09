@@ -2,13 +2,11 @@ package cat.olivadevelop.universalwar.actors.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import cat.olivadevelop.universalwar.actors.allied.Allied;
 import cat.olivadevelop.universalwar.actors.explosions.ExplosionMedium;
-import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.GameActor;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
@@ -30,6 +28,10 @@ public class Enemy extends GameActor {
     // Boss
     public static final String[] BOSS = new String[]{
             "ufoGreen", "ufoBlue", "ufoRed", "ufoYellow"
+    };
+    // MegaBoss
+    public static final String[] MEGA_BOSS = new String[]{
+            "gray_boss", "boss_green", "red_boss", "yellow_boss"
     };
     public int maxHealth;
     public int health;
@@ -63,18 +65,17 @@ public class Enemy extends GameActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (isShowLive()) {
+        /*if (isShowLive()) {
             batch.end();
             shape.setProjectionMatrix(batch.getProjectionMatrix());
             shape.begin(ShapeRenderer.ShapeType.Filled);
             shape.setColor(ColorGame.BLUE_CYAN);
-            //shape.rect(polygon.getX(), polygon.getY() - (10 + (12 * getScaleX())), ((width) / 2), 8 / 2f, width, 8, getScaleX(), getScaleY(), 0);
             shape.rect(polygon.getX() - (getWidth() * .15f), polygon.getY() - (getHeight() * .5f), 120, 10);
             shape.setColor(ColorGame.DARK_BLUE);
             shape.rect(polygon.getX() - (getWidth() * .15f) + 1, polygon.getY() - (getHeight() * .5f) + 1, (120 / maxHealth) * getHealth(), 8);
             shape.end();
             batch.begin();
-        }
+        }*/
     }
 
     @Override

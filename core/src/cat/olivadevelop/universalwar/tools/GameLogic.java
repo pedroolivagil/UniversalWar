@@ -51,6 +51,7 @@ public abstract class GameLogic implements Disposable {
     private static Skin skin_mini;
     private static TextureAtlas ui;
     private static TextureAtlas enemy;
+    private static TextureAtlas boss;
     private static TextureAtlas player;
     private static TextureAtlas powers;
     private static TextureAtlas planets;
@@ -79,6 +80,7 @@ public abstract class GameLogic implements Disposable {
          */
         ui = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/ui.atlas");
         enemy = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/enemy_ship.atlas");
+        boss = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/boss.atlas");
         player = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/player_ship.atlas");
         powers = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/powers.atlas");
         planets = new TextureAtlas("textures/" + getPrefs().getString("theme", COLOR_BASIC) + "/planets.atlas");
@@ -201,6 +203,9 @@ public abstract class GameLogic implements Disposable {
 
     public static TextureRegion getEnemy(String region) {
         return enemy.findRegion(region);
+    }
+    public static TextureRegion getBoss(String region) {
+        return boss.findRegion(region);
     }
 
     public static TextureRegion getPlayer(String region) {

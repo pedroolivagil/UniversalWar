@@ -151,21 +151,23 @@ public class HUDArcade extends ActorGame {
         screen._stage.addActor(tBottom);
 
         ImageGame i = new ImageGame(getUi("blank"));
-        i.setWidth(getScreenWidth());
-        i.setHeight(getScreenHeight() / 2 - 50);
         i.addListener(new Listener() {
             @Override
             public void action() {
-                Allied a = (Allied) screen._groupAllied.getChildren().first();
-                a.shoot();
+                if (screen._groupAllied.hasChildren()) {
+                    Allied a = (Allied) screen._groupAllied.getChildren().first();
+                    if (a.alive) {
+                        a.shoot();
+                    }
+                }
             }
         });
 
         tShoot = new Table(getSkin());
         tShoot.setWidth(getScreenWidth());
-        tShoot.setHeight(getScreenHeight() / 2 - 50);
+        tShoot.setHeight(getScreenHeight() - (tTop.getHeight() + tBottom.getHeight()));
         tShoot.setY(tBottom.getX() + tBottom.getHeight() - 10);
-        tShoot.add(i).width(getScreenWidth()).height(getScreenHeight() / 2 - 50);
+        tShoot.add(i).width(getScreenWidth()).height(getScreenHeight() - (tTop.getHeight() + tBottom.getHeight()));
         screen._stage.addActor(tShoot);
 
         Group gDefeated = new Group();

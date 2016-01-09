@@ -13,6 +13,7 @@ import cat.olivadevelop.universalwar.actors.enemies.AdvancedEnemy;
 import cat.olivadevelop.universalwar.actors.enemies.BasicEnemy;
 import cat.olivadevelop.universalwar.actors.enemies.Boss;
 import cat.olivadevelop.universalwar.actors.enemies.Enemy;
+import cat.olivadevelop.universalwar.actors.enemies.MegaBoss;
 import cat.olivadevelop.universalwar.actors.enemies.SuperBoss;
 import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
 import cat.olivadevelop.universalwar.actors.ui.HUDArcade;
@@ -168,14 +169,19 @@ public class GameArcadeScreen extends GeneralScreen {
     private void addActors() {
         addEnemies();
         addPlanets();
-        if (getCountEnemiesDispached() % 100 == 0 && getCountEnemiesDispached() != 0) {
-            _groupEnemy.addActor(new Boss(this, Enemy.BASIC[MathUtils.random(0, Enemy.BASIC.length - 1)]));
+        if (getCountEnemiesDispached() % 150 == 0 && getCountEnemiesDispached() != 0) {
+            _groupEnemy.addActor(new Boss(this));
             GameLogic.addToScore(10000);
             setCountEnemiesDispached(getCountEnemiesDispached() + 1);
         }
-        if (getCountEnemiesDispached() % 501 == 0 && getCountEnemiesDispached() != 0) {
-            _groupEnemy.addActor(new SuperBoss(this, Enemy.BOSS[MathUtils.random(0, Enemy.BOSS.length - 1)]));
+        if (getCountEnemiesDispached() % 550 == 0 && getCountEnemiesDispached() != 0) {
+            _groupEnemy.addActor(new SuperBoss(this));
             GameLogic.addToScore(100000);
+            setCountEnemiesDispached(getCountEnemiesDispached() + 1);
+        }
+        if (getCountEnemiesDispached() % 2500 == 0 && getCountEnemiesDispached() != 0) {
+            _groupEnemy.addActor(new MegaBoss(this));
+            GameLogic.addToScore(1000000);
             setCountEnemiesDispached(getCountEnemiesDispached() + 1);
         }
     }
