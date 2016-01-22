@@ -147,8 +147,8 @@ public class HUDArcade extends ActorGame {
         settTop();
         settBottom();
         setListeners();
-        screen._stage.addActor(tTop);
-        screen._stage.addActor(tBottom);
+        screen.getStage().addActor(tTop);
+        screen.getStage().addActor(tBottom);
 
         ImageGame i = new ImageGame(getUi("blank"));
         i.addListener(new Listener() {
@@ -168,7 +168,7 @@ public class HUDArcade extends ActorGame {
         tShoot.setHeight(getScreenHeight() - (tTop.getHeight() + tBottom.getHeight()));
         tShoot.setY(tBottom.getX() + tBottom.getHeight() - 10);
         tShoot.add(i).width(getScreenWidth()).height(getScreenHeight() - (tTop.getHeight() + tBottom.getHeight()));
-        screen._stage.addActor(tShoot);
+        screen.getStage().addActor(tShoot);
 
         Group gDefeated = new Group();
         lblCounter = new LabelGame("0", .4f, ColorGame.GREEN);
@@ -176,13 +176,13 @@ public class HUDArcade extends ActorGame {
         gDefeated.addActor(lblCounter);
         gDefeated.addActor(new ImageGame(getEnemy(Enemy.BASIC[5]), 0, 47, 28, 28));
         gDefeated.setPosition(10, 65);
-        screen._stage.addActor(gDefeated);
+        screen.getStage().addActor(gDefeated);
         setWindowGameOver();
         setWindowPause();
-        screen._stage.addActor(windowPause);
+        screen.getStage().addActor(windowPause);
         ipauseBG = new ImageGame(getUi("black"), 0, 0, getScreenWidth(), getScreenHeight());
         ipauseBG.setVisible(false);
-        screen._stage.addActor(ipauseBG);
+        screen.getStage().addActor(ipauseBG);
         async = new AsyncGame(screen);
         setExtraLives();
     }
@@ -483,7 +483,7 @@ public class HUDArcade extends ActorGame {
     private void actionMisile() {
         if (screen._groupAllied.hasChildren()) {
             if (isBoolMisile()) {
-                screen._stage.addActor(new SuperBullet(screen,
+                screen.getStage().addActor(new SuperBullet(screen,
                                 screen._groupAllied.getChildren().first().getX() + (screen._groupAllied.getChildren().first().getWidth() / 2) + getWidth() / 2 - 30,
                                 screen._groupAllied.getChildren().first().getY() + 2,
                                 Bullet.BULLET_UP)
@@ -498,7 +498,7 @@ public class HUDArcade extends ActorGame {
     private void actionSuperMisile() {
         if (screen._groupAllied.hasChildren()) {
             if (isBoolSuperMisile()) {
-                screen._stage.addActor(new MegaBullet(screen,
+                screen.getStage().addActor(new MegaBullet(screen,
                                 screen._groupAllied.getChildren().first().getX() + (screen._groupAllied.getChildren().first().getWidth() / 2) + getWidth() / 2 + 20,
                                 screen._groupAllied.getChildren().first().getY() + 2,
                                 Bullet.BULLET_UP)
@@ -545,7 +545,7 @@ public class HUDArcade extends ActorGame {
                 tmr.scheduleTask(new Timer.Task() {
                     @Override
                     public void run() {
-                        screen._stage.addActor(new BulletOrange(screen,
+                        screen.getStage().addActor(new BulletOrange(screen,
                                         screen._groupAllied.getChildren().first().getX() + (screen._groupAllied.getChildren().first().getWidth() / 2) + getWidth() / 2 - 5,
                                         screen._groupAllied.getChildren().first().getY() + 2,
                                         Bullet.BULLET_UP)
@@ -570,8 +570,8 @@ public class HUDArcade extends ActorGame {
                     g2.setActive(false);
                     g1.enter(60, 60);
                     g2.enter(getScreenWidth() - 60 - g2.getWidth(), 60);
-                    screen._stage.addActor(g1);
-                    screen._stage.addActor(g2);
+                    screen.getStage().addActor(g1);
+                    screen.getStage().addActor(g2);
                     Timer tmr = new Timer();
                     tmr.scheduleTask(new Timer.Task() {
                         @Override
@@ -674,7 +674,7 @@ public class HUDArcade extends ActorGame {
         wExit.add().width(150);
         wExit.row();
         wExit.add(tGameOver).padTop(-10).colspan(4);
-        screen._stage.addActor(wExit);
+        screen.getStage().addActor(wExit);
     }
 
     public void showWindowGameOver() {
@@ -705,7 +705,7 @@ public class HUDArcade extends ActorGame {
         tbExit.addListener(new Listener() {
             @Override
             public void action() {
-                screen.game.setScreen(screen.game._gameOverScreen);
+                screen.getGame().setScreen(screen.getGame()._gameOverScreen);
             }
         });
         tablePause = new Table();
@@ -745,7 +745,7 @@ public class HUDArcade extends ActorGame {
 
     public final void exitGame() {
         scn.clearGroups();
-        screen.game.setScreen(screen.game._gameOverScreen);
+        screen.getGame().setScreen(screen.getGame()._gameOverScreen);
     }
 
     @Override

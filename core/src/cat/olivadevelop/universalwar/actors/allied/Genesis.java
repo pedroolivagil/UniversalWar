@@ -35,7 +35,7 @@ public class Genesis extends Allied {
         });
         setName("Genesis");
         fire = new Fire(screen, getX(), getY(), 0);
-        screen._stage.addActor(fire);
+        screen.getStage().addActor(fire);
         addListener(new Listener() {
             @Override
             public void action() {
@@ -59,8 +59,8 @@ public class Genesis extends Allied {
     @Override
     public void shoot() {
         super.shoot();
-        screen._stage.addActor(new BulletDarkPink(screen, getX() + getWidth() / 2 - 35, getY() + 2, Bullet.BULLET_UP));
-        screen._stage.addActor(new BulletDarkPink(screen, getX() + getWidth() / 2 + 20, getY() + 2, Bullet.BULLET_UP));
+        screen.getStage().addActor(new BulletDarkPink(screen, getX() + getWidth() / 2 - 35, getY() + 2, Bullet.BULLET_UP));
+        screen.getStage().addActor(new BulletDarkPink(screen, getX() + getWidth() / 2 + 20, getY() + 2, Bullet.BULLET_UP));
         if (GameLogic.isAudioOn()) {
             GameLogic.getSoundShootNormal().play();
         }

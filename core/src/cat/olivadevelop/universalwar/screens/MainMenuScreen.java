@@ -57,7 +57,6 @@ public class MainMenuScreen extends GeneralScreen {
         super.show();
         Group title = new Group();
         ImageGame subTitle = new ImageGame(getUi("title"));
-        //ImageGame planet = new ImageGame(getPlanets("jupiter"));
         ImageGame planet = new ImageGame(getPlanets(Planet.planets[MathUtils.random(0, Planet.planets.length - 1)]));
 
         title.setWidth(subTitle.getWidth());
@@ -81,8 +80,8 @@ public class MainMenuScreen extends GeneralScreen {
         tableMenu();
 
         // Stage Adds
-        _stage.addActor(title);
-        _stage.addActor(table);
+        getStage().addActor(title);
+        getStage().addActor(table);
 
         // actions
         title.addAction(Actions.moveTo(getScreenWidth() / 2 - title.getWidth() / 2, getScreenHeight() - title.getHeight() / 2 - 100, 1.2f, Interpolation.bounce));
@@ -92,13 +91,13 @@ public class MainMenuScreen extends GeneralScreen {
             getSoundAmbient().loop();
         }*/
         buttonMute();
-        //game.setScreen(game._gameArcadeScreen);
+        getGame().setScreen(getGame()._gameHistoryScreen);
     }
 
     private void buttonMute() {
         _groupSound = new Group();
         _groupSound.setPosition(getScreenWidth() - 70, getScreenHeight() - 70);
-        _stage.addActor(_groupSound);
+        getStage().addActor(_groupSound);
 
         imageOff = new ImageGame(getUi("mute_off"));
         imageOn = new ImageGame(getUi("mute_on"));
@@ -132,30 +131,28 @@ public class MainMenuScreen extends GeneralScreen {
         options.setWidth(widthButtons);
         exit.setWidth(widthButtons);
 
-        misiones.setColor(ColorGame.DARK_BLUE);
-
         start.addListener(new Listener() {
             @Override
             public void action() {
-                game.setScreen(game._gameArcadeScreen);
+                getGame().setScreen(getGame()._gameArcadeScreen);
             }
         });
         misiones.addListener(new Listener() {
             @Override
             public void action() {
-                //game.setScreen(game._gameArcadeScreen);
+                getGame().setScreen(getGame()._gameHistoryScreen);
             }
         });
         score.addListener(new Listener() {
             @Override
             public void action() {
-                game.setScreen(game._highScoreScreen);
+                getGame().setScreen(getGame()._highScoreScreen);
             }
         });
         options.addListener(new Listener() {
             @Override
             public void action() {
-                game.setScreen(game._settingsScreen);
+                getGame().setScreen(getGame()._settingsScreen);
             }
         });
         exit.addListener(new Listener() {

@@ -125,7 +125,7 @@ public class Enemy extends GameActor {
         if ((getCountEnemiesDispached() % 40 == 0 && getCountEnemiesDispached() != 0) && (GameLogic.getMaxEnemiesIntoGroup() < 70)) {
             GameLogic.addMaxEnemiesIntoGroup();
         }
-        screen._stage.addActor(new ExplosionMedium(this));
+        screen.getStage().addActor(new ExplosionMedium(this));
         addAction(Actions.delay(.3f, Actions.removeActor()));
         drop();
     }

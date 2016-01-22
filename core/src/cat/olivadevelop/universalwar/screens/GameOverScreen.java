@@ -32,7 +32,7 @@ public class GameOverScreen extends GeneralScreen {
     @Override
     public void actionBackButton() {
         super.actionBackButton();
-        game.setScreen(game._mainMenuScreen);
+        getGame().setScreen(getGame()._mainMenuScreen);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class GameOverScreen extends GeneralScreen {
             }
         });
         addTableGameOver();
-        _stage.addActor(table);
+        getStage().addActor(table);
     }
 
     @Override
@@ -71,14 +71,14 @@ public class GameOverScreen extends GeneralScreen {
         btTryAgain.addListener(new Listener() {
             @Override
             public void action() {
-                game.setScreen(game._gameArcadeScreen);
+                getGame().setScreen(getGame()._gameArcadeScreen);
             }
         });
 
         btBackMenu.addListener(new Listener() {
             @Override
             public void action() {
-                game.setScreen(game._mainMenuScreen);
+                getGame().setScreen(getGame()._mainMenuScreen);
             }
         });
         Table tablePuntuacion = new Table();
@@ -109,7 +109,7 @@ public class GameOverScreen extends GeneralScreen {
 
     @Override
     public void dispose() {
-        game._gameOverScreen.dispose();
+        getGame()._gameOverScreen.dispose();
         super.dispose();
     }
 }

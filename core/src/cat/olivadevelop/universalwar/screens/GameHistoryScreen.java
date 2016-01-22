@@ -12,5 +12,10 @@ public class GameHistoryScreen extends GeneralScreen {
         super(game);
     }
 
+    @Override
+    public void show() {
+        super.show();
 
+        //getStage().addActor();
+    }
 }

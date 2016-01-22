@@ -29,11 +29,11 @@ public class SplashScreen extends GeneralScreen {
         loadUI();
         Image logo = new Image(getUi("logoSplash"));
         logo.setPosition(GameLogic.getScreenWidth() / 2 - logo.getWidth() / 2, GameLogic.getScreenHeight() / 2 - logo.getHeight() / 2);
-        _stage.addActor(logo);
+        getStage().addActor(logo);
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                game.setScreen(game._mainMenuScreen);
+                getGame().setScreen(getGame()._mainMenuScreen);
             }
         }, 2.6f);
     }
@@ -44,7 +44,7 @@ public class SplashScreen extends GeneralScreen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        _stage.act(delta);
-        _stage.draw();
+        getStage().act(delta);
+        getStage().draw();
     }
 }

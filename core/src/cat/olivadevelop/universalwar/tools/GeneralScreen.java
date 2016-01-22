@@ -38,12 +38,12 @@ public class GeneralScreen implements Screen {
     public Group _groupStars;
     public Group _groupMeteors;
     public Table table;
-    public Stage _stage;
-    public UniversalWarGame game;
     public WindowGame windowPause;
+    private UniversalWarGame _game;
+    private Stage _stage;
 
     public GeneralScreen(UniversalWarGame game) {
-        this.game = game;
+        this._game = game;
         _groupStars = new Group();
         _groupMeteors = new Group();
     }
@@ -56,12 +56,20 @@ public class GeneralScreen implements Screen {
 
     }
 
+    public Stage getStage() {
+        return _stage;
+    }
+
+    public UniversalWarGame getGame() {
+        return _game;
+    }
+
     @Override
     public void show() {
         _stage = new Stage(new FitViewport(getScreenWidth(), getScreenHeight()));
-        Gdx.input.setInputProcessor(_stage);
+        Gdx.input.setInputProcessor(getStage());
         Gdx.input.setCatchBackKey(true);
-        _stage.addListener(new Listener() {
+        getStage().addListener(new Listener() {
             @Override
             public void action(InputEvent event, int keycode) {
                 if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
@@ -70,8 +78,8 @@ public class GeneralScreen implements Screen {
                 actionOtherButton(event, keycode);
             }
         });
-        if (this != game._splashScreen) {
-            _stage.addActor(new InfiniteBackground(this));
+        if (this != getGame()._splashScreen) {
+            getStage().addActor(new InfiniteBackground(this));
         }
     }
 
@@ -80,13 +88,13 @@ public class GeneralScreen implements Screen {
         Gdx.gl.glClearColor(26f / 255, 26f / 255, 37f / 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        _stage.act(delta);
-        _stage.draw();
+        getStage().act(delta);
+        getStage().draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        _stage.getViewport().update(width, height, true);
+        getStage().getViewport().update(width, height, true);
     }
 
     @Override
@@ -106,6 +114,6 @@ public class GeneralScreen implements Screen {
 
     @Override
     public void dispose() {
-        _stage.dispose();
+        getStage().dispose();
     }
 }

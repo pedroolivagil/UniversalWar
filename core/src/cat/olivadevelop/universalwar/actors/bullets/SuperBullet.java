@@ -18,6 +18,6 @@ public class SuperBullet extends Bullet {
     @Override
     public void removeBullet() {
         super.removeBullet();
-        screen._stage.addActor(new ShockwavePurple(screen, getX() + (getWidth() / 2), (getRotation() < 180) ? getY() + getHeight() + 20 : getY() + 10));
+        screen.getStage().addActor(new ShockwavePurple(screen, getX() + (getWidth() / 2), (getRotation() < 180) ? getY() + getHeight() + 20 : getY() + 10));
     }
 }

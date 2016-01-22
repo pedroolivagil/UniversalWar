@@ -60,7 +60,7 @@ public class SettingsScreen extends GeneralScreen {
     @Override
     public void actionBackButton() {
         super.actionBackButton();
-        game.setScreen(game._mainMenuScreen);
+        getGame().setScreen(getGame()._mainMenuScreen);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class SettingsScreen extends GeneralScreen {
         tbBack.addListener(new Listener() {
             @Override
             public void action() {
-                game.setScreen(game._mainMenuScreen);
+                getGame().setScreen(getGame()._mainMenuScreen);
             }
         });
         tbBack.setWidth(700);
@@ -79,7 +79,7 @@ public class SettingsScreen extends GeneralScreen {
         tbSignUp.addListener(new Listener() {
             @Override
             public void action() {
-                //game.setScreen(game._signUpScreen);
+                //getGame().setScreen(getGame()._signUpScreen);
                 Gdx.net.openURI("http://codeduo.cat/index.php?controller=authentication");
             }
         });
@@ -133,7 +133,7 @@ public class SettingsScreen extends GeneralScreen {
         tableSettings.add(tbSignUp).height(tbSignUp.getHeight() * tbSignUp.getScale()).padRight(31);
         tableSettings.row().height(50).expand();
         tableSettings.add(tbBack).height(tbBack.getHeight() * tbBack.getScale()).padRight(31);
-        _stage.addActor(tableSettings);
+        getStage().addActor(tableSettings);
     }
 
     @Override
@@ -148,13 +148,13 @@ public class SettingsScreen extends GeneralScreen {
         dialog.setBackground(new NinePatchDrawable(new NinePatch(getUi("bg_bar_blue"), 9, 9, 9, 9)));
         dialog.text(getString("lSignIn"));
         ipauseBG = new ImageGame(getUi("black"), 0, 0, getScreenWidth(), getScreenHeight());
-        _stage.addActor(ipauseBG);
+        getStage().addActor(ipauseBG);
         hideDialog();
     }
 
     public void showDialog() {
         ipauseBG.setVisible(true);
-        dialog.show(_stage);
+        dialog.show(getStage());
     }
 
     public void hideDialog() {
@@ -181,7 +181,7 @@ public class SettingsScreen extends GeneralScreen {
         tableContent.row().expandX().pad(10);
         tableContent.add(new LabelGame(getString("btnSign"), .5f)).center();
         tableContent.row().height(80).width(600);
-        tableContent.add(new LabelGame(getString("welcome") + ", " + getUserName() + " " + getUserLast(), .6f, ColorGame.ORANGE)).expand().center();
+        tableContent.add(new LabelGame(getString("welcome") + ", " + getUserName() + " " + getUserLast(), .5f, ColorGame.ORANGE)).expand().center().padRight(10);
         tableContent.row().height(80).expandX().padBottom(50);
         tableContent.add(btnSignOut).center().padRight(20);
     }
@@ -211,7 +211,7 @@ public class SettingsScreen extends GeneralScreen {
                                 @Override
                                 public void run() {
                                     hideDialog();
-                                    game.setScreen(game._settingsScreen);
+                                    getGame().setScreen(getGame()._settingsScreen);
                                 }
                             }, 2, 0, 0);
                             t.start();
@@ -229,6 +229,6 @@ public class SettingsScreen extends GeneralScreen {
 
     public void signOut() {
         setUserID(-1);
-        game.setScreen(game._settingsScreen);
+        getGame().setScreen(getGame()._settingsScreen);
     }
 }

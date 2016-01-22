@@ -48,7 +48,7 @@ public class ScoreScreen extends GeneralScreen {
 
     @Override
     public void actionBackButton() {
-        game.setScreen(game._mainMenuScreen);
+        getGame().setScreen(getGame()._mainMenuScreen);
     }
 
     @Override
@@ -73,13 +73,13 @@ public class ScoreScreen extends GeneralScreen {
         dialog.setBackground(new NinePatchDrawable(new NinePatch(getUi("bg_bar_blue"), 9, 9, 9, 9)));
         dialog.text(getString("lLoad"));
         ipauseBG = new ImageGame(getUi("black"), 0, 0, getScreenWidth(), getScreenHeight());
-        _stage.addActor(ipauseBG);
+        getStage().addActor(ipauseBG);
         hideDialog();
     }
 
     public void showDialog() {
         ipauseBG.setVisible(true);
-        dialog.show(_stage);
+        dialog.show(getStage());
     }
 
     public void hideDialog() {
@@ -134,14 +134,14 @@ public class ScoreScreen extends GeneralScreen {
         tableScore.add(scoresTable).fillX().center();
         tableScore.row().padBottom(50);
         tableScore.add(tbBack).height(tbBack.getHeight() * tbBack.getScale());
-        _stage.addActor(tableScore);
+        getStage().addActor(tableScore);
     }
 
     public void listeners() {
         tbBack.addListener(new Listener() {
             @Override
             public void action() {
-                game.setScreen(game._mainMenuScreen);
+                getGame().setScreen(getGame()._mainMenuScreen);
             }
         });
     }

@@ -53,8 +53,8 @@ public class MegaBoss extends Enemy {
         t.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                screen._stage.addActor(new BulletRed(screen, getX() - 20 + getWidth() / 2, getY() + 5, Bullet.BULLET_DOWN));
-                screen._stage.addActor(new BulletRed(screen, getX() - 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
+                screen.getStage().addActor(new BulletRed(screen, getX() - 20 + getWidth() / 2, getY() + 5, Bullet.BULLET_DOWN));
+                screen.getStage().addActor(new BulletRed(screen, getX() - 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
                 if (GameLogic.isAudioOn()) {
                     GameLogic.getSoundShootLaser().play();
                 }
@@ -67,11 +67,11 @@ public class MegaBoss extends Enemy {
     public void drop() {
         super.drop();
         for (int z = 0; z < 10; z++) {
-            screen._stage.addActor(new HeartDropBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new HeartDropBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 3) {
-            screen._stage.addActor(new ShieldGoldDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new ShieldGoldDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
-        screen._stage.addActor(new ShieldGoldDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+        screen.getStage().addActor(new ShieldGoldDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
     }
 }

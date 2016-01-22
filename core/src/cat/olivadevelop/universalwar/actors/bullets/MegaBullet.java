@@ -17,7 +17,7 @@ public class MegaBullet extends Bullet {
 
     @Override
     public void removeBullet() {
-        screen._stage.addActor(new ShockwaveBlue(screen, getX() + (getWidth() / 2), (getRotation() < 180) ? getY() + getHeight() + 20 : getY() + 10));
+        screen.getStage().addActor(new ShockwaveBlue(screen, getX() + (getWidth() / 2), (getRotation() < 180) ? getY() + getHeight() + 20 : getY() + 10));
         super.removeBullet();
     }
 }

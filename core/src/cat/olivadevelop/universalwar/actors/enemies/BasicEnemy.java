@@ -27,7 +27,7 @@ public class BasicEnemy extends Enemy {
     @Override
     public void shoot() {
         super.shoot();
-        screen._stage.addActor(new BulletGreen(screen, getX() + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
+        screen.getStage().addActor(new BulletGreen(screen, getX() + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
         if (GameLogic.isAudioOn()) {
             GameLogic.getSoundShootLaser().play();
         }
@@ -37,10 +37,10 @@ public class BasicEnemy extends Enemy {
     public void drop() {
         super.drop();
         if (calcDrop() <= 5) {
-            screen._stage.addActor(new PointsUpBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new PointsUpBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 2) {
-            screen._stage.addActor(new PointsUpSilver(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new PointsUpSilver(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
     }
 }

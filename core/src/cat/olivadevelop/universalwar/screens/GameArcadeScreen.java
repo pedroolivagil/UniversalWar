@@ -119,7 +119,7 @@ public class GameArcadeScreen extends GeneralScreen {
         super.actionBackButton();
         _hud.showWindowPause();
         if (GameLogic.isShowADS()) {
-            game.actionResolver.showOrLoadInterstital();
+            getGame().actionResolver.showOrLoadInterstital();
         }
     }
 
@@ -137,12 +137,12 @@ public class GameArcadeScreen extends GeneralScreen {
         clearGroups();
         ship1 = new SpaceShipOne(this);
         ship2 = new Genesis(this);
-        _stage.addActor(_groupPlanets);
-        _stage.addActor(_groupAllied);
-        _stage.addActor(_groupEnemy);
-        _stage.addActor(_groupShields);
+        getStage().addActor(_groupPlanets);
+        getStage().addActor(_groupAllied);
+        getStage().addActor(_groupEnemy);
+        getStage().addActor(_groupShields);
         _hud = new HUDArcade(this);
-        _stage.addActor(_hud);
+        getStage().addActor(_hud);
         _hud.toFront();
         addAllieds();
         addShields();
@@ -155,9 +155,9 @@ public class GameArcadeScreen extends GeneralScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glDisable(GL20.GL_BLEND);
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-        _stage.draw();
+        getStage().draw();
         if (!GameLogic.isPause()) {
-            _stage.act(delta);
+            getStage().act(delta);
         }
         addActors();
         MainMenuScreen.checkAudio();
@@ -191,7 +191,7 @@ public class GameArcadeScreen extends GeneralScreen {
         Timer.instance().stop();
         _hud.showWindowPause();
         if (GameLogic.isShowADS()) {
-            game.actionResolver.showOrLoadInterstital();
+            getGame().actionResolver.showOrLoadInterstital();
         }
         Gdx.app.log("PAUSE", "TRUE");
     }

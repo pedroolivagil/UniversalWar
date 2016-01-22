@@ -99,7 +99,7 @@ public class Bullet extends Image {
 
     public void removeBullet() {
         posBulletFinal = (getRotation() == 0) ? getY() + getHeight() : getY();
-        screen._stage.addActor(new ExplosionMini(getX(), posBulletFinal, MathUtils.random(0, 3) * 90));
+        screen.getStage().addActor(new ExplosionMini(getX(), posBulletFinal, MathUtils.random(0, 3) * 90));
         remove();
     }
 }

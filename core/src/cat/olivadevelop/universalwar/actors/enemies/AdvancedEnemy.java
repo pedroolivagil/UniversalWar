@@ -29,8 +29,8 @@ public class AdvancedEnemy extends Enemy {
     @Override
     public void shoot() {
         super.shoot();
-        screen._stage.addActor(new BulletBlue(screen, getX() + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
-        //screen._stage.addActor(new BulletBlue(screen, getX() + 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
+        screen.getStage().addActor(new BulletBlue(screen, getX() + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
+        //screen.getStage().addActor(new BulletBlue(screen, getX() + 5 + getWidth() / 2, getY() - 1, Bullet.BULLET_DOWN));
         if (GameLogic.isAudioOn()) {
             GameLogic.getSoundShootPlasma().play();
         }
@@ -40,19 +40,19 @@ public class AdvancedEnemy extends Enemy {
     public void drop() {
         super.drop();
         if (calcDrop() <= 10) {
-            screen._stage.addActor(new HeartDropBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new HeartDropBronze(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 10) {
-            screen._stage.addActor(new ShieldBronzeDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new ShieldBronzeDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 8) {
-            screen._stage.addActor(new ShieldSilverDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new ShieldSilverDrop(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 7) {
-            screen._stage.addActor(new PointsUpSilver(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new PointsUpSilver(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
         if (calcDrop() <= 2) {
-            screen._stage.addActor(new PointsUpGold(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
+            screen.getStage().addActor(new PointsUpGold(screen, this.getX() + calcPosition(), this.getY() + calcPosition()));
         }
     }
 }

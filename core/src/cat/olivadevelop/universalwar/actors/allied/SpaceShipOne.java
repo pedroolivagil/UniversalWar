@@ -33,7 +33,7 @@ public class SpaceShipOne extends Allied {
                 getX() + getWidth() - 3, getY() + 17
         });
         fire = new Fire(screen, getX(), getY(), 0);
-        screen._stage.addActor(fire);
+        screen.getStage().addActor(fire);
         setName("SpaceShipOne");
     }
 
@@ -52,7 +52,7 @@ public class SpaceShipOne extends Allied {
     @Override
     public void shoot() {
         super.shoot();
-        screen._stage.addActor(new BulletDarkPink(screen, getX() + getWidth() / 2 - 5, getY() + 2, Bullet.BULLET_UP));
+        screen.getStage().addActor(new BulletDarkPink(screen, getX() + getWidth() / 2 - 5, getY() + 2, Bullet.BULLET_UP));
         if (GameLogic.isAudioOn()) {
             GameLogic.getSoundShootNormal().play();
         }

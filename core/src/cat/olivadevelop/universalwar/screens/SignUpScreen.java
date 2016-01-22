@@ -25,7 +25,7 @@ public class SignUpScreen extends GeneralScreen {
     @Override
     public void actionBackButton() {
         super.actionBackButton();
-        game.setScreen(game._settingsScreen);
+        getGame().setScreen(getGame()._settingsScreen);
     }
 
     @Override
@@ -48,6 +48,6 @@ public class SignUpScreen extends GeneralScreen {
         tableSettings.row().padBottom(50).expand();
         tableSettings.add(tbBack).height(tbBack.getHeight() * tbBack.getScale());
 
-        _stage.addActor(tableSettings);
+        getStage().addActor(tableSettings);
     }
 }
