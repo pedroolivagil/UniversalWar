@@ -2,9 +2,12 @@ package cat.olivadevelop.universalwar.tools;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import cat.olivadevelop.universalwar.screens.history.Level;
 
 import static cat.olivadevelop.universalwar.tools.GameLogic.getServerData;
 
@@ -51,6 +54,24 @@ public class ConnectDB {
             //Gdx.app.log("Server", "Connected");
             this.estado = this.conn.createStatement();
             this.estado.executeUpdate(query);
+            //conn.close();
+        } catch (SQLException e) {
+            //Gdx.app.log("Server", "Error MYSQL");
+            e.printStackTrace();
+        } catch (Exception e) {
+            //Gdx.app.log("Server", "Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void insertObject(Level lvl, String title) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            this.conn = DriverManager.getConnection(url, user, pass);
+            //Gdx.app.log("Server", "Connected");
+            PreparedStatement ps = this.conn.prepareStatement("INSERT INTO uw_level(title, object) VALUES('" + title + "', ?)");
+            ps.setObject(1, lvl);
+            ps.execute();
             //conn.close();
         } catch (SQLException e) {
             //Gdx.app.log("Server", "Error MYSQL");

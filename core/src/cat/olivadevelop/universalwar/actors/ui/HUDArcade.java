@@ -546,7 +546,12 @@ public class HUDArcade extends ActorGame {
                     @Override
                     public void run() {
                         screen.getStage().addActor(new BulletOrange(screen,
-                                        screen._groupAllied.getChildren().first().getX() + (screen._groupAllied.getChildren().first().getWidth() / 2) + getWidth() / 2 - 5,
+                                        screen._groupAllied.getChildren().first().getX() - 2,
+                                        screen._groupAllied.getChildren().first().getY() + 2,
+                                        Bullet.BULLET_UP)
+                        );
+                        screen.getStage().addActor(new BulletOrange(screen,
+                                        screen._groupAllied.getChildren().first().getX() + screen._groupAllied.getChildren().first().getWidth() - 10,
                                         screen._groupAllied.getChildren().first().getY() + 2,
                                         Bullet.BULLET_UP)
                         );

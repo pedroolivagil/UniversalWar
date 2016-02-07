@@ -26,6 +26,7 @@ public class UniversalWarGame extends Game {
     public Screen _gameOverScreen;
     public Screen _settingsScreen;
     public Screen _signUpScreen;
+    public Screen _setLevelsScreen;
     public Publicidad actionResolver = null;
     private String idDevice;
 
