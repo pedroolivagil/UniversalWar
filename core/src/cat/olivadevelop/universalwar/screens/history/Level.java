@@ -16,18 +16,13 @@ public class Level extends Group implements Serializable {
     public String descript = null;
     public GeneralScreen screen;
 
-    public void actionsLevel(GeneralScreen screen) {
-
+    public Level(GeneralScreen screen) {
+        this.screen = screen;
     }
 
     // Getters y setters
     public GeneralScreen getScreen() {
         return screen;
-    }
-
-    public void setScreen(GeneralScreen screen) {
-        this.screen = screen;
-        actionsLevel(screen);
     }
 
     public String getReward_medall() {

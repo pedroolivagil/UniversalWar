@@ -117,7 +117,7 @@ public class GameArcadeScreen extends GeneralScreen {
     @Override
     public void actionBackButton() {
         super.actionBackButton();
-        _hud.showWindowPause();
+        _hudArcade.showWindowPause();
         if (GameLogic.isShowADS()) {
             getGame().actionResolver.showOrLoadInterstital();
         }
@@ -141,9 +141,9 @@ public class GameArcadeScreen extends GeneralScreen {
         getStage().addActor(_groupAllied);
         getStage().addActor(_groupEnemy);
         getStage().addActor(_groupShields);
-        _hud = new HUDArcade(this);
-        getStage().addActor(_hud);
-        _hud.toFront();
+        _hudArcade = new HUDArcade(this);
+        getStage().addActor(_hudArcade);
+        _hudArcade.toFront();
         addAllieds();
         addShields();
         addEnemies();
@@ -162,7 +162,7 @@ public class GameArcadeScreen extends GeneralScreen {
         addActors();
         MainMenuScreen.checkAudio();
         if (!_groupAllied.hasChildren()) {
-            _hud.showWindowGameOver();
+            _hudArcade.showWindowGameOver();
         }
     }
 
@@ -189,7 +189,7 @@ public class GameArcadeScreen extends GeneralScreen {
     @Override
     public void pause() {
         Timer.instance().stop();
-        _hud.showWindowPause();
+        _hudArcade.showWindowPause();
         if (GameLogic.isShowADS()) {
             getGame().actionResolver.showOrLoadInterstital();
         }
@@ -205,6 +205,6 @@ public class GameArcadeScreen extends GeneralScreen {
     @Override
     public void hide() {
         Timer.instance().stop();
-        _hud.showWindowPause();
+        _hudArcade.showWindowPause();
     }
 }

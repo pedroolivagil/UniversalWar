@@ -91,7 +91,7 @@ public class GameOverScreen extends GeneralScreen {
         tablePuntuacion.row();
         tablePuntuacion.add(new LabelGame(getString("lTime"), .5f));
         tablePuntuacion.row();
-        tablePuntuacion.add(new LabelGame("" + GameArcadeScreen._hud.getLblTime().getText(), 1, ColorGame.RED));
+        tablePuntuacion.add(new LabelGame("" + GameArcadeScreen._hudArcade.getLblTime().getText(), 1, ColorGame.RED));
 
         table = new Table();
         table.setFillParent(true);

@@ -25,7 +25,6 @@ import cat.olivadevelop.universalwar.actors.shields.Shield;
 import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
 import cat.olivadevelop.universalwar.screens.GameArcadeScreen;
 import cat.olivadevelop.universalwar.screens.MainMenuScreen;
-import cat.olivadevelop.universalwar.tools.ActorGame;
 import cat.olivadevelop.universalwar.tools.AsyncGame;
 import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.ColorGame;
@@ -62,7 +61,7 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeDefault;
 /**
  * Created by OlivaDevelop on 18/04/2015.
  */
-public class HUDArcade extends ActorGame {
+public class HUDArcade extends HUD {
 
     private final ImageGame ipauseBG;
     private int time1 = 30;

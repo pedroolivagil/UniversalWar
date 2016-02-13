@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
 import cat.olivadevelop.universalwar.actors.ui.HUDArcade;
+import cat.olivadevelop.universalwar.actors.ui.HUDHistory;
 import cat.olivadevelop.universalwar.actors.ui.InfiniteBackground;
 
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
@@ -22,7 +23,8 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
  */
 public class GeneralScreen implements Screen {
 
-    public static HUDArcade _hud;
+    public static HUDArcade _hudArcade;
+    public static HUDHistory _hudHistory;
     public static Table tablePause;
     public ButtonGame start;
     public ButtonGame misiones;

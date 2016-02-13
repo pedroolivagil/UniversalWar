@@ -3,6 +3,7 @@ package cat.olivadevelop.universalwar.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,9 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Timer;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
@@ -26,6 +32,7 @@ public abstract class GameLogic implements Disposable {
 
     public final static String prefsName = "localPreferences";
     public final static String COOKIE_KEY = "5d77314492c1e10daa3a2366ca1b7103578d856c3a5c89e30b879ad4";
+
     // Textures
     public static String COLOR_BASIC = "basic";
     public static String COLOR_BWHITE = "blackandwhite";
@@ -46,6 +53,7 @@ public abstract class GameLogic implements Disposable {
     private static int timeSec;
     private static int countEnemiesDispached;
     private static int maxEnemiesIntoGroup;
+    private static JsonValue json_levels;
     // Skin
     private static Skin skin;
     private static Skin skin_mini;
@@ -103,6 +111,7 @@ public abstract class GameLogic implements Disposable {
             getPrefs().putString("user", "");
         }
         getPrefs().flush();
+        setJsonLevels();
     }
 
     public static void load() {
@@ -114,6 +123,51 @@ public abstract class GameLogic implements Disposable {
         skin = new Skin(Gdx.files.internal("skin/basic/uiskin.json"));
         skin_mini = new Skin(Gdx.files.internal("skin/mini/uiskin.json"));
         ColorGame.initColorGame();
+    }
+
+    private static void setJsonLevels() {
+        // obtenemos el json interno
+        JsonValue internal_json_levels = new JsonReader().parse(Gdx.files.internal("json/levels.json"));
+        double internal_json_version = internal_json_levels.getDouble("__version");
+        Gdx.app.log("Internal Version JSON", "->" + internal_json_levels.getDouble("__version"));
+
+        /*Net.HttpRequest httpGet = new Net.HttpRequest(Net.HttpMethods.GET);
+        httpGet.setUrl("http://universalwar.codeduo.cat/levels.json");
+        Gdx.net.sendHttpRequest (httpGet, new Net.HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                status = httpResponse.getResultAsString();
+                //do stuff here based on response
+                // comprobaremos que el interno y el web dean o no iguales,
+                // solo actualizaremos el json si la version del
+                // json web es mayor que la del json interno
+            }
+            @Override
+            public void failed(Throwable t) {
+                status = "failed";
+                //do stuff here based on the failed attempt
+                // dejamos internal levels porque no se pudo actualizar
+            }
+            @Override
+            public void cancelled() {
+                status = "canceled";
+                // dejamos internal levels porque no se pudo actualizar
+            }
+        });*/
+        try {
+            URL url = new URL("http://universalwar.codeduo.cat/levels.json");
+            JsonValue json = new JsonReader().parse((FileHandle) url.getContent());
+            Gdx.app.log("URL Version JSON", "->" + json.getDouble("__version"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //json_levels = internal_json_levels;
+    }
+
+    public static JsonValue getJsonLevels() {
+        return json_levels;
     }
 
     public static boolean isShowADS() {
@@ -204,6 +258,7 @@ public abstract class GameLogic implements Disposable {
     public static TextureRegion getEnemy(String region) {
         return enemy.findRegion(region);
     }
+
     public static TextureRegion getBoss(String region) {
         return boss.findRegion(region);
     }
