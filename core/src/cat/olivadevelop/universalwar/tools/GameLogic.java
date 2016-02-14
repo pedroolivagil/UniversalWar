@@ -16,7 +16,9 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Timer;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -127,43 +129,36 @@ public abstract class GameLogic implements Disposable {
 
     private static void setJsonLevels() {
         // obtenemos el json interno
-        JsonValue internal_json_levels = new JsonReader().parse(Gdx.files.internal("json/levels.json"));
+        FileHandle fh = Gdx.files.internal("json/levels.json");
+        JsonValue internal_json_levels = new JsonReader().parse(fh);
         double internal_json_version = internal_json_levels.getDouble("__version");
-        Gdx.app.log("Internal Version JSON", "->" + internal_json_levels.getDouble("__version"));
+        Gdx.app.log("Internal version", "-->" + internal_json_version);
 
-        /*Net.HttpRequest httpGet = new Net.HttpRequest(Net.HttpMethods.GET);
-        httpGet.setUrl("http://universalwar.codeduo.cat/levels.json");
-        Gdx.net.sendHttpRequest (httpGet, new Net.HttpResponseListener() {
-            @Override
-            public void handleHttpResponse(Net.HttpResponse httpResponse) {
-                status = httpResponse.getResultAsString();
-                //do stuff here based on response
-                // comprobaremos que el interno y el web dean o no iguales,
-                // solo actualizaremos el json si la version del
-                // json web es mayor que la del json interno
-            }
-            @Override
-            public void failed(Throwable t) {
-                status = "failed";
-                //do stuff here based on the failed attempt
-                // dejamos internal levels porque no se pudo actualizar
-            }
-            @Override
-            public void cancelled() {
-                status = "canceled";
-                // dejamos internal levels porque no se pudo actualizar
-            }
-        });*/
+        StringBuffer sb = new StringBuffer();
+        URL url_level = null;
         try {
-            URL url = new URL("http://universalwar.codeduo.cat/levels.json");
-            JsonValue json = new JsonReader().parse((FileHandle) url.getContent());
-            Gdx.app.log("URL Version JSON", "->" + json.getDouble("__version"));
+            url_level = new URL("http://universalwar.codeduo.cat/levels.json");
+            BufferedReader in = new BufferedReader(new InputStreamReader(url_level.openStream()));
+
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                sb.append(inputLine);
+            }
+            in.close();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //json_levels = internal_json_levels;
+        JsonValue url_json_levels = new JsonReader().parse(sb.toString());
+        double url_json_version = url_json_levels.getDouble("__version");
+        // reemplazamos el json interno si la version es superior, sino, lo dejamos como esta
+        if (url_json_version > internal_json_version) {
+            fh = Gdx.files.local("json/levels.json");
+            fh.writeString(sb.toString(), false, "UTF-8");
+            Gdx.app.log("Levels", "Updated");
+        }
+        json_levels = new JsonReader().parse(Gdx.files.internal("json/levels.json"));
     }
 
     public static JsonValue getJsonLevels() {

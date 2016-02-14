@@ -1,10 +1,9 @@
 package cat.olivadevelop.universalwar.screens;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
-
 import cat.olivadevelop.universalwar.UniversalWarGame;
 import cat.olivadevelop.universalwar.actors.ui.HUDHistory;
 import cat.olivadevelop.universalwar.screens.history.LevelManager;
+import cat.olivadevelop.universalwar.screens.history.PreferenceStory;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 
 /**
@@ -13,7 +12,7 @@ import cat.olivadevelop.universalwar.tools.GeneralScreen;
 public class GameHistoryScreen extends GeneralScreen {
 
     private LevelManager levelManager;
-    private Group groupLevel;
+    private PreferenceStory storyPrefs;
 
     public GameHistoryScreen(UniversalWarGame game) {
         super(game);
@@ -22,10 +21,12 @@ public class GameHistoryScreen extends GeneralScreen {
     @Override
     public void show() {
         super.show();
-        levelManager = new LevelManager(this);
-        groupLevel = levelManager.getCurrentLevel(1);
+        // instanciamos el generador de niveles, segun el nivel del usuario
+        levelManager = new LevelManager();
+        // data_level contiene todos los datos del nivel
+        storyPrefs = new PreferenceStory(levelManager.getCurrentLevel(1));
+
         _hudHistory = new HUDHistory(this);
-        getStage().addActor(groupLevel);
         getStage().addActor(_hudHistory);
     }
 

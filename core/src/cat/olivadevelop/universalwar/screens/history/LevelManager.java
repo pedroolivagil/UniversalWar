@@ -1,11 +1,8 @@
 package cat.olivadevelop.universalwar.screens.history;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.JsonValue;
 
-import java.util.ArrayList;
-
-import cat.olivadevelop.universalwar.screens.history.levels.Level1;
-import cat.olivadevelop.universalwar.tools.GeneralScreen;
+import cat.olivadevelop.universalwar.tools.GameLogic;
 
 /**
  * Recuperamos los niveles de la base de datos y
@@ -13,16 +10,15 @@ import cat.olivadevelop.universalwar.tools.GeneralScreen;
  */
 public class LevelManager {
 
-    private ArrayList<Level> allLevels;
+    private JsonValue arr_levels;
+    // ArrayList<JsonValue> arrayList;
 
-    public LevelManager(GeneralScreen screen) {
-        allLevels = new ArrayList<Level>();
-        allLevels.add(new Level1(screen));
+    public LevelManager() {
+        // El nivel de inicio de un jugador es 1. Por lo tanto buscaremos el nivel (level-1)
+        arr_levels = GameLogic.getJsonLevels().get("levels");
     }
 
-    public Level getCurrentLevel(int currentLevel) {
-        currentLevel = (currentLevel > allLevels.size()) ? allLevels.size() : currentLevel;
-        Gdx.app.log("Cargando nivel", "" + currentLevel);
-        return allLevels.get(currentLevel - 1);
+    public JsonValue getCurrentLevel(int currentLevel) {
+        return this.arr_levels.get((currentLevel - 1));
     }
 }
