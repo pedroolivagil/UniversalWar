@@ -59,6 +59,22 @@ public class PreferenceStory {
         setBoss();
         setMegaboss();
         setSuperboss();
+        this.timerate_basic = data.getInt("timerate_ba_enemy");
+        this.timerate_advanced = data.getInt("timerate_av_enemy");
+        this.timerate_boss = data.getInt("timerate_boss");
+        this.timerate_megaboss = data.getInt("timerate_megaboss");
+        this.timerate_superboss = data.getInt("timerate_superboss");
+        this.reward = data.getInt("reward_points");
+        this.medal = data.getString("reward_medal");
+        this.ship_can_shoot = data.getBoolean("ship_shoot");
+        this.ship_health = data.getInt("ship_health");
+        this.ship_shield = data.getInt("ship_shield");
+        this.powerup_health = data.getBoolean("powerup_health");
+        this.powerup_help = data.getBoolean("powerup_help");
+        this.powerup_missile = data.getBoolean("powerup_missile");
+        this.powerup_shield = data.getBoolean("powerup_shield");
+        this.powerup_shooter = data.getBoolean("powerup_shooter");
+        this.powerup_supermissile = data.getBoolean("powerup_supermissile");
     }
 
     public int getTimerate_basic() {
