@@ -99,21 +99,6 @@ public class GameArcadeScreen extends GeneralScreen {
         _groupShields.addActor(new ShieldBronze(this));
     }
 
-    public void clearGroups() {
-        if (_groupAllied.hasChildren()) {
-            _groupAllied.clearChildren();
-        }
-        if (_groupEnemy.hasChildren()) {
-            _groupEnemy.clearChildren();
-        }
-        if (_groupShields.hasChildren()) {
-            _groupShields.clearChildren();
-        }
-        if (_groupPlanets.hasChildren()) {
-            _groupPlanets.clearChildren();
-        }
-    }
-
     @Override
     public void actionBackButton() {
         super.actionBackButton();

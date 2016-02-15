@@ -8,7 +8,12 @@ import com.badlogic.gdx.utils.Timer;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
 import cat.olivadevelop.universalwar.actors.allied.Hurricane;
+import cat.olivadevelop.universalwar.actors.enemies.AdvancedEnemy;
+import cat.olivadevelop.universalwar.actors.enemies.BasicEnemy;
+import cat.olivadevelop.universalwar.actors.enemies.Enemy;
 import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
+import cat.olivadevelop.universalwar.actors.shields.ShieldGold;
+import cat.olivadevelop.universalwar.actors.shields.ShieldSilver;
 import cat.olivadevelop.universalwar.actors.ui.HUDHistory;
 import cat.olivadevelop.universalwar.actors.ui.Planet;
 import cat.olivadevelop.universalwar.screens.history.PreferenceStory;
@@ -26,6 +31,11 @@ public class GameHistoryScreen extends GeneralScreen {
 
     private static Hurricane ship;
     private PreferenceStory storyPrefs;
+    private int tmp_basic;
+    private int tmp_advan;
+    private int max_basic;
+    private int max_advan;
+    private int max_into_group;
 
     public GameHistoryScreen(UniversalWarGame game) {
         super(game);
@@ -60,6 +70,7 @@ public class GameHistoryScreen extends GeneralScreen {
         _hudHistory = new HUDHistory(this, storyPrefs);
         setScoreGame(0);
         setTimeGame(0);
+        clearGroups();
         getStage().addActor(_groupPlanets);
         getStage().addActor(_hudHistory);
         getStage().addActor(_groupAllied);
@@ -67,7 +78,40 @@ public class GameHistoryScreen extends GeneralScreen {
         getStage().addActor(_groupShields);
         ship = new Hurricane(this);
         addAllieds();
+        setEnemies();
         addShields();
+    }
+
+    public void setEnemies() {
+        max_into_group = storyPrefs.getMax_into_group();
+        max_basic = (int) (max_into_group * .7f);
+        max_advan = (int) (max_into_group * .3f);
+        Gdx.app.log("Max in Group", "" + max_into_group);
+        Gdx.app.log("Max basic", "" + max_basic);
+        Gdx.app.log("Max advan", "" + max_advan);
+    }
+
+    private void addEnemies() {
+        if (getTimeGame() != 0) {
+            if ((getTimeGame() % storyPrefs.getTimerate_basic() == 0)) {
+                if (_groupEnemy.getChildren().size < max_into_group - max_advan) {
+                    for (int x = 0; x < storyPrefs.getBasic(); x++) {
+                        _groupEnemy.addActor(
+                                new BasicEnemy(this, Enemy.BASIC[MathUtils.random(0, Enemy.BASIC.length - 1)])
+                        );
+                    }
+                }
+            }
+            if ((getTimeGame() % storyPrefs.getTimerate_advanced() == 0)) {
+                if (_groupEnemy.getChildren().size < max_into_group) {
+                    for (int x = 0; x < storyPrefs.getAdvanced(); x++) {
+                        _groupEnemy.addActor(
+                                new AdvancedEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)])
+                        );
+                    }
+                }
+            }
+        }
     }
 
     private void addPlanets() {
@@ -89,7 +133,18 @@ public class GameHistoryScreen extends GeneralScreen {
     }
 
     public void addShields() {
-        _groupShields.addActor(new ShieldBronze(this));
+        switch (storyPrefs.getShip_shield()) {
+            case 1:
+            default:
+                _groupShields.addActor(new ShieldBronze(this));
+                break;
+            case 2:
+                _groupShields.addActor(new ShieldSilver(this));
+                break;
+            case 3:
+                _groupShields.addActor(new ShieldGold(this));
+                break;
+        }
     }
 
     @Override
@@ -102,9 +157,11 @@ public class GameHistoryScreen extends GeneralScreen {
         }
         MainMenuScreen.checkAudio();
         if (!_groupAllied.hasChildren()) {
-            _hudArcade.showWindowGameOver();
+            //_hudArcade.showWindowGameOver();
         }
         addPlanets();
+        addEnemies();
+        Gdx.app.log("Total", "" + _groupEnemy.getChildren().size);
     }
 
     @Override

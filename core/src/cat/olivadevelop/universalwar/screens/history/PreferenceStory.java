@@ -31,6 +31,7 @@ public class PreferenceStory {
     private int timerate_boss;
     private int timerate_megaboss;
     private int timerate_superboss;
+    private int max_into_group;
 
     private String medal;
     private int reward;
@@ -75,6 +76,7 @@ public class PreferenceStory {
         this.powerup_shield = data.getBoolean("powerup_shield");
         this.powerup_shooter = data.getBoolean("powerup_shooter");
         this.powerup_supermissile = data.getBoolean("powerup_supermissile");
+        this.max_into_group = data.getInt("max_into_group");
     }
 
     public int getTimerate_basic() {
@@ -95,6 +97,10 @@ public class PreferenceStory {
 
     public int getTimerate_superboss() {
         return timerate_superboss;
+    }
+
+    public int getMax_into_group() {
+        return max_into_group;
     }
 
     public String getMedal() {

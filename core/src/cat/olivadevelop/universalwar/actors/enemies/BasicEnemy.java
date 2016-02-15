@@ -17,6 +17,7 @@ public class BasicEnemy extends Enemy {
         setScale(.7f);
         score = 100;
         setHealth(1);
+        setName("basic");
     }
 
     @Override

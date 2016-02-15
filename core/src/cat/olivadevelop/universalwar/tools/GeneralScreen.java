@@ -66,6 +66,21 @@ public class GeneralScreen implements Screen {
         return _game;
     }
 
+    public void clearGroups() {
+        if (_groupAllied.hasChildren()) {
+            _groupAllied.clearChildren();
+        }
+        if (_groupEnemy.hasChildren()) {
+            _groupEnemy.clearChildren();
+        }
+        if (_groupShields.hasChildren()) {
+            _groupShields.clearChildren();
+        }
+        if (_groupPlanets.hasChildren()) {
+            _groupPlanets.clearChildren();
+        }
+    }
+
     @Override
     public void show() {
         _stage = new Stage(new FitViewport(getScreenWidth(), getScreenHeight()));

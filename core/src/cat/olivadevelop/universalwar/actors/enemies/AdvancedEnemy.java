@@ -24,6 +24,7 @@ public class AdvancedEnemy extends Enemy {
         time = MathUtils.random(4, 5);
         setScale(1);
         setHealth(2);
+        setName("advanced");
     }
 
     @Override
