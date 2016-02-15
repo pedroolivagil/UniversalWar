@@ -3,7 +3,6 @@ package cat.olivadevelop.universalwar.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Timer;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
@@ -31,18 +30,11 @@ public class GameHistoryScreen extends GeneralScreen {
 
     private static Hurricane ship;
     private PreferenceStory storyPrefs;
-    private int tmp_basic;
-    private int tmp_advan;
-    private int max_basic;
-    private int max_advan;
-    private int max_into_group;
+    private int max_bas_into_group;
+    private int max_adv_into_group;
 
     public GameHistoryScreen(UniversalWarGame game) {
         super(game);
-        _groupEnemy = new Group();
-        _groupAllied = new Group();
-        _groupPlanets = new Group();
-        _groupShields = new Group();
     }
 
     public static Hurricane getShip() {
@@ -74,7 +66,8 @@ public class GameHistoryScreen extends GeneralScreen {
         getStage().addActor(_groupPlanets);
         getStage().addActor(_hudHistory);
         getStage().addActor(_groupAllied);
-        getStage().addActor(_groupEnemy);
+        getStage().addActor(_groupEnemyAdv);
+        getStage().addActor(_groupEnemyBas);
         getStage().addActor(_groupShields);
         ship = new Hurricane(this);
         addAllieds();
@@ -83,33 +76,17 @@ public class GameHistoryScreen extends GeneralScreen {
     }
 
     public void setEnemies() {
-        max_into_group = storyPrefs.getMax_into_group();
-        max_basic = (int) (max_into_group * .7f);
-        max_advan = (int) (max_into_group * .3f);
-        Gdx.app.log("Max in Group", "" + max_into_group);
-        Gdx.app.log("Max basic", "" + max_basic);
-        Gdx.app.log("Max advan", "" + max_advan);
+        max_bas_into_group = storyPrefs.getMax_bas_into_group();
+        max_adv_into_group = storyPrefs.getMax_adv_into_group();
     }
 
     private void addEnemies() {
         if (getTimeGame() != 0) {
-            if ((getTimeGame() % storyPrefs.getTimerate_basic() == 0)) {
-                if (_groupEnemy.getChildren().size < max_into_group - max_advan) {
-                    for (int x = 0; x < storyPrefs.getBasic(); x++) {
-                        _groupEnemy.addActor(
-                                new BasicEnemy(this, Enemy.BASIC[MathUtils.random(0, Enemy.BASIC.length - 1)])
-                        );
-                    }
-                }
+            if (_groupEnemyAdv.getChildren().size < max_adv_into_group) {
+                _groupEnemyAdv.addActor(new AdvancedEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)]));
             }
-            if ((getTimeGame() % storyPrefs.getTimerate_advanced() == 0)) {
-                if (_groupEnemy.getChildren().size < max_into_group) {
-                    for (int x = 0; x < storyPrefs.getAdvanced(); x++) {
-                        _groupEnemy.addActor(
-                                new AdvancedEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)])
-                        );
-                    }
-                }
+            if (_groupEnemyBas.getChildren().size < max_bas_into_group) {
+                _groupEnemyBas.addActor(new BasicEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)]));
             }
         }
     }
@@ -161,7 +138,6 @@ public class GameHistoryScreen extends GeneralScreen {
         }
         addPlanets();
         addEnemies();
-        Gdx.app.log("Total", "" + _groupEnemy.getChildren().size);
     }
 
     @Override

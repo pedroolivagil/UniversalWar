@@ -64,12 +64,34 @@ public class Bullet extends Image {
             remove();
         }
         if (vel > 0) {
-            Enemy enemy;
-            for (Actor a : screen._groupEnemy.getChildren()) {
-                enemy = (Enemy) a;
-                if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {//Bala inpacta en enemic
-                    enemy.kicked(getDamage());
-                    removeBullet();
+            if (screen._groupEnemy.hasChildren()) {
+                Enemy enemy;
+                for (Actor a : screen._groupEnemy.getChildren()) {
+                    enemy = (Enemy) a;
+                    if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {//Bala inpacta en enemic
+                        enemy.kicked(getDamage());
+                        removeBullet();
+                    }
+                }
+            }
+            if (screen._groupEnemyBas.hasChildren()) {
+                Enemy enemy;
+                for (Actor a : screen._groupEnemyBas.getChildren()) {
+                    enemy = (Enemy) a;
+                    if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {//Bala inpacta en enemic
+                        enemy.kicked(getDamage());
+                        removeBullet();
+                    }
+                }
+            }
+            if (screen._groupEnemyAdv.hasChildren()) {
+                Enemy enemy;
+                for (Actor a : screen._groupEnemyAdv.getChildren()) {
+                    enemy = (Enemy) a;
+                    if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {//Bala inpacta en enemic
+                        enemy.kicked(getDamage());
+                        removeBullet();
+                    }
                 }
             }
         } else {

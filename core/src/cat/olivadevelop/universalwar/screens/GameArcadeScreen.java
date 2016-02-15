@@ -3,7 +3,6 @@ package cat.olivadevelop.universalwar.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Timer;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
@@ -39,10 +38,6 @@ public class GameArcadeScreen extends GeneralScreen {
 
     public GameArcadeScreen(UniversalWarGame game) {
         super(game);
-        _groupEnemy = new Group();
-        _groupAllied = new Group();
-        _groupPlanets = new Group();
-        _groupShields = new Group();
     }
 
     public static float getEnemyRound() {

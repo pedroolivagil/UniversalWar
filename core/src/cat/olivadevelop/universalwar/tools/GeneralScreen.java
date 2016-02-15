@@ -34,6 +34,8 @@ public class GeneralScreen implements Screen {
     public ButtonGame tbExit;
     public ButtonGame options;
     public Group _groupEnemy;
+    public Group _groupEnemyAdv;
+    public Group _groupEnemyBas;
     public Group _groupAllied;
     public Group _groupPlanets;
     public Group _groupShields;
@@ -48,6 +50,12 @@ public class GeneralScreen implements Screen {
         this._game = game;
         _groupStars = new Group();
         _groupMeteors = new Group();
+        _groupEnemy = new Group();
+        _groupAllied = new Group();
+        _groupPlanets = new Group();
+        _groupShields = new Group();
+        _groupEnemyAdv = new Group();
+        _groupEnemyBas = new Group();
     }
 
     public void actionBackButton() {
@@ -78,6 +86,12 @@ public class GeneralScreen implements Screen {
         }
         if (_groupPlanets.hasChildren()) {
             _groupPlanets.clearChildren();
+        }
+        if (_groupEnemyAdv.hasChildren()) {
+            _groupEnemyAdv.clearChildren();
+        }
+        if (_groupEnemyBas.hasChildren()) {
+            _groupEnemyBas.clearChildren();
         }
     }
 
