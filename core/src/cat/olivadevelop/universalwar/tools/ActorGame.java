@@ -26,6 +26,7 @@ public class ActorGame extends Actor implements Disposable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.enableBlending();
+        batch.setColor(ColorGame.WHITE);
         super.draw(batch, parentAlpha);
     }
 

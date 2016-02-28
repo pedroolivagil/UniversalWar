@@ -16,7 +16,13 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getPlanets;
 public class Planet extends ActorGame {
 
     public static String[] planets = new String[]{
-            "venus", "star", "mars", "luna", "jupiter", "acid", "earth", "green", "pluton", "purple", "tankard", "morado", "saturno", "west", "pipiolo", "ginteky"
+            "cloudy1", "cloudy2", "cloudy3", "cloudy4", "cloudy5", "cloudy6", "cloudy7", "cloudy8",
+            "cloudy9", "cloudy10", "cloudy11", "cloudy12", "cloudy13", "cloudy14", "cloudy15", "cloudy16",
+            "leaky1", "leaky2", "leaky3", "leaky4",
+            "rings1", "rings2", "rings3", "rings4", "rings5", "rings6", "rings7", "rings8", "rings9",
+            "rings10", "rings11", "rings12", "rings13",
+            "rock1", "rock2", "rock3", "rock4", "rock5",
+            "sun"
     };
     public static float[] speed_planets = new float[]{
             -3.8f, -3.2f, -2.3f
@@ -60,7 +66,7 @@ public class Planet extends ActorGame {
         super.act(delta);
 
         moveBy(0, vel / 2);
-        rotateBy(degrees * delta * 100);
+        //rotateBy(degrees * delta * 100);
 
         if (getY() < -getHeight()) {
             remove();

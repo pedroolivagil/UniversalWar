@@ -2,7 +2,6 @@ package cat.olivadevelop.universalwar.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,6 +16,8 @@ import cat.olivadevelop.universalwar.tools.ImageGame;
 import cat.olivadevelop.universalwar.tools.LabelGame;
 import cat.olivadevelop.universalwar.tools.Listener;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.VOLUME_5;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getEnviromentQuiet;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getPlanets;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
@@ -57,7 +58,7 @@ public class MainMenuScreen extends GeneralScreen {
         super.show();
         Group title = new Group();
         ImageGame subTitle = new ImageGame(getUi("title"));
-        ImageGame planet = new ImageGame(getPlanets(Planet.planets[MathUtils.random(0, Planet.planets.length - 1)]));
+        ImageGame planet = new ImageGame(getPlanets(Planet.planets[26]));
 
         title.setWidth(subTitle.getWidth());
         title.setHeight(planet.getHeight());
@@ -70,8 +71,8 @@ public class MainMenuScreen extends GeneralScreen {
                 -80
         );
         planet.setPosition(
-                0,
-                -150
+                -30,
+                -130
         );
         title.addActor(planet);
         title.addActor(subTitle);
@@ -85,13 +86,15 @@ public class MainMenuScreen extends GeneralScreen {
 
         // actions
         title.addAction(Actions.moveTo(getScreenWidth() / 2 - title.getWidth() / 2, getScreenHeight() - title.getHeight() / 2 - 100, 1.2f, Interpolation.bounce));
-        planet.addAction(Actions.forever(Actions.rotateBy(-10f, .9f)));
+        //planet.addAction(Actions.forever(Actions.rotateBy(-10f, .9f)));
 
-        /*if (GameLogic.isAudioOn()) {
-            getSoundAmbient().loop();
-        }*/
+        if (GameLogic.isAudioOn()) {
+            getEnviromentQuiet().setLooping(true);
+            getEnviromentQuiet().setVolume(VOLUME_5);
+            getEnviromentQuiet().play();
+        }
         buttonMute();
-        getGame().setScreen(getGame()._gameHistoryScreen);
+        //getGame().setScreen(getGame()._mapLevelScreen);
     }
 
     private void buttonMute() {
@@ -140,7 +143,7 @@ public class MainMenuScreen extends GeneralScreen {
         misiones.addListener(new Listener() {
             @Override
             public void action() {
-                getGame().setScreen(getGame()._gameHistoryScreen);
+                getGame().setScreen(getGame()._mapLevelScreen);
             }
         });
         score.addListener(new Listener() {
@@ -194,5 +197,12 @@ public class MainMenuScreen extends GeneralScreen {
     public void render(float delta) {
         super.render(delta);
         checkAudio();
+        if (!GameLogic.isAudioOn()) {
+            getEnviromentQuiet().pause();
+        } else {
+            if (!getEnviromentQuiet().isPlaying()) {
+                getEnviromentQuiet().play();
+            }
+        }
     }
 }

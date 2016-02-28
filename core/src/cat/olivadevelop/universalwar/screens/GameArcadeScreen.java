@@ -20,7 +20,9 @@ import cat.olivadevelop.universalwar.actors.ui.Planet;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.VOLUME_5;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getCountEnemiesDispached;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getEnviromentQuiet;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setCountEnemiesDispached;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setPauseGame;
@@ -64,7 +66,7 @@ public class GameArcadeScreen extends GeneralScreen {
                             this,
                             Planet.planets[MathUtils.random(0, Planet.planets.length - 1)],
                             Planet.speed_planets[MathUtils.random(0, 2)],
-                            MathUtils.random(.3f, 1f)
+                            MathUtils.random(.3f, .8f)
                     )
             );
         }
@@ -127,6 +129,11 @@ public class GameArcadeScreen extends GeneralScreen {
         addAllieds();
         addShields();
         addEnemies();
+        if (GameLogic.isAudioOn()) {
+            getEnviromentQuiet().setLooping(true);
+            getEnviromentQuiet().setVolume(VOLUME_5);
+            getEnviromentQuiet().play();
+        }
     }
 
     @Override
@@ -143,6 +150,13 @@ public class GameArcadeScreen extends GeneralScreen {
         MainMenuScreen.checkAudio();
         if (!_groupAllied.hasChildren()) {
             _hudArcade.showWindowGameOver();
+        }
+        if (!GameLogic.isAudioOn()) {
+            getEnviromentQuiet().pause();
+        } else {
+            if (!getEnviromentQuiet().isPlaying()) {
+                getEnviromentQuiet().play();
+            }
         }
     }
 

@@ -39,13 +39,13 @@ public class GameActor extends Image implements Disposable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
+        /*batch.end();
         shape.setProjectionMatrix(batch.getProjectionMatrix());
         shape.begin(ShapeRenderer.ShapeType.Line);
         shape.setColor(ColorGame.RED);
         shape.polygon(polygon.getTransformedVertices());
         shape.end();
-        batch.begin();
+        batch.begin();*/
     }
 
     @Override

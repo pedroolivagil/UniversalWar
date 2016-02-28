@@ -17,8 +17,8 @@ public class PreferenceStory {
     private final String XTREMSURVIVE = "xtrem_survive";
 
     private JsonValue data;
-
-    private boolean new_story;
+    private static JsonValue world;
+    private int id_level;
 
     private int basic;
     private int advanced;
@@ -55,12 +55,12 @@ public class PreferenceStory {
         this.data = data;
         setTarget();
         setOpt_target();
-        setNew_story(data.getBoolean("new_story"));
         setBasic(data.getInt("basic_enemys"));
         setAdvanced(data.getInt("advan_enemys"));
         setBoss();
         setMegaboss();
         setSuperboss();
+        this.id_level = data.getInt("id_level");
         this.timerate_basic = data.getInt("timerate_ba_enemy");
         this.timerate_advanced = data.getInt("timerate_av_enemy");
         this.timerate_boss = data.getInt("timerate_boss");
@@ -79,6 +79,18 @@ public class PreferenceStory {
         this.powerup_supermissile = data.getBoolean("powerup_supermissile");
         this.max_bas_into_group = data.getInt("max_basic_into_group");
         this.max_adv_into_group = data.getInt("max_advan_into_group");
+    }
+
+    public int getId_level() {
+        return id_level;
+    }
+
+    public static JsonValue getWorld() {
+        return world;
+    }
+
+    public static void setWorld(JsonValue world) {
+        PreferenceStory.world = world;
     }
 
     public int getTimerate_basic() {
@@ -151,14 +163,6 @@ public class PreferenceStory {
 
     public int getShip_health() {
         return ship_health;
-    }
-
-    public boolean isNew_story() {
-        return new_story;
-    }
-
-    public void setNew_story(boolean new_story) {
-        this.new_story = new_story;
     }
 
     public int getBasic() {

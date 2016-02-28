@@ -3,7 +3,6 @@ package cat.olivadevelop.universalwar.actors.ui;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 import cat.olivadevelop.universalwar.tools.ActorGame;
-import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 
@@ -27,9 +26,8 @@ public class InfiniteBackground extends ActorGame {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(ColorGame.WHITE);
         super.draw(batch, parentAlpha);
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
-        batch.draw(texture, getX(), getY() - getHeight() - 4, getWidth(), getHeight());
+        batch.draw(texture, getX(), getY() - getHeight() - 0, getWidth(), getHeight());
     }
 }

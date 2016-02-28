@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.VOLUME_5;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getSoundExplode;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSprites;
 
 /**
@@ -30,7 +32,7 @@ public class ExplosionMini extends Actor {
         setOrigin(getWidth() / 2, getHeight() / 2);
         setScale(.2f);
         if (GameLogic.isAudioOn()) {
-            GameLogic.getSoundExplode().play();
+            getSoundExplode().play(VOLUME_5);
         }
     }
 

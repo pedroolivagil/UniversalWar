@@ -2,6 +2,7 @@ package cat.olivadevelop.universalwar.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,8 +37,10 @@ public abstract class GameLogic implements Disposable {
 
     public final static String prefsName = "localPreferences";
     public final static String COOKIE_KEY = "5d77314492c1e10daa3a2366ca1b7103578d856c3a5c89e30b879ad4";
-
-    // Textures
+    // Volume Sounds
+    public static final float VOLUME_10 = 1.0f;
+    public static final float VOLUME_7 = .7f;
+    public static final float VOLUME_5 = .5f;
     public static String COLOR_BASIC = "basic";
     public static String COLOR_BWHITE = "blackandwhite";
     private static Preferences prefs;
@@ -63,6 +66,7 @@ public abstract class GameLogic implements Disposable {
     private static Skin skin;
     private static Skin skin_mini;
     private static Skin skin_normal;
+    // Textures
     private static TextureAtlas ui;
     private static TextureAtlas enemy;
     private static TextureAtlas boss;
@@ -79,7 +83,11 @@ public abstract class GameLogic implements Disposable {
     private static Sound SOUND_SHOOT_LASER;
     private static Sound SOUND_SHOOT_PLASMA;
     private static Sound SOUND_EXPLODE;
-    //private static Sound SOUND_AMBIENT;
+    private static Sound SOUND_POWER_UP;
+    private static Sound SOUND_LEVEL_UP;
+    // Enviroments
+    private static Music ENVIROMENT_QUIET;
+    private static Music ENVIROMENT_EDGY;
 
     // User Vars
     private static ResultSet userQuery;
@@ -108,7 +116,11 @@ public abstract class GameLogic implements Disposable {
         SOUND_SHOOT_LASER = Gdx.audio.newSound(Gdx.files.internal(("sounds/shoot_laser.mp3")));
         SOUND_SHOOT_PLASMA = Gdx.audio.newSound(Gdx.files.internal(("sounds/shoot_plasma.mp3")));
         SOUND_EXPLODE = Gdx.audio.newSound(Gdx.files.internal(("sounds/explosion_spaceship.mp3")));
-        //SOUND_AMBIENT = Gdx.audio.newSound(Gdx.files.internal(("sounds/ambient.mp3")));
+        SOUND_POWER_UP = Gdx.audio.newSound(Gdx.files.internal(("sounds/power_up.mp3")));
+        SOUND_LEVEL_UP = Gdx.audio.newSound(Gdx.files.internal(("sounds/level_up.mp3")));
+        // Music
+        ENVIROMENT_QUIET = Gdx.audio.newMusic(Gdx.files.internal(("enviroment/enviroment_quiet.mp3")));
+        ENVIROMENT_EDGY = Gdx.audio.newMusic(Gdx.files.internal(("enviroment/enviroment_edgy.mp3")));
         // Preferencias
         if (getPrefs().getBoolean("localReg", true)) {
             getPrefs().putBoolean("localReg", true);
@@ -338,9 +350,22 @@ public abstract class GameLogic implements Disposable {
         return SOUND_EXPLODE;
     }
 
-    /*public static Sound getSoundAmbient() {
-        return SOUND_AMBIENT;
-    }*/
+    public static Sound getSoundLevelUp() {
+        return SOUND_LEVEL_UP;
+    }
+
+    public static Sound getSoundPowerUp() {
+        return SOUND_POWER_UP;
+    }
+
+    public static Music getEnviromentQuiet() {
+        return ENVIROMENT_QUIET;
+    }
+
+    public static Music getENVIROMENT_EDGY() {
+        return ENVIROMENT_EDGY;
+    }
+
     public static int getUserID() {
         return getPrefs().getInteger("userID", 0);
     }
@@ -555,7 +580,7 @@ public abstract class GameLogic implements Disposable {
         SOUND_SHOOT_LASER.dispose();
         SOUND_SHOOT_PLASMA.dispose();
         SOUND_EXPLODE.dispose();
-        //SOUND_AMBIENT.dispose();
+        ENVIROMENT_QUIET.dispose();
         getTimer().clear();
     }
 }

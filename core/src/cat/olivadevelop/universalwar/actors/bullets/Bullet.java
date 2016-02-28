@@ -111,7 +111,7 @@ public class Bullet extends Image {
                 for (Actor a : screen._groupAllied.getChildren()) {
                     allied = (Allied) a;
                     if (allied.alive && IntersectorGame.overlaps(allied.polygon, circle)) {
-                        allied.kicked(getDamage());
+                        //allied.kicked(getDamage());
                         removeBullet();
                     }
                 }

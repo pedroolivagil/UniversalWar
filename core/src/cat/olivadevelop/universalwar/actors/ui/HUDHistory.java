@@ -231,7 +231,8 @@ public class HUDHistory extends HUD {
         tbExit.addListener(new Listener() {
             @Override
             public void action() {
-                screen.getGame().setScreen(screen.getGame()._gameOverScreen);
+                //screen.getGame().setScreen(screen.getGame()._gameOverScreen);
+                hideWindowPause();
             }
         });
         tablePause = new Table();

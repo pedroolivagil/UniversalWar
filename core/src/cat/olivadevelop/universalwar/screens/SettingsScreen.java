@@ -181,7 +181,7 @@ public class SettingsScreen extends GeneralScreen {
         tableContent.row().expandX().pad(10);
         tableContent.add(new LabelGame(getString("btnSign"), .5f)).center();
         tableContent.row().height(80).width(600);
-        tableContent.add(new LabelGame(getString("welcome") + ", " + getUserName() + " " + getUserLast(), .5f, ColorGame.ORANGE)).expand().center().padRight(10);
+        tableContent.add(new LabelGame(getString("welcome") + ", " + getUserName() + " " + getUserLast(), .5f, ColorGame.ORANGE).center()).expand().center().padRight(10);
         tableContent.row().height(80).expandX().padBottom(50);
         tableContent.add(btnSignOut).center().padRight(20);
     }

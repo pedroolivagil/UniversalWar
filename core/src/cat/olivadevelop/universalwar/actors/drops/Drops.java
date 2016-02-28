@@ -12,6 +12,9 @@ import cat.olivadevelop.universalwar.actors.allied.Allied;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.IntersectorGame;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.VOLUME_10;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getSoundPowerUp;
+
 /**
  * Created by Oliva on 15/04/2015.
  */
@@ -72,6 +75,7 @@ public class Drops extends Image {
                 if (allied.alive && IntersectorGame.overlaps(allied.polygon, rectangle)) {
                     actionsObject();
                     remove();
+                    getSoundPowerUp().play(VOLUME_10);
                 }
             }
         }

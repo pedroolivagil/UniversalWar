@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.VOLUME_7;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getSoundExplode;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSprites;
 
 /**
@@ -31,7 +33,7 @@ public class ExplosionMedium extends Actor {
         setHeight(texture.getHeight() / 6);
         setOrigin(getWidth() / 2, getHeight() / 2);
         if (GameLogic.isAudioOn()) {
-            GameLogic.getSoundExplode().play();
+            getSoundExplode().play(VOLUME_7);
         }
     }
 

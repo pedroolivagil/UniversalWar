@@ -19,6 +19,8 @@ import cat.olivadevelop.universalwar.screens.history.PreferenceStory;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 
+import static cat.olivadevelop.universalwar.tools.GameLogic.VOLUME_5;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getEnviromentQuiet;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setScoreGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeGame;
@@ -30,8 +32,6 @@ public class GameHistoryScreen extends GeneralScreen {
 
     private static Hurricane ship;
     private PreferenceStory storyPrefs;
-    private int max_bas_into_group;
-    private int max_adv_into_group;
 
     public GameHistoryScreen(UniversalWarGame game) {
         super(game);
@@ -70,23 +70,27 @@ public class GameHistoryScreen extends GeneralScreen {
         getStage().addActor(_groupEnemyBas);
         getStage().addActor(_groupShields);
         ship = new Hurricane(this);
+        ship.setHealth(storyPrefs.getShip_health());
         addAllieds();
-        setEnemies();
         addShields();
-    }
-
-    public void setEnemies() {
-        max_bas_into_group = storyPrefs.getMax_bas_into_group();
-        max_adv_into_group = storyPrefs.getMax_adv_into_group();
+        if (GameLogic.isAudioOn()) {
+            getEnviromentQuiet().setLooping(true);
+            getEnviromentQuiet().setVolume(VOLUME_5);
+            getEnviromentQuiet().play();
+        }
     }
 
     private void addEnemies() {
         if (getTimeGame() != 0) {
-            if (_groupEnemyAdv.getChildren().size < max_adv_into_group) {
-                _groupEnemyAdv.addActor(new AdvancedEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)]));
+            if (_groupEnemyAdv.getChildren().size < storyPrefs.getMax_adv_into_group()) {
+                if (getTimeGame() % storyPrefs.getTimerate_advanced() == 0) {
+                    _groupEnemyAdv.addActor(new AdvancedEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)]));
+                }
             }
-            if (_groupEnemyBas.getChildren().size < max_bas_into_group) {
-                _groupEnemyBas.addActor(new BasicEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)]));
+            if (_groupEnemyBas.getChildren().size < storyPrefs.getMax_bas_into_group()) {
+                if (getTimeGame() % storyPrefs.getTimerate_basic() == 0) {
+                    _groupEnemyBas.addActor(new BasicEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)]));
+                }
             }
         }
     }
@@ -132,12 +136,19 @@ public class GameHistoryScreen extends GeneralScreen {
         if (!GameLogic.isPause()) {
             getStage().act(delta);
         }
-        MainMenuScreen.checkAudio();
         if (!_groupAllied.hasChildren()) {
             //_hudArcade.showWindowGameOver();
         }
         addPlanets();
         addEnemies();
+        MainMenuScreen.checkAudio();
+        if (!GameLogic.isAudioOn()) {
+            getEnviromentQuiet().pause();
+        } else {
+            if (!getEnviromentQuiet().isPlaying()) {
+                getEnviromentQuiet().play();
+            }
+        }
     }
 
     @Override

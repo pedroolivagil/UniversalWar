@@ -2,115 +2,276 @@ planets.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-acid
+cloudy1
   rotate: false
-  xy: 260, 518
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
+  xy: 1822, 1211
+  size: 283, 283
+  orig: 314, 283
+  offset: 15, 0
   index: -1
-earth
+cloudy10
+  rotate: false
+  xy: 964, 1121
+  size: 284, 284
+  orig: 284, 284
+  offset: 0, 0
+  index: -1
+cloudy11
+  rotate: false
+  xy: 964, 1407
+  size: 284, 284
+  orig: 284, 284
+  offset: 0, 0
+  index: -1
+cloudy12
+  rotate: false
+  xy: 2315, 1668
+  size: 153, 153
+  orig: 153, 153
+  offset: 0, 0
+  index: -1
+cloudy13
+  rotate: false
+  xy: 2315, 1496
+  size: 170, 170
+  orig: 170, 170
+  offset: 0, 0
+  index: -1
+cloudy14
+  rotate: false
+  xy: 2, 1759
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+cloudy15
+  rotate: false
+  xy: 2100, 316
+  size: 321, 320
+  orig: 321, 320
+  offset: 0, 0
+  index: -1
+cloudy16
+  rotate: false
+  xy: 2304, 1823
+  size: 143, 142
+  orig: 143, 142
+  offset: 0, 0
+  index: -1
+cloudy2
+  rotate: false
+  xy: 1601, 2
+  size: 437, 437
+  orig: 515, 474
+  offset: 47, 24
+  index: -1
+cloudy3
+  rotate: false
+  xy: 1536, 1497
+  size: 283, 283
+  orig: 419, 300
+  offset: 91, 17
+  index: -1
+cloudy4
+  rotate: false
+  xy: 2052, 639
+  size: 283, 283
+  orig: 334, 311
+  offset: 17, 18
+  index: -1
+cloudy5
+  rotate: false
+  xy: 932, 1693
+  size: 271, 271
+  orig: 271, 271
+  offset: 0, 0
+  index: -1
+cloudy6
+  rotate: false
+  xy: 1250, 1121
+  size: 284, 284
+  orig: 284, 284
+  offset: 0, 0
+  index: -1
+cloudy7
+  rotate: false
+  xy: 1250, 1407
+  size: 284, 284
+  orig: 284, 284
+  offset: 0, 0
+  index: -1
+cloudy8
+  rotate: false
+  xy: 1366, 906
+  size: 190, 191
+  orig: 190, 191
+  offset: 0, 0
+  index: -1
+cloudy9
+  rotate: false
+  xy: 1558, 925
+  size: 284, 284
+  orig: 284, 284
+  offset: 0, 0
+  index: -1
+leaky1
+  rotate: false
+  xy: 1821, 1658
+  size: 240, 240
+  orig: 240, 240
+  offset: 0, 0
+  index: -1
+leaky2
+  rotate: false
+  xy: 2069, 1496
+  size: 244, 244
+  orig: 244, 244
+  offset: 0, 0
+  index: -1
+leaky3
+  rotate: false
+  xy: 2063, 1742
+  size: 239, 240
+  orig: 239, 240
+  offset: 0, 0
+  index: -1
+leaky4
+  rotate: false
+  xy: 734, 1538
+  size: 196, 197
+  orig: 196, 197
+  offset: 0, 0
+  index: -1
+rings1
+  rotate: false
+  xy: 974, 574
+  size: 583, 330
+  orig: 583, 330
+  offset: 0, 0
+  index: -1
+rings10
+  rotate: false
+  xy: 1601, 441
+  size: 497, 196
+  orig: 497, 196
+  offset: 0, 0
+  index: -1
+rings11
+  rotate: false
+  xy: 726, 1759
+  size: 201, 121
+  orig: 201, 121
+  offset: 0, 0
+  index: -1
+rings12
+  rotate: false
+  xy: 2, 973
+  size: 777, 434
+  orig: 777, 526
+  offset: 0, 42
+  index: -1
+rings13
+  rotate: false
+  xy: 2, 1409
+  size: 730, 348
+  orig: 730, 437
+  offset: 0, 42
+  index: -1
+rings2
+  rotate: false
+  xy: 781, 973
+  size: 181, 563
+  orig: 181, 563
+  offset: 0, 0
+  index: -1
+rings3
+  rotate: false
+  xy: 974, 2
+  size: 625, 570
+  orig: 625, 582
+  offset: 0, 10
+  index: -1
+rings4
+  rotate: false
+  xy: 260, 1759
+  size: 464, 247
+  orig: 464, 247
+  offset: 0, 0
+  index: -1
+rings5
+  rotate: false
+  xy: 2040, 2
+  size: 448, 312
+  orig: 448, 312
+  offset: 0, 0
+  index: -1
+rings6
+  rotate: false
+  xy: 974, 906
+  size: 390, 213
+  orig: 390, 213
+  offset: 0, 0
+  index: -1
+rings7
+  rotate: false
+  xy: 1559, 639
+  size: 491, 284
+  orig: 491, 284
+  offset: 0, 0
+  index: -1
+rings8
+  rotate: false
+  xy: 1464, 1782
+  size: 264, 142
+  orig: 264, 142
+  offset: 0, 0
+  index: -1
+rings9
+  rotate: false
+  xy: 1822, 1496
+  size: 245, 160
+  orig: 245, 160
+  offset: 0, 0
+  index: -1
+rock1
+  rotate: false
+  xy: 2130, 924
+  size: 283, 283
+  orig: 310, 283
+  offset: 17, 0
+  index: -1
+rock2
+  rotate: false
+  xy: 2107, 1211
+  size: 283, 283
+  orig: 283, 290
+  offset: 0, 0
+  index: -1
+rock3
+  rotate: false
+  xy: 1205, 1693
+  size: 257, 257
+  orig: 257, 257
+  offset: 0, 0
+  index: -1
+rock4
+  rotate: false
+  xy: 1536, 1211
+  size: 284, 284
+  orig: 284, 284
+  offset: 0, 0
+  index: -1
+rock5
+  rotate: false
+  xy: 1844, 925
+  size: 284, 284
+  orig: 284, 284
+  offset: 0, 0
+  index: -1
+sun
   rotate: false
   xy: 2, 2
-  size: 256, 256
-  orig: 256, 256
+  size: 970, 969
+  orig: 970, 970
   offset: 0, 0
-  index: -1
-ginteky
-  rotate: false
-  xy: 514, 518
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-green
-  rotate: false
-  xy: 518, 2
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-jupiter
-  rotate: false
-  xy: 2, 260
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-luna
-  rotate: false
-  xy: 518, 256
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-mars
-  rotate: false
-  xy: 768, 510
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-morado
-  rotate: false
-  xy: 2, 518
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-pipiolo
-  rotate: false
-  xy: 768, 764
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-pluton
-  rotate: false
-  xy: 260, 2
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-purple
-  rotate: false
-  xy: 772, 2
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-saturno
-  rotate: false
-  xy: 772, 256
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-star
-  rotate: false
-  xy: 260, 772
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-tankard
-  rotate: false
-  xy: 260, 260
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-venus
-  rotate: false
-  xy: 2, 776
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
-  index: -1
-west
-  rotate: false
-  xy: 514, 772
-  size: 252, 252
-  orig: 256, 256
-  offset: 2, 2
   index: -1
