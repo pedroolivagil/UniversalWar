@@ -23,6 +23,7 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUi;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getUserID;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUserLast;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUserName;
 
@@ -34,6 +35,7 @@ public class MainMenuScreen extends GeneralScreen {
     public static ImageGame imageOn;
     public static ImageGame imageOff;
     public static Group _groupSound;
+    private LabelGame welLabel;
 
     public MainMenuScreen(UniversalWarGame game) {
         super(game);
@@ -171,8 +173,10 @@ public class MainMenuScreen extends GeneralScreen {
         table.setHeight(getScreenHeight());
         table.setOrigin(getScreenWidth() / 2, getScreenHeight() / 2);
 
+        welLabel = new LabelGame("", .35f, ColorGame.WHITE);
+
         table.row().padBottom(10);
-        table.add(new LabelGame(getString("welcome") + ", " + getUserName() + " " + getUserLast(), .35f, ColorGame.WHITE)).height(start.getHeight() * start.getScale()).padLeft(25);
+        table.add(welLabel).height(start.getHeight() * start.getScale()).padLeft(25);
         table.row().padBottom(10);
         table.add(start).height(start.getHeight() * start.getScale());
         table.row().padBottom(10);
@@ -203,6 +207,11 @@ public class MainMenuScreen extends GeneralScreen {
             if (!getEnviromentQuiet().isPlaying()) {
                 getEnviromentQuiet().play();
             }
+        }
+        if (getUserID() > 0) {
+            welLabel.setText(getString("welcome") + ", " + getUserName() + " " + getUserLast());
+        } else {
+            welLabel.setText("");
         }
     }
 }

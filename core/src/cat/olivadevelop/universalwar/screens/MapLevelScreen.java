@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.async.AsyncTask;
 
 import java.sql.ResultSet;
@@ -27,18 +28,25 @@ import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.ImageGame;
 import cat.olivadevelop.universalwar.tools.LabelGame;
 import cat.olivadevelop.universalwar.tools.Listener;
+import cat.olivadevelop.universalwar.tools.TextFieldGame;
 
 import static cat.olivadevelop.universalwar.screens.history.PreferenceStory.getWorld;
+import static cat.olivadevelop.universalwar.tools.GameLogic.encrypt;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getBotonMenu2Drawable;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getEnviromentQuiet;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getNumberFormated;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getPlanets;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin_mini;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUi;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUserID;
+import static cat.olivadevelop.universalwar.tools.GameLogic.setUserID;
+import static cat.olivadevelop.universalwar.tools.GameLogic.setUserLast;
+import static cat.olivadevelop.universalwar.tools.GameLogic.setUserMail;
+import static cat.olivadevelop.universalwar.tools.GameLogic.setUserName;
 
 /**
  * Created by onion on 25/02/2016.
@@ -52,6 +60,8 @@ public class MapLevelScreen extends GeneralScreen {
     private Table tSup;
     private Table tCentral;
     private Table tBottm;
+    private TextFieldGame tfMail;
+    private TextFieldGame tfPass;
 
     public MapLevelScreen(UniversalWarGame game) {
         super(game);
@@ -66,61 +76,101 @@ public class MapLevelScreen extends GeneralScreen {
     @Override
     public void show() {
         super.show();
-        setDialog();
+        setDialog(getString("lLoad"));
         showDialog();
         setHudMenu();
         AsyncGame async = new AsyncGame(this);
         async.submit(new AsyncTask<Object>() {
             @Override
             public Object call() throws Exception {
-                ConnectDB conn = new ConnectDB();
-                user_points = conn.query("SELECT SUM(total_points) FROM uw_levels_customer WHERE state != 0 AND id_customer = " + getUserID());
-                current_level = conn.query("SELECT * FROM uw_levels_customer WHERE state = 0 AND id_customer = " + getUserID());
-                try {
-                    if (current_level.next()) {
-                        Gdx.app.log("USER WORLD", "" + current_level.getInt("world"));
-                        Gdx.app.log("USER LEVEL", "" + current_level.getInt("level"));
-                        LevelManager.WORLD = current_level.getInt("world");
-                        levelProperties = new PreferenceStory(GameLogic.getLevelManager().getCurrentLevel(current_level.getInt("level")));
-                        Gdx.app.log("WORLD ID", "" + getWorld().get(LevelManager.WORLD - 1).getInt("world_id"));
-                        hideDialog();
-                        int p;
-                        if (user_points.next()) {
-                            p = user_points.getInt(1);
+                if (getUserID() > 0) {
+                    ConnectDB conn = new ConnectDB();
+                    user_points = conn.query("SELECT SUM(total_points) FROM uw_levels_customer WHERE state != 0 AND id_customer = " + getUserID());
+                    current_level = conn.query("SELECT * FROM uw_levels_customer WHERE state = 0 AND id_customer = " + getUserID());
+                    try {
+                        if (current_level.next()) {
+                            Gdx.app.log("USER WORLD", "" + current_level.getInt("world"));
+                            Gdx.app.log("USER LEVEL", "" + current_level.getInt("level"));
+                            LevelManager.WORLD = current_level.getInt("world");
+                            levelProperties = new PreferenceStory(GameLogic.getLevelManager().getCurrentLevel(current_level.getInt("level")));
+                            Gdx.app.log("WORLD ID", "" + getWorld().get(LevelManager.WORLD - 1).getInt("world_id"));
+                            hideDialog();
+                            int p;
+                            if (user_points.next()) {
+                                p = user_points.getInt(1);
+                            } else {
+                                p = 0;
+                            }
+                            showHudMenu(p, getWorld().get(LevelManager.WORLD - 1).getInt("world_id"), current_level.getInt("level"));
                         } else {
-                            p = 0;
-                        }
-                        showHudMenu(p, getWorld().get(LevelManager.WORLD - 1).getInt("world_id"), current_level.getInt("level"));
-                    } else {
-                        // cambiamos texto del dialog y mostramos boton de volver al inicio
-                        ButtonGame back = new ButtonGame(getString("windowTbBack"), .5f);
-                        ButtonGame retry = new ButtonGame(getString("GO_btTryAgain"), .5f);
-                        retry.addListener(new Listener() {
-                            @Override
-                            public void action() {
-                                getGame().setScreen(getGame()._mapLevelScreen);
-                            }
-                        });
-                        back.addListener(new Listener() {
-                            @Override
-                            public void action() {
-                                getGame().setScreen(getGame()._mainMenuScreen);
-                            }
-                        });
-                        retry.setX(280);
-                        back.setX(15);
-                        back.setY(15);
-                        retry.setY(15);
+                            setDialog(getString("lFailLoad"));
+                            // cambiamos texto del dialog y mostramos boton de volver al inicio
+                            ButtonGame back = new ButtonGame(getString("windowTbBack"), .5f);
+                            ButtonGame retry = new ButtonGame(getString("GO_btTryAgain"), .5f);
+                            retry.addListener(new Listener() {
+                                @Override
+                                public void action() {
+                                    getGame().setScreen(getGame()._mapLevelScreen);
+                                }
+                            });
+                            back.addListener(new Listener() {
+                                @Override
+                                public void action() {
+                                    getGame().setScreen(getGame()._mainMenuScreen);
+                                }
+                            });
+                            retry.setX(280);
+                            back.setX(15);
+                            back.setY(15);
+                            retry.setY(15);
 
-                        dialog.addActor(retry);
-                        dialog.addActor(back);
-                        dialog.setHeight(220);
-                        dialog.setWidth(600);
-                        dialog.setX(getScreenWidth() / 2 - dialog.getWidth() / 2);
-                        dialog.setY(getScreenHeight() / 2 - dialog.getHeight() / 2);
+                            dialog.addActor(retry);
+                            dialog.addActor(back);
+                            dialog.setHeight(220);
+                            dialog.setWidth(600);
+                            dialog.setX(getScreenWidth() / 2 - dialog.getWidth() / 2);
+                            dialog.setY(getScreenHeight() / 2 - dialog.getHeight() / 2);
+                            showDialog();
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                } else {
+                    hideDialog();
+                    setDialog(getString("lFirstLogin"));
+                    tfMail = new TextFieldGame(getString("lMail"));
+                    tfMail.setMaxLength(125);
+
+                    tfPass = new TextFieldGame(getString("lPass"));
+                    tfPass.setPasswordMode(true);
+                    tfPass.setPasswordCharacter('*');
+
+                    ButtonGame btnSignIn = new ButtonGame(getString("btnSign"), .5f);
+                    btnSignIn.setWidth(700);
+                    btnSignIn.addListener(new Listener() {
+                        @Override
+                        public void action() {
+                            if (!tfMail.getText().equals("") && !tfPass.getText().equals("")) {
+                                //SettingsScreen.backScreen = getGame()._mapLevelScreen;
+                                signIn();
+                            }
+                        }
+                    });
+
+                    Table tLogin = new Table(getSkin());
+                    tLogin.setWidth(getScreenWidth());
+                    tLogin.setHeight(450);
+                    tLogin.setY(getScreenHeight() / 2 - tLogin.getHeight() / 2);
+                    tLogin.setBackground(getBotonMenu2Drawable());
+                    tLogin.row().expandX().pad(10);
+                    tLogin.add(new LabelGame(getString("btnSign"), .5f)).center();
+                    tLogin.row().height(80).width(600);
+                    tLogin.add(tfMail).expand();
+                    tLogin.row().height(80).width(600);
+                    tLogin.add(tfPass).expand();
+                    tLogin.row().height(80).expandX().padBottom(50);
+                    tLogin.add(btnSignIn).center().padRight(31);
+                    getStage().addActor(tLogin);
                 }
                 return true;
             }
@@ -244,10 +294,10 @@ public class MapLevelScreen extends GeneralScreen {
         }
     }
 
-    public void setDialog() {
+    public void setDialog(String str) {
         dialog = new Dialog("", getSkin_mini());
         dialog.setBackground(new NinePatchDrawable(new NinePatch(getUi("bg_bar_blue"), 9, 9, 9, 9)));
-        dialog.text(getString("lLoad"));
+        dialog.text(str);
         ipauseBG = new ImageGame(getUi("black"), 0, 0, getScreenWidth(), getScreenHeight());
         getStage().addActor(ipauseBG);
         hideDialog();
@@ -262,4 +312,47 @@ public class MapLevelScreen extends GeneralScreen {
         ipauseBG.setVisible(false);
         dialog.hide();
     }
+
+    public void signIn() {
+        setDialog(getString("lSignIn"));
+        showDialog();
+        AsyncGame async = new AsyncGame(this);
+        async.submit(new AsyncTask<Object>() {
+            @Override
+            public Object call() throws Exception {
+                String mail = tfMail.getText();
+                String pass = encrypt(tfPass.getText());
+                String bd_pass;
+                try {
+                    ConnectDB conn = new ConnectDB();
+                    ResultSet query = conn.query("SELECT id_customer, firstname, lastname, email, passwd FROM ps_customer WHERE email LIKE '" + mail + "'");
+                    if (query.next()) {
+                        bd_pass = query.getString("passwd");
+                        if (pass.equals(bd_pass)) {
+                            setUserID(query.getInt("id_customer"));
+                            setUserName(query.getString("firstname"));
+                            setUserLast(query.getString("lastname"));
+                            setUserMail(query.getString("email"));
+                            Gdx.app.log("SignIn", "TRUE");
+                            Timer t = new Timer();
+                            t.scheduleTask(new Timer.Task() {
+                                @Override
+                                public void run() {
+                                    hideDialog();
+                                    getGame().setScreen(getGame()._mapLevelScreen);
+                                }
+                            }, 2, 0, 0);
+                            t.start();
+                        } else {
+                            Gdx.app.log("SignIn", "FALSE");
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
+    }
+
 }

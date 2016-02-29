@@ -1,7 +1,6 @@
 package cat.olivadevelop.universalwar;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 
 import java.net.InetAddress;
 import java.security.MessageDigest;
@@ -16,18 +15,19 @@ import cat.olivadevelop.universalwar.screens.SettingsScreen;
 import cat.olivadevelop.universalwar.screens.SignUpScreen;
 import cat.olivadevelop.universalwar.screens.SplashScreen;
 import cat.olivadevelop.universalwar.tools.GameLogic;
+import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.Publicidad;
 
 public class UniversalWarGame extends Game {
-    public Screen _splashScreen;
-    public Screen _mainMenuScreen;
-    public Screen _gameArcadeScreen;
-    public Screen _gameHistoryScreen;
-    public Screen _highScoreScreen;
-    public Screen _gameOverScreen;
-    public Screen _settingsScreen;
-    public Screen _signUpScreen;
-    public Screen _mapLevelScreen;
+    public GeneralScreen _splashScreen;
+    public GeneralScreen _mainMenuScreen;
+    public GeneralScreen _gameArcadeScreen;
+    public GeneralScreen _gameHistoryScreen;
+    public GeneralScreen _highScoreScreen;
+    public GeneralScreen _gameOverScreen;
+    public GeneralScreen _settingsScreen;
+    public GeneralScreen _signUpScreen;
+    public GeneralScreen _mapLevelScreen;
     public Publicidad actionResolver = null;
     private String idDevice;
 

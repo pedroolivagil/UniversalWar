@@ -43,7 +43,8 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setUserName;
  */
 public class SettingsScreen extends GeneralScreen {
 
-    Table tableContent;
+    public static GeneralScreen backScreen;
+    private Table tableContent;
     private TextFieldGame tfPass;
     private TextFieldGame tfMail;
     private ButtonGame btnSignIn;
@@ -60,7 +61,11 @@ public class SettingsScreen extends GeneralScreen {
     @Override
     public void actionBackButton() {
         super.actionBackButton();
-        getGame().setScreen(getGame()._mainMenuScreen);
+        if (backScreen != null) {
+            getGame().setScreen(backScreen);
+        } else {
+            getGame().setScreen(getGame()._mainMenuScreen);
+        }
     }
 
     @Override
@@ -186,7 +191,7 @@ public class SettingsScreen extends GeneralScreen {
         tableContent.add(btnSignOut).center().padRight(20);
     }
 
-    private void signIn() {
+    public void signIn() {
         showDialog();
         AsyncGame async = new AsyncGame(this);
         async.submit(new AsyncTask<Object>() {
