@@ -9,15 +9,14 @@ import com.badlogic.gdx.utils.JsonValue;
  */
 public class PreferenceStory {
 
+    private static JsonValue world;
     private final String KILLBOSS = "kill_boss";
     private final String KILLMEGABOSS = "kill_megaboss";
     private final String KILLSUPERBOSS = "kill_superboss";
     private final String KILLENEMY = "kill_enemys";
     private final String SURVIVE = "survive";
     private final String XTREMSURVIVE = "xtrem_survive";
-
     private JsonValue data;
-    private static JsonValue world;
     private int id_level;
 
     private int basic;
@@ -81,16 +80,16 @@ public class PreferenceStory {
         this.max_adv_into_group = data.getInt("max_advan_into_group");
     }
 
-    public int getId_level() {
-        return id_level;
-    }
-
     public static JsonValue getWorld() {
         return world;
     }
 
     public static void setWorld(JsonValue world) {
         PreferenceStory.world = world;
+    }
+
+    public int getId_level() {
+        return id_level;
     }
 
     public int getTimerate_basic() {

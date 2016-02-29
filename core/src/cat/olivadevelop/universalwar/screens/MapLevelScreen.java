@@ -218,14 +218,23 @@ public class MapLevelScreen extends GeneralScreen {
         for (int x = 0; x < totl_lvls.size; x++) {
             curr_lvl = totl_lvls.get(x);
             String str = (curr_lvl.getInt("id_level") < userlvl) ? "tick" : (curr_lvl.getInt("id_level") == userlvl) ? "lock2" : "lock";
+            String bg = (curr_lvl.getInt("id_level") < userlvl) ? "bg_bar_green" : (curr_lvl.getInt("id_level") == userlvl) ? "bg_bar_purple" : "bg_bar_marine";
             ImageGame i = new ImageGame(getUi(str));
             Table t1 = new Table();
-            t1.background(new TextureRegionDrawable(new TextureRegion(getUi("bg_bar_blue"))));
-            //t1.background(new TextureRegionDrawable(new TextureRegion(getUi("black"))));
+            t1.background(new TextureRegionDrawable(new TextureRegion(getUi(bg))));
             t1.row().padTop(20);
             t1.add(i).padBottom(-20);
             t1.row();
             t1.add(new LabelGame(getNumberFormated(curr_lvl.getInt("reward_points")), .3f)).pad(10).padBottom(-10);
+            if (curr_lvl.getInt("id_level") == userlvl) {
+                t1.addListener(new Listener() {
+                    @Override
+                    public void action() {
+                        super.action();
+                        getGame().setScreen(getGame()._levelScreen);
+                    }
+                });
+            }
             tables[x] = t1;
         }
         return tables;

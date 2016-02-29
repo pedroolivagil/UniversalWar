@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import cat.olivadevelop.universalwar.actors.allied.Allied;
 import cat.olivadevelop.universalwar.actors.shields.Shield;
-import cat.olivadevelop.universalwar.screens.GameHistoryScreen;
 import cat.olivadevelop.universalwar.screens.MainMenuScreen;
+import cat.olivadevelop.universalwar.screens.history.LevelScreen;
 import cat.olivadevelop.universalwar.screens.history.PreferenceStory;
 import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.ColorGame;
@@ -38,7 +38,7 @@ public class HUDHistory extends HUD {
     private final ImageGame ipauseBG;
     private PreferenceStory storyPrefs;
     private Table tBottom;
-    private GameHistoryScreen scn;
+    private LevelScreen scn;
     private LabelGame lblTime;
     private Group gHealth;
     private ImageGame hBarBg;
@@ -63,7 +63,7 @@ public class HUDHistory extends HUD {
 
     public HUDHistory(GeneralScreen screen, PreferenceStory storyPrefs) {
         super(screen);
-        this.scn = (GameHistoryScreen) screen;
+        this.scn = (LevelScreen) screen;
         this.storyPrefs = storyPrefs;
         setTimeDefault();
         settBottom();

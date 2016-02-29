@@ -6,7 +6,6 @@ import java.net.InetAddress;
 import java.security.MessageDigest;
 
 import cat.olivadevelop.universalwar.screens.GameArcadeScreen;
-import cat.olivadevelop.universalwar.screens.GameHistoryScreen;
 import cat.olivadevelop.universalwar.screens.GameOverScreen;
 import cat.olivadevelop.universalwar.screens.MainMenuScreen;
 import cat.olivadevelop.universalwar.screens.MapLevelScreen;
@@ -14,6 +13,7 @@ import cat.olivadevelop.universalwar.screens.ScoreScreen;
 import cat.olivadevelop.universalwar.screens.SettingsScreen;
 import cat.olivadevelop.universalwar.screens.SignUpScreen;
 import cat.olivadevelop.universalwar.screens.SplashScreen;
+import cat.olivadevelop.universalwar.screens.history.LevelScreen;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.Publicidad;
@@ -22,12 +22,12 @@ public class UniversalWarGame extends Game {
     public GeneralScreen _splashScreen;
     public GeneralScreen _mainMenuScreen;
     public GeneralScreen _gameArcadeScreen;
-    public GeneralScreen _gameHistoryScreen;
     public GeneralScreen _highScoreScreen;
     public GeneralScreen _gameOverScreen;
     public GeneralScreen _settingsScreen;
     public GeneralScreen _signUpScreen;
     public GeneralScreen _mapLevelScreen;
+    public GeneralScreen _levelScreen;
     public Publicidad actionResolver = null;
     private String idDevice;
 
@@ -91,9 +91,9 @@ public class UniversalWarGame extends Game {
         _highScoreScreen = new ScoreScreen(this);
         _gameOverScreen = new GameOverScreen(this);
         _settingsScreen = new SettingsScreen(this);
-        _gameHistoryScreen = new GameHistoryScreen(this);
         _signUpScreen = new SignUpScreen(this);
         _mapLevelScreen = new MapLevelScreen(this);
+        _levelScreen = new LevelScreen(this);
 
         setScreen(_splashScreen);
     }

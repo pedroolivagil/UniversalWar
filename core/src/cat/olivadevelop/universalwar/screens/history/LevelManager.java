@@ -25,11 +25,11 @@ public class LevelManager {
         arr_levels = world_sel.get("level");
     }
 
-    public JsonValue getCurrentLevel(int currentLevel) {
-        return arr_levels.get((currentLevel - 1));
-    }
-
     public static JsonValue getArr_levels() {
         return arr_levels;
+    }
+
+    public JsonValue getCurrentLevel(int currentLevel) {
+        return arr_levels.get((currentLevel - 1));
     }
 }

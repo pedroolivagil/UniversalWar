@@ -1,4 +1,4 @@
-package cat.olivadevelop.universalwar.screens;
+package cat.olivadevelop.universalwar.screens.history;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +15,7 @@ import cat.olivadevelop.universalwar.actors.shields.ShieldGold;
 import cat.olivadevelop.universalwar.actors.shields.ShieldSilver;
 import cat.olivadevelop.universalwar.actors.ui.HUDHistory;
 import cat.olivadevelop.universalwar.actors.ui.Planet;
-import cat.olivadevelop.universalwar.screens.history.PreferenceStory;
+import cat.olivadevelop.universalwar.screens.MainMenuScreen;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 
@@ -26,14 +26,13 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setScoreGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeGame;
 
 /**
- * Created by Oliva on 12/12/2015.
+ * Created by onion on 29/02/2016.
  */
-public class GameHistoryScreen extends GeneralScreen {
-
+public class LevelScreen extends GeneralScreen {
     private static Hurricane ship;
     private PreferenceStory storyPrefs;
 
-    public GameHistoryScreen(UniversalWarGame game) {
+    public LevelScreen(UniversalWarGame game) {
         super(game);
     }
 
@@ -78,6 +77,51 @@ public class GameHistoryScreen extends GeneralScreen {
             getEnviromentQuiet().setVolume(VOLUME_5);
             getEnviromentQuiet().play();
         }
+    }
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(26f / 255, 26f / 255, 37f / 255, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        getStage().draw();
+        if (!GameLogic.isPause()) {
+            getStage().act(delta);
+        }
+        if (!_groupAllied.hasChildren()) {
+            //_hudArcade.showWindowGameOver();
+        }
+        addPlanets();
+        addEnemies();
+        MainMenuScreen.checkAudio();
+        if (!GameLogic.isAudioOn()) {
+            getEnviromentQuiet().pause();
+        } else {
+            if (!getEnviromentQuiet().isPlaying()) {
+                getEnviromentQuiet().play();
+            }
+        }
+    }
+
+    @Override
+    public void pause() {
+        Timer.instance().stop();
+        _hudHistory.showWindowPause();
+        if (GameLogic.isShowADS()) {
+            getGame().actionResolver.showOrLoadInterstital();
+        }
+        Gdx.app.log("PAUSE", "TRUE");
+    }
+
+    @Override
+    public void resume() {
+        Timer.instance().start();
+        Gdx.app.log("PAUSE", "FALSE");
+    }
+
+    @Override
+    public void hide() {
+        Timer.instance().stop();
+        _hudHistory.showWindowPause();
     }
 
     private void addEnemies() {
@@ -126,50 +170,5 @@ public class GameHistoryScreen extends GeneralScreen {
                 _groupShields.addActor(new ShieldGold(this));
                 break;
         }
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(26f / 255, 26f / 255, 37f / 255, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        getStage().draw();
-        if (!GameLogic.isPause()) {
-            getStage().act(delta);
-        }
-        if (!_groupAllied.hasChildren()) {
-            //_hudArcade.showWindowGameOver();
-        }
-        addPlanets();
-        addEnemies();
-        MainMenuScreen.checkAudio();
-        if (!GameLogic.isAudioOn()) {
-            getEnviromentQuiet().pause();
-        } else {
-            if (!getEnviromentQuiet().isPlaying()) {
-                getEnviromentQuiet().play();
-            }
-        }
-    }
-
-    @Override
-    public void pause() {
-        Timer.instance().stop();
-        _hudHistory.showWindowPause();
-        if (GameLogic.isShowADS()) {
-            getGame().actionResolver.showOrLoadInterstital();
-        }
-        Gdx.app.log("PAUSE", "TRUE");
-    }
-
-    @Override
-    public void resume() {
-        Timer.instance().start();
-        Gdx.app.log("PAUSE", "FALSE");
-    }
-
-    @Override
-    public void hide() {
-        Timer.instance().stop();
-        _hudHistory.showWindowPause();
     }
 }

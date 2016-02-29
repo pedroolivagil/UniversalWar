@@ -4,7 +4,7 @@ filter: Linear,Linear
 repeat: none
 back
   rotate: false
-  xy: 1554, 478
+  xy: 1646, 410
   size: 95, 95
   orig: 95, 95
   offset: 0, 0
@@ -18,14 +18,14 @@ background
   index: -1
 bar_blue
   rotate: false
-  xy: 1641, 104
+  xy: 1452, 478
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 bar_red
   rotate: false
-  xy: 1641, 202
+  xy: 1592, 1075
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
@@ -37,23 +37,44 @@ bg_bar_blue
   orig: 100, 100
   offset: 0, 0
   index: -1
+bg_bar_green
+  rotate: false
+  xy: 1641, 104
+  size: 100, 100
+  orig: 158, 158
+  offset: 29, 29
+  index: -1
+bg_bar_marine
+  rotate: false
+  xy: 1641, 206
+  size: 100, 100
+  orig: 158, 158
+  offset: 29, 29
+  index: -1
+bg_bar_purple
+  rotate: false
+  xy: 1641, 308
+  size: 100, 100
+  orig: 158, 158
+  offset: 29, 29
+  index: -1
 bg_bar_red
   rotate: false
-  xy: 1452, 478
+  xy: 1490, 1075
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 black
   rotate: false
-  xy: 1747, 456
+  xy: 1706, 915
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 blank
   rotate: false
-  xy: 1747, 459
+  xy: 1199, 1015
   size: 1, 1
   orig: 4, 4
   offset: 0, 3
@@ -88,42 +109,28 @@ bubble
   index: -1
 bullet
   rotate: false
-  xy: 1712, 552
+  xy: 1690, 1075
   size: 12, 94
   orig: 12, 94
   offset: 0, 0
   index: -1
-close
-  rotate: false
-  xy: 1345, 1075
-  size: 142, 142
-  orig: 142, 142
-  offset: 0, 0
-  index: -1
-coins
-  rotate: false
-  xy: 724, 1204
-  size: 59, 64
-  orig: 64, 64
-  offset: 3, 0
-  index: -1
 cursor
   rotate: false
-  xy: 785, 1204
+  xy: 724, 1204
   size: 30, 33
   orig: 30, 33
   offset: 0, 0
   index: -1
 lock
   rotate: false
-  xy: 1651, 456
+  xy: 1490, 1177
   size: 94, 94
   orig: 158, 158
   offset: 32, 32
   index: -1
 lock2
   rotate: false
-  xy: 1634, 1175
+  xy: 1586, 1177
   size: 94, 94
   orig: 158, 158
   offset: 32, 32
@@ -134,13 +141,6 @@ logoSplash
   size: 485, 418
   orig: 640, 480
   offset: 73, 36
-  index: -1
-multicoins
-  rotate: false
-  xy: 1621, 326
-  size: 127, 128
-  orig: 128, 128
-  offset: 0, 0
   index: -1
 mute_off
   rotate: false
@@ -165,7 +165,7 @@ shield1
   index: -1
 shield2
   rotate: false
-  xy: 1489, 1075
+  xy: 1345, 1075
   size: 143, 119
   orig: 143, 119
   offset: 0, 0
@@ -186,35 +186,35 @@ shockwave
   index: -1
 speed
   rotate: false
-  xy: 1706, 915
+  xy: 1621, 326
   size: 7, 108
   orig: 7, 108
   offset: 0, 0
   index: -1
 star1
   rotate: false
-  xy: 1641, 300
+  xy: 1646, 507
   size: 25, 24
   orig: 25, 24
   offset: 0, 0
   index: -1
 star2
   rotate: false
-  xy: 1668, 300
+  xy: 756, 1204
   size: 25, 24
   orig: 25, 24
   offset: 0, 0
   index: -1
 star3
   rotate: false
-  xy: 1695, 300
+  xy: 724, 1239
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 tick
   rotate: false
-  xy: 1634, 1075
+  xy: 1550, 478
   size: 94, 98
   orig: 158, 158
   offset: 32, 28
