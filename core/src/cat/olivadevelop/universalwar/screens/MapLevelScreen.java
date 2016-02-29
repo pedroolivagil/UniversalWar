@@ -250,14 +250,16 @@ public class MapLevelScreen extends GeneralScreen {
 
         ImageGame i = new ImageGame(getPlanets(Planet.planets[world_id]));
         int pad = 0;
+        float scale = 1;
         if (i.getWidth() > 700) {
             pad = 20;
+            scale = .8f;
         }
         i.addAction(
                 Actions.forever(
                         Actions.sequence(
-                                Actions.scaleBy(.1f, .1f, .4f),
-                                Actions.scaleTo(1, 1, 1f)
+                                Actions.scaleTo(scale, scale, 1f),
+                                Actions.scaleBy(.1f, .1f, .4f)
                         )
                 )
         );
