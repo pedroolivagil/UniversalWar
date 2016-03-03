@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 
 public class ColorGame extends Color {
+    public static Color ESMERALDA_LIGHT;
+    public static Color ESMERALDA;
     public static Color RED;
     public static Color ORANGE;
     public static Color GREEN;
@@ -49,6 +51,8 @@ public class ColorGame extends Color {
             PURPLE_BULLET = Color.PURPLE;
             STAR_YELLOW = valueOf("fffdde");
             BLUE_HEALTH_BAR = valueOf("3b96d8");
+            ESMERALDA = valueOf("2d997a");
+            ESMERALDA_LIGHT = valueOf("00c78d");
         } else if (theme.equals(GameLogic.COLOR_BWHITE)) {
             RED = valueOf("FFFFFF");
             ORANGE = valueOf("FFFFFF");

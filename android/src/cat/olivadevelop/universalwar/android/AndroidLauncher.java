@@ -38,7 +38,7 @@ public class AndroidLauncher extends AndroidApplication implements Publicidad {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        //initialize(new InvadersGame(), config);
+        //init(new InvadersGame(), config);
         settings = getSharedPreferences(GameLogic.prefsName, MODE_PRIVATE);
 
         RelativeLayout layout = new RelativeLayout(this);

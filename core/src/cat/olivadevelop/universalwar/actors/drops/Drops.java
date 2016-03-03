@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cat.olivadevelop.universalwar.actors.allied.Allied;
+import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.IntersectorGame;
 
@@ -75,7 +76,9 @@ public class Drops extends Image {
                 if (allied.alive && IntersectorGame.overlaps(allied.polygon, rectangle)) {
                     actionsObject();
                     remove();
-                    getSoundPowerUp().play(VOLUME_10);
+                    if (GameLogic.isAudioOn()) {
+                        getSoundPowerUp().play(VOLUME_10);
+                    }
                 }
             }
         }

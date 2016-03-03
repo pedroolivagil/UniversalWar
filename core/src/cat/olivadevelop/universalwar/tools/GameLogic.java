@@ -233,6 +233,26 @@ public abstract class GameLogic implements Disposable {
         return sb.toString();
     }
 
+    public static String zeroFill(int val) {
+        String str = "";
+        if (val < 10) {
+            str += "0";
+        }
+        return str + "" + val;
+    }
+
+    public static String getFormatedTime(int seconds) {
+        int hor, min, seg;
+        hor = seconds / 3600;
+        min = (seconds - (3600 * hor)) / 60;
+        seg = seconds - ((hor * 3600) + (min * 60));
+        if (seconds > 3599) {
+            return zeroFill(hor) + ":" + zeroFill(min) + ":" + zeroFill(seg);
+        } else {
+            return zeroFill(min) + ":" + zeroFill(seg);
+        }
+    }
+
     public static float resizeImg(float anchoOriginal, float altoOriginal, float anchoDeseado) {
         return (anchoDeseado * altoOriginal) / anchoOriginal;
     }
@@ -362,7 +382,7 @@ public abstract class GameLogic implements Disposable {
         return ENVIROMENT_QUIET;
     }
 
-    public static Music getENVIROMENT_EDGY() {
+    public static Music getEnviromentEdgy() {
         return ENVIROMENT_EDGY;
     }
 
@@ -430,6 +450,39 @@ public abstract class GameLogic implements Disposable {
     public static String encrypt(String passwd) {
         String pass = COOKIE_KEY + "" + passwd;
         return getMD5(pass);
+    }
+
+    /**
+     * Separa la frase en palabras.
+     *
+     * @param s La cadena a separar.
+     * @return Cadena en partes.
+     */
+    public static String[] split(String s) {
+        int cp = 0; // Cantidad de palabras
+
+        // Recorremos en busca de espacios
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') { // Si es un espacio
+                cp++; // Aumentamos en uno la cantidad de palabras
+            }
+        }
+
+        // "Este blog es genial" tiene 3 espacios y 3 + 1 palabras
+        String[] partes = new String[cp + 1];
+        for (int i = 0; i < partes.length; i++) {
+            partes[i] = ""; // Se inicializa en "" en lugar de null (defecto)
+        }
+
+        int ind = 0; // Creamos un índice para las palabras
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') { // Si hay un espacio
+                ind++; // Pasamos a la siguiente palabra
+                continue; // Próximo i
+            }
+            partes[ind] += s.charAt(i); // Sino, agregamos el carácter a la palabra actual
+        }
+        return partes; // Devolvemos las partes
     }
 
     public static String getServerData(int pos) {

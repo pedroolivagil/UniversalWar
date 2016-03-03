@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.JsonValue;
@@ -36,10 +37,12 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getBotonMenu2Drawabl
 import static cat.olivadevelop.universalwar.tools.GameLogic.getEnviromentQuiet;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getNumberFormated;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getPlanets;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getPrefs;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin_mini;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin_normal;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUi;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUserID;
@@ -230,8 +233,57 @@ public class MapLevelScreen extends GeneralScreen {
                 t1.addListener(new Listener() {
                     @Override
                     public void action() {
-                        super.action();
-                        getGame().setScreen(getGame()._levelScreen);
+                        String[] story;
+                        StringBuilder str_story = new StringBuilder();
+                        if (!getPrefs().getBoolean("readStory")) {
+                            story = GameLogic.split(getWorld().get(LevelManager.WORLD - 1).getString("story"));
+                            getPrefs().putBoolean("readStory", true);
+                            getPrefs().flush();
+                            for (int x = 0; x < story.length; x++) {
+                                str_story.append(story[x]).append(" ");
+                                if (x % 7 == 0 && x != 0) {
+                                    str_story.append("\n");
+                                }
+                            }
+                        } else {
+                            str_story.append(getString("lStartLevel"));
+                        }
+                        ButtonGame btnContinue = new ButtonGame(getString("lPlay"), .5f);
+                        btnContinue.addListener(new Listener() {
+                            @Override
+                            public void action() {
+                                getGame().setScreen(getGame()._levelScreen);
+                            }
+                        });
+                        ButtonGame btnCancel = new ButtonGame(getString("lCancel"), .5f);
+                        btnCancel.addListener(new Listener() {
+                            @Override
+                            public void action() {
+                                hideDialog();
+                                ipauseBG.setVisible(false);
+                            }
+                        });
+                        btnContinue.setWidth(360);
+                        btnCancel.setWidth(360);
+
+                        LabelGame l = new LabelGame(str_story.toString(), getSkin_normal());
+                        l.setAlignment(Align.top | Align.center);
+                        l.setFontScale(1.3f);
+
+                        Table t = new Table();
+                        t.add(btnContinue).padRight(20);
+                        t.add(btnCancel).padLeft(20);
+
+                        dialog = new Dialog("", getSkin_normal());
+                        dialog.setBackground(new NinePatchDrawable(new NinePatch(getUi("bg_bar_marine"), 9, 9, 9, 9)));
+                        dialog.text(l);
+                        dialog.row();
+                        dialog.add(t);
+                        dialog.show(getStage());
+                        dialog.setY(getScreenHeight() - dialog.getHeight() - 185);
+                        ipauseBG.setVisible(true);
+                        ipauseBG.toFront();
+                        dialog.toFront();
                     }
                 });
             }
@@ -307,7 +359,7 @@ public class MapLevelScreen extends GeneralScreen {
 
     public void setDialog(String str) {
         dialog = new Dialog("", getSkin_mini());
-        dialog.setBackground(new NinePatchDrawable(new NinePatch(getUi("bg_bar_blue"), 9, 9, 9, 9)));
+        dialog.setBackground(new NinePatchDrawable(new NinePatch(getUi("bg_bar_marine"), 9, 9, 9, 9)));
         dialog.text(str);
         ipauseBG = new ImageGame(getUi("black"), 0, 0, getScreenWidth(), getScreenHeight());
         getStage().addActor(ipauseBG);

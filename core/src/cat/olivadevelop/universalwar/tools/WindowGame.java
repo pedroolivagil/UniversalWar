@@ -34,5 +34,6 @@ public class WindowGame extends Window {
         setPosition(GameLogic.getScreenWidth() / 2 - getWidth() / 2, GameLogic.getScreenHeight() / 2 - getHeight() / 2);
         setVisible(false);
         setResizable(false);
+        setMovable(false);
     }
 }

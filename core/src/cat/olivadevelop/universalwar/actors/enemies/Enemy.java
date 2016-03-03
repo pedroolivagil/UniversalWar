@@ -43,6 +43,7 @@ public class Enemy extends GameActor {
     private boolean showLive;
     private float width;
     private boolean boss;
+    private static boolean canShoot;
 
     public Enemy(GeneralScreen screen, TextureRegion tRegion) {
         super(tRegion);
@@ -54,6 +55,7 @@ public class Enemy extends GameActor {
         width = getWidth() * getScaleX();
         showLive = false;
         setBoss(false);
+        setCanShoot(true);
     }
 
     private float calcDegree(float newX, float newY) {
@@ -165,5 +167,13 @@ public class Enemy extends GameActor {
 
     public void setBoss(boolean boss) {
         this.boss = boss;
+    }
+
+    public static boolean isCanShoot() {
+        return canShoot;
+    }
+
+    public static void setCanShoot(boolean b) {
+        canShoot = b;
     }
 }

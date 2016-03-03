@@ -2,6 +2,7 @@ package cat.olivadevelop.universalwar.tools;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import static cat.olivadevelop.universalwar.tools.GameLogic.getSkin;
@@ -13,6 +14,11 @@ public class LabelGame extends Label {
 
     public LabelGame(CharSequence text) {
         super(text, getSkin());
+        setFontScale(1f);
+    }
+
+    public LabelGame(CharSequence text, Skin skin) {
+        super(text, skin);
         setFontScale(1f);
     }
 

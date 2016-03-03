@@ -4,7 +4,7 @@ filter: Linear,Linear
 repeat: none
 back
   rotate: false
-  xy: 1646, 410
+  xy: 1588, 1177
   size: 95, 95
   orig: 95, 95
   offset: 0, 0
@@ -18,14 +18,14 @@ background
   index: -1
 bar_blue
   rotate: false
-  xy: 1452, 478
+  xy: 1641, 206
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 bar_red
   rotate: false
-  xy: 1592, 1075
+  xy: 1490, 1177
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
@@ -39,42 +39,42 @@ bg_bar_blue
   index: -1
 bg_bar_green
   rotate: false
-  xy: 1641, 104
+  xy: 1490, 1075
   size: 100, 100
   orig: 158, 158
   offset: 29, 29
   index: -1
 bg_bar_marine
   rotate: false
-  xy: 1641, 206
+  xy: 1452, 478
   size: 100, 100
   orig: 158, 158
   offset: 29, 29
   index: -1
 bg_bar_purple
   rotate: false
-  xy: 1641, 308
+  xy: 1641, 104
   size: 100, 100
   orig: 158, 158
   offset: 29, 29
   index: -1
 bg_bar_red
   rotate: false
-  xy: 1490, 1075
+  xy: 1592, 1075
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 black
   rotate: false
-  xy: 1706, 915
+  xy: 1743, 2
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 blank
   rotate: false
-  xy: 1199, 1015
+  xy: 1743, 5
   size: 1, 1
   orig: 4, 4
   offset: 0, 3
@@ -109,7 +109,7 @@ bubble
   index: -1
 bullet
   rotate: false
-  xy: 1690, 1075
+  xy: 1621, 326
   size: 12, 94
   orig: 12, 94
   offset: 0, 0
@@ -123,14 +123,14 @@ cursor
   index: -1
 lock
   rotate: false
-  xy: 1490, 1177
+  xy: 1650, 304
   size: 94, 94
   orig: 158, 158
   offset: 32, 32
   index: -1
 lock2
   rotate: false
-  xy: 1586, 1177
+  xy: 1650, 400
   size: 94, 94
   orig: 158, 158
   offset: 32, 32
@@ -186,35 +186,42 @@ shockwave
   index: -1
 speed
   rotate: false
-  xy: 1621, 326
+  xy: 1641, 304
   size: 7, 108
   orig: 7, 108
   offset: 0, 0
   index: -1
 star1
   rotate: false
-  xy: 1646, 507
+  xy: 756, 1204
   size: 25, 24
   orig: 25, 24
   offset: 0, 0
   index: -1
 star2
   rotate: false
-  xy: 756, 1204
+  xy: 724, 1239
   size: 25, 24
   orig: 25, 24
   offset: 0, 0
   index: -1
 star3
   rotate: false
-  xy: 724, 1239
+  xy: 783, 1204
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
+target
+  rotate: false
+  xy: 1650, 496
+  size: 93, 94
+  orig: 158, 158
+  offset: 33, 32
+  index: -1
 tick
   rotate: false
-  xy: 1550, 478
+  xy: 1554, 478
   size: 94, 98
   orig: 158, 158
   offset: 32, 28

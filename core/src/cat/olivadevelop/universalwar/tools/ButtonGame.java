@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUi;
 
@@ -58,5 +59,11 @@ public class ButtonGame extends Group {
         super.setWidth(width * getScale());
         image.setWidth(width + (width * .1f));
         label.setX(image.getWidth() / 2 - label.getWidth() / 2);
+    }
+
+    public ButtonGame center() {
+        label.setAlignment(Align.center);
+        image.setAlign(Align.center);
+        return this;
     }
 }

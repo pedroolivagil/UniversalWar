@@ -1,7 +1,11 @@
 package cat.olivadevelop.universalwar.screens.history;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonValue;
+
+import cat.olivadevelop.universalwar.tools.GameLogic;
+
+import static cat.olivadevelop.universalwar.tools.GameLogic.getNumberFormated;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 
 /**
  * edita y perfecciona la salida y entrada de los datos.
@@ -10,12 +14,12 @@ import com.badlogic.gdx.utils.JsonValue;
 public class PreferenceStory {
 
     private static JsonValue world;
-    private final String KILLBOSS = "kill_boss";
-    private final String KILLMEGABOSS = "kill_megaboss";
-    private final String KILLSUPERBOSS = "kill_superboss";
-    private final String KILLENEMY = "kill_enemys";
-    private final String SURVIVE = "survive";
-    private final String XTREMSURVIVE = "xtrem_survive";
+    public final String KILLBOSS = "kill_boss";
+    public final String KILLMEGABOSS = "kill_megaboss";
+    public final String KILLSUPERBOSS = "kill_superboss";
+    public final String KILLENEMY = "kill_enemys";
+    public final String SURVIVE = "survive";
+    public final String XTREMSURVIVE = "xtrem_survive";
     private JsonValue data;
     private int id_level;
 
@@ -47,7 +51,7 @@ public class PreferenceStory {
     private boolean powerup_supermissile;
     private boolean powerup_shooter;
 
-    private int target;
+    private JsonValue targets;
     private int[] opt_target;
 
     public PreferenceStory(JsonValue data) {
@@ -201,39 +205,44 @@ public class PreferenceStory {
     public void setSuperboss() {
     }
 
-    public int getTarget() {
-        return target;
+    public JsonValue getTargets() {
+        return targets;
     }
 
     public void setTarget() {
         // leemos los objetivos del nivel y implementamos un array a medida para
         // validar si el usuario ha ganado o no
+        targets = this.data.get("main_target");
+    }
 
-        JsonValue t = this.data.get("main_target");
-        for (int x = 0; x < t.size; x++) {
-            JsonValue tmp = t.get(x);
-            String key = tmp.name();
-            int value = this.data.get("main_target").getInt(key);
-
-            if (key.equals(KILLENEMY)) {
-                Gdx.app.log("Target", "" + key + " -> " + value);
-            }
-            if (key.equals(KILLBOSS)) {
-                Gdx.app.log("Target", "" + key + " -> " + value);
-            }
-            if (key.equals(KILLMEGABOSS)) {
-                Gdx.app.log("Target", "" + key + " -> " + value);
-            }
-            if (key.equals(KILLSUPERBOSS)) {
-                Gdx.app.log("Target", "" + key + " -> " + value);
-            }
-            if (key.equals(SURVIVE)) {
-                Gdx.app.log("Target", "" + key + " -> " + value);
-            }
-            if (key.equals(XTREMSURVIVE)) {
-                Gdx.app.log("Target", "" + key + " -> " + value);
-            }
+    public String[] getStringTarget(String key, int value) {
+        String target_name = "";
+        String target_value = "";
+        if (key.equals(KILLENEMY)) {
+            target_name = getString("target_kill_enemys");
+            target_value = getNumberFormated(value) + " " + getString("target_num");
         }
+        if (key.equals(KILLBOSS)) {
+            target_name = getString("target_kill_boss");
+            target_value = getNumberFormated(value);
+        }
+        if (key.equals(KILLMEGABOSS)) {
+            target_name = getString("target_kill_megaboss");
+            target_value = getNumberFormated(value);
+        }
+        if (key.equals(KILLSUPERBOSS)) {
+            target_name = getString("target_kill_superboss");
+            target_value = getNumberFormated(value);
+        }
+        if (key.equals(SURVIVE)) {
+            target_name = getString("target_survive");
+            target_value = GameLogic.getFormatedTime(value) + " " + getString("target_mins");
+        }
+        if (key.equals(XTREMSURVIVE)) {
+            target_name = getString("target_xtrem_survive");
+            target_value = " " + getString("target_mins");
+        }
+        return new String[]{target_name, target_value};
     }
 
     public int[] getOpt_target() {
@@ -245,5 +254,9 @@ public class PreferenceStory {
         if (t.toString().equals("kill_enemys")) {
             Gdx.app.log("Opt Target", "" + t.toString());
         }*/
+    }
+
+    public JsonValue getData() {
+        return data;
     }
 }
