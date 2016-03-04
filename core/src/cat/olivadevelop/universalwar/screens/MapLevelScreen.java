@@ -215,7 +215,6 @@ public class MapLevelScreen extends GeneralScreen {
 
     public Table[] generateTables(int userlvl, int id_world) {
         JsonValue totl_lvls = LevelManager.getArr_levels();
-        Gdx.app.log("totl_lvls", "" + totl_lvls);
         JsonValue curr_lvl;
         Table[] tables = new Table[6];
         for (int x = 0; x < totl_lvls.size; x++) {

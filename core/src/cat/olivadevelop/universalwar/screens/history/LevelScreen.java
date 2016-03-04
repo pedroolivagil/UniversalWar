@@ -115,7 +115,6 @@ public class LevelScreen extends GeneralScreen {
                         LevelManager.WORLD = current_level.getInt("world");
                         hideDialog();
                         content(current_level.getInt("level"));
-                        Gdx.app.log("Story prefs", "" + storyPrefs);
                         Timer.schedule(new Timer.Task() {
                             @Override
                             public void run() {
@@ -182,7 +181,7 @@ public class LevelScreen extends GeneralScreen {
                                     int level = current_level.getInt("level");
                                     int world = current_level.getInt("world");
                                     ConnectDB conn = new ConnectDB();
-                                    conn.insert("UPDATE uw_levels_customer SET state = 1, total_points = " + getScoreGame() + storyPrefs.getReward() + ", date_update = NOW(), time_game = " + getTimeGame() + "  WHERE id_level_customer = " + id_level);
+                                    conn.insert("UPDATE uw_levels_customer SET state = 1, total_points = " + ((getScoreGame() + storyPrefs.getReward())) + ", date_update = NOW(), time_game = " + getTimeGame() + "  WHERE id_level_customer = " + id_level);
                                     if (level % 6 == 0) {
                                         world += 1;
                                         getPrefs().putBoolean("readStory", false);
