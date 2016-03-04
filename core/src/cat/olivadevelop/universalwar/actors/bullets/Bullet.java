@@ -142,7 +142,7 @@ public class Bullet extends Image {
                     allied = (Allied) a;
                     if (allied.alive && IntersectorGame.overlaps(allied.polygon, circle)) {
                         if (Enemy.isCanShoot()) {
-                            //allied.kicked(getDamage());
+                            allied.kicked(getDamage());
                         }
                         removeBullet();
                     }
