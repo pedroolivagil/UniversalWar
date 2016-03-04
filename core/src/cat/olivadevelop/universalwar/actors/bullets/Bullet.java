@@ -94,6 +94,36 @@ public class Bullet extends Image {
                     }
                 }
             }
+            if (screen._bossGroup.hasChildren()) {
+                Enemy enemy;
+                for (Actor a : screen._bossGroup.getChildren()) {
+                    enemy = (Enemy) a;
+                    if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {//Bala inpacta en enemic
+                        enemy.kicked(getDamage());
+                        removeBullet();
+                    }
+                }
+            }
+            if (screen._megaBossGroup.hasChildren()) {
+                Enemy enemy;
+                for (Actor a : screen._megaBossGroup.getChildren()) {
+                    enemy = (Enemy) a;
+                    if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {//Bala inpacta en enemic
+                        enemy.kicked(getDamage());
+                        removeBullet();
+                    }
+                }
+            }
+            if (screen._superBossGroup.hasChildren()) {
+                Enemy enemy;
+                for (Actor a : screen._superBossGroup.getChildren()) {
+                    enemy = (Enemy) a;
+                    if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {//Bala inpacta en enemic
+                        enemy.kicked(getDamage());
+                        removeBullet();
+                    }
+                }
+            }
         } else {
             Shield shield;
             Allied allied;
@@ -112,7 +142,7 @@ public class Bullet extends Image {
                     allied = (Allied) a;
                     if (allied.alive && IntersectorGame.overlaps(allied.polygon, circle)) {
                         if (Enemy.isCanShoot()) {
-                            allied.kicked(getDamage());
+                            //allied.kicked(getDamage());
                         }
                         removeBullet();
                     }

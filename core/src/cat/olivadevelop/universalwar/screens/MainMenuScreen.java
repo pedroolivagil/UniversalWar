@@ -96,7 +96,7 @@ public class MainMenuScreen extends GeneralScreen {
             getEnviromentQuiet().play();
         }
         buttonMute();
-        getGame().setScreen(getGame()._mapLevelScreen);
+        //getGame().setScreen(getGame()._mapLevelScreen);
     }
 
     private void buttonMute() {

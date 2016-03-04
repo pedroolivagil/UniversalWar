@@ -11,4 +11,8 @@ public class AsyncGame extends AsyncExecutor {
     public AsyncGame(GeneralScreen screen) {
         super(300);
     }
+
+    public AsyncGame() {
+        super(300);
+    }
 }

@@ -20,6 +20,7 @@ public abstract class Allied extends GameActor {
     public static float y;
     protected static int health = 0;
     protected static int maxHealth = 0;
+    private static boolean canShoot;
     public Fire fire;
     float dir; // direccion de la nave
     GeneralScreen screen;
@@ -35,6 +36,7 @@ public abstract class Allied extends GameActor {
         setPosition((GameLogic.getScreenWidth() - getWidth()) / 2, -getHeight());
         enter();
         setActive(true);
+        setCanShoot(true);
     }
 
     public static int getHealth() {
@@ -56,6 +58,14 @@ public abstract class Allied extends GameActor {
                 health += 1;
             }
         }
+    }
+
+    public static boolean isCanShoot() {
+        return canShoot;
+    }
+
+    public static void setCanShoot(boolean b) {
+        canShoot = b;
     }
 
     public boolean isActive() {
@@ -96,7 +106,9 @@ public abstract class Allied extends GameActor {
                 }
                 if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                     if (screen._groupAllied.hasChildren()) {
-                        shoot();
+                        if (isCanShoot()) {
+                            shoot();
+                        }
                     }
                 }
             }

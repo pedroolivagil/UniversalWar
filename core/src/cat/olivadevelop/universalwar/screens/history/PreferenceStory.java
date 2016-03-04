@@ -25,9 +25,9 @@ public class PreferenceStory {
 
     private int basic;
     private int advanced;
-    private int boss;
-    private int megaboss;
-    private int superboss;
+    private JsonValue boss;
+    private JsonValue megaboss;
+    private JsonValue superboss;
 
     private int timerate_basic;
     private int timerate_advanced;
@@ -41,8 +41,8 @@ public class PreferenceStory {
     private int reward;
 
     private int ship_health;
-    private boolean ship_can_shoot;
     private int ship_shield;
+    private boolean ship_can_shoot;
 
     private boolean powerup_health;
     private boolean powerup_shield;
@@ -60,9 +60,7 @@ public class PreferenceStory {
         setOpt_target();
         setBasic(data.getInt("basic_enemys"));
         setAdvanced(data.getInt("advan_enemys"));
-        setBoss();
-        setMegaboss();
-        setSuperboss();
+
         this.id_level = data.getInt("id_level");
         this.timerate_basic = data.getInt("timerate_ba_enemy");
         this.timerate_advanced = data.getInt("timerate_av_enemy");
@@ -82,6 +80,9 @@ public class PreferenceStory {
         this.powerup_supermissile = data.getBoolean("powerup_supermissile");
         this.max_bas_into_group = data.getInt("max_basic_into_group");
         this.max_adv_into_group = data.getInt("max_advan_into_group");
+        this.boss = data.get("boss");
+        this.megaboss = data.get("mega_boss");
+        this.superboss = data.get("super_boss");
     }
 
     public static JsonValue getWorld() {
@@ -160,7 +161,7 @@ public class PreferenceStory {
         return ship_shield;
     }
 
-    public boolean isShip_can_shoot() {
+    public boolean isShipCanShoot() {
         return ship_can_shoot;
     }
 
@@ -184,25 +185,16 @@ public class PreferenceStory {
         this.advanced = advanced;
     }
 
-    public int getBoss() {
+    public JsonValue getBoss() {
         return boss;
     }
 
-    public void setBoss() {
-    }
-
-    public int getMegaboss() {
+    public JsonValue getMegaboss() {
         return megaboss;
     }
 
-    public void setMegaboss() {
-    }
-
-    public int getSuperboss() {
+    public JsonValue getSuperboss() {
         return superboss;
-    }
-
-    public void setSuperboss() {
     }
 
     public JsonValue getTargets() {

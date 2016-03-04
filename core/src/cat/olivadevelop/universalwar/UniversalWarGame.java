@@ -13,7 +13,6 @@ import cat.olivadevelop.universalwar.screens.ScoreScreen;
 import cat.olivadevelop.universalwar.screens.SettingsScreen;
 import cat.olivadevelop.universalwar.screens.SignUpScreen;
 import cat.olivadevelop.universalwar.screens.SplashScreen;
-import cat.olivadevelop.universalwar.screens.history.LevelScreen;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.Publicidad;
@@ -27,7 +26,6 @@ public class UniversalWarGame extends Game {
     public GeneralScreen _settingsScreen;
     public GeneralScreen _signUpScreen;
     public GeneralScreen _mapLevelScreen;
-    public GeneralScreen _levelScreen;
     public Publicidad actionResolver = null;
     private String idDevice;
 
@@ -93,7 +91,6 @@ public class UniversalWarGame extends Game {
         _settingsScreen = new SettingsScreen(this);
         _signUpScreen = new SignUpScreen(this);
         _mapLevelScreen = new MapLevelScreen(this);
-        _levelScreen = new LevelScreen(this);
 
         setScreen(_splashScreen);
     }

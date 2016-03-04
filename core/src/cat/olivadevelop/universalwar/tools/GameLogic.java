@@ -197,6 +197,18 @@ public abstract class GameLogic implements Disposable {
         }
     }
 
+    public static String getNumberFormated(BigInteger num) {
+        String n = num.toString();
+        StringBuffer sb = new StringBuffer();
+        for (int z = n.length(); z > 0; z--) {
+            if (z % 3 == 0 && z != n.length()) {
+                sb.append(".");
+            }
+            sb.append(n.charAt(n.length() - z));
+        }
+        return sb.toString();
+    }
+
     public static String getNumberFormated(double num) {
         String n = String.valueOf(num);
         StringBuffer sb = new StringBuffer();

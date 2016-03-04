@@ -18,7 +18,10 @@ import cat.olivadevelop.universalwar.actors.allied.Allied;
 import cat.olivadevelop.universalwar.actors.allied.Hurricane;
 import cat.olivadevelop.universalwar.actors.enemies.AdvancedEnemy;
 import cat.olivadevelop.universalwar.actors.enemies.BasicEnemy;
+import cat.olivadevelop.universalwar.actors.enemies.Boss;
 import cat.olivadevelop.universalwar.actors.enemies.Enemy;
+import cat.olivadevelop.universalwar.actors.enemies.MegaBoss;
+import cat.olivadevelop.universalwar.actors.enemies.SuperBoss;
 import cat.olivadevelop.universalwar.actors.shields.ShieldBronze;
 import cat.olivadevelop.universalwar.actors.shields.ShieldGold;
 import cat.olivadevelop.universalwar.actors.shields.ShieldSilver;
@@ -37,6 +40,7 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.VOLUME_5;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getCountEnemiesDispached;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getEnviromentQuiet;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getLevelManager;
+import static cat.olivadevelop.universalwar.tools.GameLogic.getPrefs;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScoreGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenHeight;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getScreenWidth;
@@ -46,6 +50,7 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.getString;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getTimeGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUi;
 import static cat.olivadevelop.universalwar.tools.GameLogic.getUserID;
+import static cat.olivadevelop.universalwar.tools.GameLogic.setCountEnemiesDispached;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setPauseGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setScoreGame;
 import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeGame;
@@ -66,6 +71,12 @@ public class LevelScreen extends GeneralScreen {
     private boolean killSBoss;
     private boolean survive;
     private boolean xtremsurvive;
+
+    private boolean addBoss;
+    private boolean addMegaBoss;
+    private boolean addSuperBoss;
+
+    private boolean dataInserted;
 
     public LevelScreen(UniversalWarGame game) {
         super(game);
@@ -96,13 +107,15 @@ public class LevelScreen extends GeneralScreen {
             public Object call() throws Exception {
                 if (getUserID() > 0) {
                     ConnectDB conn = new ConnectDB();
-                    current_level = conn.query("SELECT * FROM uw_levels_customer WHERE state = 0 AND id_customer = " + getUserID());
+                    //Gdx.app.log("SQL","SELECT * FROM uw_levels_customer WHERE state = 0 AND id_customer = " + getUserID() + " LIMIT 1");
+                    current_level = conn.query("SELECT * FROM uw_levels_customer WHERE state = 0 AND id_customer = " + getUserID() + " LIMIT 1");
                     if (current_level.next()) {
                         Gdx.app.log("USER WORLD", "" + current_level.getInt("world"));
                         Gdx.app.log("USER LEVEL", "" + current_level.getInt("level"));
                         LevelManager.WORLD = current_level.getInt("world");
                         hideDialog();
                         content(current_level.getInt("level"));
+                        Gdx.app.log("Story prefs", "" + storyPrefs);
                         Timer.schedule(new Timer.Task() {
                             @Override
                             public void run() {
@@ -127,12 +140,15 @@ public class LevelScreen extends GeneralScreen {
             }
             if (key.equals(storyPrefs.KILLBOSS)) {
                 killBoss = false;
+                addBoss = true;
             }
             if (key.equals(storyPrefs.KILLMEGABOSS)) {
                 killMBoss = false;
+                addMegaBoss = true;
             }
             if (key.equals(storyPrefs.KILLSUPERBOSS)) {
                 killSBoss = false;
+                addSuperBoss = true;
             }
             if (key.equals(storyPrefs.SURVIVE)) {
                 survive = false;
@@ -151,22 +167,38 @@ public class LevelScreen extends GeneralScreen {
                 getEnviromentQuiet().pause();
                 getSoundLevelUp().play(GameLogic.VOLUME_10);
             }
-            try {
-                int id_level = current_level.getInt("id_level_customer");
-                int level = current_level.getInt("level");
-                int world = current_level.getInt("world");
-                ConnectDB conn = new ConnectDB();
-                conn.insert("UPDATE uw_levels_customer SET state = 1, total_points = " + getScoreGame() + ", date_update = NOW(), time_game = " + getTimeGame() + "  WHERE id_level_customer = " + id_level);
-                conn.insert("INSERT INTO uw_levels_customer(id_customer,level,world,state,total_points,date_update,time_game) VALUES(" + getUserID() + ", " + (level + 1) + ", " + world + ", 0, 0, NOW(),0)");
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (!dataInserted) {
+                dataInserted = true;
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        _hudHistory.showWindowWinner();
+                        AsyncGame async = new AsyncGame();
+                        async.submit(new AsyncTask<Object>() {
+                            @Override
+                            public Object call() throws Exception {
+                                try {
+                                    int id_level = current_level.getInt("id_level_customer");
+                                    int level = current_level.getInt("level");
+                                    int world = current_level.getInt("world");
+                                    ConnectDB conn = new ConnectDB();
+                                    conn.insert("UPDATE uw_levels_customer SET state = 1, total_points = " + getScoreGame() + storyPrefs.getReward() + ", date_update = NOW(), time_game = " + getTimeGame() + "  WHERE id_level_customer = " + id_level);
+                                    if (level % 6 == 0) {
+                                        world += 1;
+                                        getPrefs().putBoolean("readStory", false);
+                                        getPrefs().flush();
+                                    }
+                                    conn.insert("INSERT INTO uw_levels_customer(id_customer,level,world,state,total_points,date_update,time_game) VALUES(" + getUserID() + ", " + (level + 1) + ", " + world + ", 0, 0, NOW(),0)");
+                                    conn.close();
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                                return true;
+                            }
+                        });
+                    }
+                }, 1.5f, 0, 0);
             }
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    _hudHistory.showWindowWinner();
-                }
-            }, 1.5f);
         }
     }
 
@@ -182,25 +214,19 @@ public class LevelScreen extends GeneralScreen {
             }
         }
         if (!killBoss) {
-            tmp = storyPrefs.getTargets().get(storyPrefs.KILLBOSS);
-            value = storyPrefs.getData().get("main_target").getInt(tmp.name());
-            /*if (value == getCountEnemiesDispached()) {
-                killEnemy = true;
-            }*/
+            if (!_bossGroup.hasChildren()) {
+                killBoss = true;
+            }
         }
         if (!killMBoss) {
-            tmp = storyPrefs.getTargets().get(storyPrefs.KILLMEGABOSS);
-            value = storyPrefs.getData().get("main_target").getInt(tmp.name());
-            /*if (value == getCountEnemiesDispached()) {
-                killEnemy = true;
-            }*/
+            if (!_megaBossGroup.hasChildren()) {
+                killMBoss = true;
+            }
         }
         if (!killSBoss) {
-            tmp = storyPrefs.getTargets().get(storyPrefs.KILLSUPERBOSS);
-            value = storyPrefs.getData().get("main_target").getInt(tmp.name());
-            /*if (value == getCountEnemiesDispached()) {
-                killEnemy = true;
-            }*/
+            if (!_superBossGroup.hasChildren()) {
+                killSBoss = true;
+            }
         }
         if (!survive) {
             tmp = storyPrefs.getTargets().get(storyPrefs.SURVIVE);
@@ -234,8 +260,9 @@ public class LevelScreen extends GeneralScreen {
             }
             addPlanets();
             addEnemies();
-            checkTargets();
+            addBosses();
             checkIfUserWin();
+            checkTargets();
         }
         MainMenuScreen.checkAudio();
         if (!GameLogic.isAudioOn()) {
@@ -270,26 +297,32 @@ public class LevelScreen extends GeneralScreen {
     }
 
     public void init() {
-        Timer.instance().clear();
-        Timer.instance().start();
-        setPauseGame(false);
-        setScoreGame(0);
-        setTimeGame(0);
-        clearGroups();
-        _hudHistory = new HUDHistory(this);
-        ship = new Hurricane(this);
-        getStage().addActor(_hudHistory);
         killEnemy = true;
         killBoss = true;
         killMBoss = true;
         killSBoss = true;
         survive = true;
         xtremsurvive = true;
+        addBoss = false;
+        addMegaBoss = false;
+        addSuperBoss = false;
+        dataInserted = false;
+        Timer.instance().clear();
+        Timer.instance().start();
+        clearGroups();
+        setPauseGame(false);
+        setScoreGame(0);
+        setTimeGame(0);
+        setCountEnemiesDispached(0);
+        ship = new Hurricane(this);
+        _hudHistory = new HUDHistory(this);
+        getStage().addActor(_hudHistory);
     }
 
     public void content(int idLevel) {
         storyPrefs = new PreferenceStory(getLevelManager().getCurrentLevel(idLevel));
         setTarget();
+        Allied.setCanShoot(storyPrefs.isShipCanShoot());
         getStage().addActor(_groupPlanets);
         getStage().addActor(_groupAllied);
         getStage().addActor(_groupEnemyAdv);
@@ -351,6 +384,54 @@ public class LevelScreen extends GeneralScreen {
                 if (getTimeGame() % storyPrefs.getTimerate_basic() == 0) {
                     _groupEnemyBas.addActor(new BasicEnemy(this, Enemy.ADVANCED[MathUtils.random(0, Enemy.ADVANCED.length - 1)]));
                 }
+            }
+            if (!killBoss) {
+                if (getTimeGame() == storyPrefs.getTimerate_boss()) {
+                    getStage().addActor(_bossGroup);
+                }
+            }
+            if (!killMBoss) {
+                if (getTimeGame() == storyPrefs.getTimerate_megaboss()) {
+                    getStage().addActor(_megaBossGroup);
+                }
+            }
+            if (!killSBoss) {
+                if (getTimeGame() == storyPrefs.getTimerate_superboss()) {
+                    getStage().addActor(_superBossGroup);
+                }
+            }
+        }
+    }
+
+    public void addBosses() {
+        if (!killBoss) {
+            if (addBoss) {
+                addBoss = false;
+                Boss b = new Boss(this);
+                b.setHealth(storyPrefs.getBoss().getInt(1));
+                b.setName(storyPrefs.getBoss().getString(0));
+                _bossGroup.addActor(b);
+                Gdx.app.log("BOSS", "-----> ADDED");
+            }
+        }
+        if (!killMBoss) {
+            if (addMegaBoss) {
+                addMegaBoss = false;
+                MegaBoss b = new MegaBoss(this);
+                b.setHealth(storyPrefs.getBoss().getInt(1));
+                b.setName(storyPrefs.getBoss().getString(0));
+                _megaBossGroup.addActor(b);
+                Gdx.app.log("MEGABOSS", "-----> ADDED");
+            }
+        }
+        if (!killSBoss) {
+            if (addSuperBoss) {
+                addSuperBoss = false;
+                SuperBoss b = new SuperBoss(this);
+                b.setHealth(storyPrefs.getBoss().getInt(1));
+                b.setName(storyPrefs.getBoss().getString(0));
+                _superBossGroup.addActor(b);
+                Gdx.app.log("SUPERBOSS", "-----> ADDED");
             }
         }
     }

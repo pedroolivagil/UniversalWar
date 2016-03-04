@@ -41,6 +41,9 @@ public class GeneralScreen implements Screen {
     public Group _groupShields;
     public Group _groupStars;
     public Group _groupMeteors;
+    public Group _bossGroup;
+    public Group _megaBossGroup;
+    public Group _superBossGroup;
     public Table table;
     public WindowGame windowPause;
     private UniversalWarGame _game;
@@ -56,6 +59,9 @@ public class GeneralScreen implements Screen {
         _groupShields = new Group();
         _groupEnemyAdv = new Group();
         _groupEnemyBas = new Group();
+        _bossGroup = new Group();
+        _megaBossGroup = new Group();
+        _superBossGroup = new Group();
     }
 
     public void actionBackButton() {
@@ -92,6 +98,15 @@ public class GeneralScreen implements Screen {
         }
         if (_groupEnemyBas.hasChildren()) {
             _groupEnemyBas.clearChildren();
+        }
+        if (_bossGroup.hasChildren()) {
+            _bossGroup.clearChildren();
+        }
+        if (_megaBossGroup.hasChildren()) {
+            _megaBossGroup.clearChildren();
+        }
+        if (_superBossGroup.hasChildren()) {
+            _superBossGroup.clearChildren();
         }
     }
 

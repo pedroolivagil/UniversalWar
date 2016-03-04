@@ -33,6 +33,7 @@ public class Enemy extends GameActor {
     public static final String[] MEGA_BOSS = new String[]{
             "gray_boss", "boss_green", "red_boss", "yellow_boss"
     };
+    private static boolean canShoot;
     public int maxHealth;
     public int health;
     public GeneralScreen screen;
@@ -43,7 +44,6 @@ public class Enemy extends GameActor {
     private boolean showLive;
     private float width;
     private boolean boss;
-    private static boolean canShoot;
 
     public Enemy(GeneralScreen screen, TextureRegion tRegion) {
         super(tRegion);
@@ -56,6 +56,14 @@ public class Enemy extends GameActor {
         showLive = false;
         setBoss(false);
         setCanShoot(true);
+    }
+
+    public static boolean isCanShoot() {
+        return canShoot;
+    }
+
+    public static void setCanShoot(boolean b) {
+        canShoot = b;
     }
 
     private float calcDegree(float newX, float newY) {
@@ -167,13 +175,5 @@ public class Enemy extends GameActor {
 
     public void setBoss(boolean boss) {
         this.boss = boss;
-    }
-
-    public static boolean isCanShoot() {
-        return canShoot;
-    }
-
-    public static void setCanShoot(boolean b) {
-        canShoot = b;
     }
 }

@@ -14,13 +14,14 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.async.AsyncTask;
 
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
 import cat.olivadevelop.universalwar.actors.ui.Planet;
 import cat.olivadevelop.universalwar.screens.history.LevelManager;
-import cat.olivadevelop.universalwar.screens.history.PreferenceStory;
+import cat.olivadevelop.universalwar.screens.history.LevelScreen;
 import cat.olivadevelop.universalwar.tools.AsyncGame;
 import cat.olivadevelop.universalwar.tools.ButtonGame;
 import cat.olivadevelop.universalwar.tools.ConnectDB;
@@ -55,7 +56,6 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setUserName;
  * Created by onion on 25/02/2016.
  */
 public class MapLevelScreen extends GeneralScreen {
-    private PreferenceStory levelProperties;
     private ResultSet current_level;
     private ResultSet user_points;
     private Dialog dialog;
@@ -95,14 +95,13 @@ public class MapLevelScreen extends GeneralScreen {
                             Gdx.app.log("USER WORLD", "" + current_level.getInt("world"));
                             Gdx.app.log("USER LEVEL", "" + current_level.getInt("level"));
                             LevelManager.WORLD = current_level.getInt("world");
-                            levelProperties = new PreferenceStory(GameLogic.getLevelManager().getCurrentLevel(current_level.getInt("level")));
                             Gdx.app.log("WORLD ID", "" + getWorld().get(LevelManager.WORLD - 1).getInt("world_id"));
                             hideDialog();
-                            int p;
+                            BigInteger p;
                             if (user_points.next()) {
-                                p = user_points.getInt(1);
+                                p = BigInteger.valueOf(Long.parseLong(user_points.getString(1)));
                             } else {
-                                p = 0;
+                                p = BigInteger.valueOf(0);
                             }
                             showHudMenu(p, getWorld().get(LevelManager.WORLD - 1).getInt("world_id"), current_level.getInt("level"));
                         } else {
@@ -214,8 +213,9 @@ public class MapLevelScreen extends GeneralScreen {
         getStage().addActor(tBottm);
     }
 
-    public Table[] generateTables(int userlvl) {
+    public Table[] generateTables(int userlvl, int id_world) {
         JsonValue totl_lvls = LevelManager.getArr_levels();
+        Gdx.app.log("totl_lvls", "" + totl_lvls);
         JsonValue curr_lvl;
         Table[] tables = new Table[6];
         for (int x = 0; x < totl_lvls.size; x++) {
@@ -252,7 +252,7 @@ public class MapLevelScreen extends GeneralScreen {
                         btnContinue.addListener(new Listener() {
                             @Override
                             public void action() {
-                                getGame().setScreen(getGame()._levelScreen);
+                                getGame().setScreen(new LevelScreen(getGame()));
                             }
                         });
                         ButtonGame btnCancel = new ButtonGame(getString("lCancel"), .5f);
@@ -292,7 +292,7 @@ public class MapLevelScreen extends GeneralScreen {
         return tables;
     }
 
-    public void showHudMenu(int totalpoints, int world_id, int lvl_user) throws SQLException {
+    public void showHudMenu(BigInteger totalpoints, int world_id, int lvl_user) throws SQLException {
         tSup.addAction(Actions.moveTo(0, getScreenHeight() - 73, 1f, Interpolation.elasticOut));
         tBottm.addAction(Actions.moveTo(0, -10, 1f, Interpolation.elasticOut));
         tCentral.addAction(Actions.moveTo(0, tCentral.getY(), 1f, Interpolation.elasticOut));
@@ -306,7 +306,7 @@ public class MapLevelScreen extends GeneralScreen {
         });
 
         tSup.add(back).width(55).pad(10).padBottom(10).padTop(20);
-        tSup.add(new LabelGame("Mundo: " + current_level.getInt("level"), .4f).center()).width((getScreenWidth() / 2) - 200);
+        tSup.add(new LabelGame("Mundo: " + current_level.getInt("world"), .4f).center()).width((getScreenWidth() / 2) - 200);
         tSup.add(new LabelGame(GameLogic.getNumberFormated(totalpoints) + " puntos", .4f).center()).width((getScreenWidth() / 2) + 100);
 
         ImageGame i = new ImageGame(getPlanets(Planet.planets[world_id]));
@@ -326,7 +326,7 @@ public class MapLevelScreen extends GeneralScreen {
         );
         tCentral.add(i).pad(pad);
 
-        Table[] tables = generateTables(lvl_user);
+        Table[] tables = generateTables(lvl_user, LevelManager.WORLD - 1);
 
         Table tIntern = new Table();
         //tIntern.background(new TextureRegionDrawable(new TextureRegion(getUi("black"))));
@@ -417,5 +417,4 @@ public class MapLevelScreen extends GeneralScreen {
             }
         });
     }
-
 }

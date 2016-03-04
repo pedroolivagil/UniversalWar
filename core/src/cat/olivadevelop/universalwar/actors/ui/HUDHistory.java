@@ -87,7 +87,9 @@ public class HUDHistory extends HUD {
                 if (scn._groupAllied.hasChildren()) {
                     Allied a = (Allied) scn._groupAllied.getChildren().first();
                     if (a.alive) {
-                        a.shoot();
+                        if (Allied.isCanShoot()) {
+                            a.shoot();
+                        }
                     }
                 }
             }
@@ -228,10 +230,6 @@ public class HUDHistory extends HUD {
         }
     }
 
-    public LabelGame getLblTime() {
-        return lblTime;
-    }
-
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -258,7 +256,6 @@ public class HUDHistory extends HUD {
         tbExit.addListener(new Listener() {
             @Override
             public void action() {
-                //screen.getGame().setScreen(screen.getGame()._mapLevelScreen);
                 hideWindowPause();
                 showWindowGameOver();
             }
@@ -350,7 +347,7 @@ public class HUDHistory extends HUD {
 
 
     public void showWindowPause() {
-        if (!wExit.isVisible()) {
+        if (!wExit.isVisible() && !wWin.isVisible()) {
             ipauseBG.setVisible(true);
             ipauseBG.toFront();
             windowPause.setVisible(true);
@@ -398,6 +395,6 @@ public class HUDHistory extends HUD {
     }
 
     private void reset() {
-        screen.getGame().setScreen(screen);
+        screen.getGame().setScreen(new LevelScreen(screen.getGame()));
     }
 }
