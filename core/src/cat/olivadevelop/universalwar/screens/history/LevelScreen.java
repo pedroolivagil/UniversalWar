@@ -59,27 +59,28 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setTimeGame;
  * Created by onion on 29/02/2016.
  */
 public class LevelScreen extends GeneralScreen {
+    public static int level_selected;
+    public static int world_selected;
     private static Hurricane ship;
     private PreferenceStory storyPrefs;
     private ResultSet current_level;
     private Dialog dialog;
     private ImageGame ipauseBG;
-
     private boolean killEnemy;
     private boolean killBoss;
     private boolean killMBoss;
     private boolean killSBoss;
     private boolean survive;
     private boolean xtremsurvive;
-
     private boolean addBoss;
     private boolean addMegaBoss;
     private boolean addSuperBoss;
-
     private boolean dataInserted;
 
-    public LevelScreen(UniversalWarGame game) {
+    public LevelScreen(UniversalWarGame game, int level, int world) {
         super(game);
+        level_selected = level;
+        world_selected = world;
     }
 
     public static Hurricane getShip() {
@@ -112,9 +113,19 @@ public class LevelScreen extends GeneralScreen {
                     if (current_level.next()) {
                         Gdx.app.log("USER WORLD", "" + current_level.getInt("world"));
                         Gdx.app.log("USER LEVEL", "" + current_level.getInt("level"));
-                        LevelManager.WORLD = current_level.getInt("world");
+                        //LevelManager.WORLD = current_level.getInt("world");
+                        if (world_selected != 0) {
+                            LevelManager.WORLD = world_selected;
+                        } else {
+                            LevelManager.WORLD = current_level.getInt("world");
+                        }
                         hideDialog();
-                        content(current_level.getInt("level"));
+                        //content(current_level.getInt("level"));
+                        if (level_selected != 0) {
+                            content(level_selected);
+                        } else {
+                            content(current_level.getInt("level"));
+                        }
                         Timer.schedule(new Timer.Task() {
                             @Override
                             public void run() {
@@ -181,13 +192,13 @@ public class LevelScreen extends GeneralScreen {
                                     int level = current_level.getInt("level");
                                     int world = current_level.getInt("world");
                                     ConnectDB conn = new ConnectDB();
-                                    conn.insert("UPDATE uw_levels_customer SET state = 1, total_points = " + ((getScoreGame() + storyPrefs.getReward())) + ", date_update = NOW(), time_game = " + getTimeGame() + "  WHERE id_level_customer = " + id_level);
+                                    conn.insert("UPDATE uw_levels_customer SET state = 1, total_points = '" + ((getScoreGame() + storyPrefs.getReward())) + "', date_update = NOW(), time_game = " + getTimeGame() + "  WHERE id_level_customer = " + id_level);
                                     if (level % 6 == 0) {
                                         world += 1;
                                         getPrefs().putBoolean("readStory", false);
                                         getPrefs().flush();
                                     }
-                                    conn.insert("INSERT INTO uw_levels_customer(id_customer,level,world,state,total_points,date_update,time_game) VALUES(" + getUserID() + ", " + (level + 1) + ", " + world + ", 0, 0, NOW(),0)");
+                                    conn.insert("INSERT INTO uw_levels_customer(id_customer,level,world,state,total_points,date_update,time_game) VALUES(" + getUserID() + ", " + (level + 1) + ", " + world + ", 0, '0', NOW(),0)");
                                     conn.close();
                                 } catch (SQLException e) {
                                     e.printStackTrace();

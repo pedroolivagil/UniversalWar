@@ -395,6 +395,6 @@ public class HUDHistory extends HUD {
     }
 
     private void reset() {
-        screen.getGame().setScreen(new LevelScreen(screen.getGame()));
+        screen.getGame().setScreen(new LevelScreen(screen.getGame(), LevelScreen.level_selected, LevelScreen.world_selected));
     }
 }

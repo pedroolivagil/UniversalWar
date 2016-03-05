@@ -56,6 +56,7 @@ import static cat.olivadevelop.universalwar.tools.GameLogic.setUserName;
  * Created by onion on 25/02/2016.
  */
 public class MapLevelScreen extends GeneralScreen {
+    static JsonValue finalCurr_lvl;
     private ResultSet current_level;
     private ResultSet user_points;
     private Dialog dialog;
@@ -92,17 +93,23 @@ public class MapLevelScreen extends GeneralScreen {
                     current_level = conn.query("SELECT * FROM uw_levels_customer WHERE state = 0 AND id_customer = " + getUserID());
                     try {
                         if (current_level.next()) {
-                            Gdx.app.log("USER WORLD", "" + current_level.getInt("world"));
-                            Gdx.app.log("USER LEVEL", "" + current_level.getInt("level"));
+                            Gdx.app.log("MAP USER WORLD", "" + current_level.getInt("world"));
+                            Gdx.app.log("MAP USER LEVEL", "" + current_level.getInt("level"));
                             LevelManager.WORLD = current_level.getInt("world");
-                            Gdx.app.log("WORLD ID", "" + getWorld().get(LevelManager.WORLD - 1).getInt("world_id"));
+                            Gdx.app.log("MAP WORLD ID", "" + getWorld().get(LevelManager.WORLD - 1).getInt("world_id"));
+                            Gdx.app.log("MAP USER P", "SELECT SUM(total_points) FROM uw_levels_customer WHERE state != 0 AND id_customer = " + getUserID());
                             hideDialog();
                             BigInteger p;
                             if (user_points.next()) {
-                                p = BigInteger.valueOf(Long.parseLong(user_points.getString(1)));
+                                if (user_points.getString(1) != null) {
+                                    p = BigInteger.valueOf(Long.parseLong(user_points.getString(1)));
+                                } else {
+                                    p = BigInteger.valueOf(0);
+                                }
                             } else {
                                 p = BigInteger.valueOf(0);
                             }
+                            Gdx.app.log("PUNTOS", "" + p);
                             showHudMenu(p, getWorld().get(LevelManager.WORLD - 1).getInt("world_id"), current_level.getInt("level"));
                         } else {
                             setDialog(getString("lFailLoad"));
@@ -228,7 +235,8 @@ public class MapLevelScreen extends GeneralScreen {
             t1.add(i).padBottom(-20);
             t1.row();
             t1.add(new LabelGame(getNumberFormated(curr_lvl.getInt("reward_points")), .3f)).pad(10).padBottom(-10);
-            if (curr_lvl.getInt("id_level") == userlvl) {
+            if (curr_lvl.getInt("id_level") <= userlvl) {
+                finalCurr_lvl = curr_lvl;
                 t1.addListener(new Listener() {
                     @Override
                     public void action() {
@@ -251,7 +259,7 @@ public class MapLevelScreen extends GeneralScreen {
                         btnContinue.addListener(new Listener() {
                             @Override
                             public void action() {
-                                getGame().setScreen(new LevelScreen(getGame()));
+                                getGame().setScreen(new LevelScreen(getGame(), finalCurr_lvl.getInt("id_level"), LevelManager.WORLD - 1));
                             }
                         });
                         ButtonGame btnCancel = new ButtonGame(getString("lCancel"), .5f);
@@ -313,7 +321,7 @@ public class MapLevelScreen extends GeneralScreen {
         float scale = 1;
         if (i.getWidth() > 700) {
             pad = 20;
-            scale = .8f;
+            scale = .9f;
         }
         i.addAction(
                 Actions.forever(
