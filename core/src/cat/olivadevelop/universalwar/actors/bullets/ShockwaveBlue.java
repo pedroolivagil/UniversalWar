@@ -1,5 +1,7 @@
 package cat.olivadevelop.universalwar.actors.bullets;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
+
 import cat.olivadevelop.universalwar.tools.ColorGame;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 
@@ -8,8 +10,8 @@ import cat.olivadevelop.universalwar.tools.GeneralScreen;
  */
 public class ShockwaveBlue extends Shockwave {
 
-    public ShockwaveBlue(GeneralScreen screen, float x, float y) {
-        super(screen, x, y, .5f);
+    public ShockwaveBlue(GeneralScreen screen, Group[] enemy, float x, float y) {
+        super(screen, enemy, x, y, .5f);
         setColor(ColorGame.BLUE_CYAN);
         setSpeed(3);
     }

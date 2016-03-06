@@ -79,6 +79,7 @@ public class MapLevelScreen extends GeneralScreen {
 
     @Override
     public void show() {
+        // controlar si hay mas niveles si no poner mensaje de proximamente
         super.show();
         setDialog(getString("lLoad"));
         showDialog();
@@ -247,7 +248,7 @@ public class MapLevelScreen extends GeneralScreen {
         getStage().addActor(tBottm);
     }
 
-    public Table[] generateTables(int userlvl, int id_world) {
+    public Table[] generateTables(int userlvl/*, int id_world*/) {
         JsonValue totl_lvls = LevelManager.getArr_levels();
         JsonValue curr_lvl;
         Table[] tables = new Table[6];
@@ -360,7 +361,7 @@ public class MapLevelScreen extends GeneralScreen {
         );
         tCentral.add(i).pad(pad);
 
-        Table[] tables = generateTables(lvl_user, LevelManager.WORLD - 1);
+        Table[] tables = generateTables(lvl_user/*, LevelManager.WORLD - 1*/);
 
         Table tIntern = new Table();
         //tIntern.background(new TextureRegionDrawable(new TextureRegion(getUi("black"))));
@@ -442,9 +443,12 @@ public class MapLevelScreen extends GeneralScreen {
                             t.start();
                         } else {
                             Gdx.app.log("SignIn", "FALSE");
+                            hideDialog();
+                            getGame().getToast().show(getString("lBadAuten"));
                         }
                     } else {
                         hideDialog();
+                        getGame().getToast().show(getString("lNotFoundAcc"));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();

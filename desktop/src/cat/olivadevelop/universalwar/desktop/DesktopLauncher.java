@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
 import cat.olivadevelop.universalwar.tools.GameLogic;
+
 public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -16,6 +17,6 @@ public class DesktopLauncher {
         config.title = "OlivaDevelop Games - Universal War";
         config.useGL30 = false;
         GameLogic.setScreenHeight(1280);
-        new LwjglApplication(new UniversalWarGame(new PublicidadDesktop(), "PC_ID"), config);
+        new LwjglApplication(new UniversalWarGame(new PublicidadDesktop(), new ToastDesktop()/*, "PC_ID"*/), config);
     }
 }

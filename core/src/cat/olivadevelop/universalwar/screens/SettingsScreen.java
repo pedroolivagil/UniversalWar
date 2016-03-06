@@ -222,7 +222,12 @@ public class SettingsScreen extends GeneralScreen {
                             t.start();
                         } else {
                             Gdx.app.log("SignIn", "FALSE");
+                            hideDialog();
+                            getGame().getToast().show(getString("lBadAuten"));
                         }
+                    } else {
+                        hideDialog();
+                        getGame().getToast().show(getString("lNotFoundAcc"));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();

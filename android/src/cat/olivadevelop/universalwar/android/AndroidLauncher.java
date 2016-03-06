@@ -1,11 +1,9 @@
 package cat.olivadevelop.universalwar.android;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -17,8 +15,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-
-import java.util.UUID;
 
 import cat.olivadevelop.universalwar.UniversalWarGame;
 import cat.olivadevelop.universalwar.tools.ColorGame;
@@ -33,6 +29,7 @@ public class AndroidLauncher extends AndroidApplication implements Publicidad {
     protected View gameView;
     private InterstitialAd interstitialAd;
     private SharedPreferences settings;
+    private ToastAndroid toastAndroid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +81,8 @@ public class AndroidLauncher extends AndroidApplication implements Publicidad {
     }
 
     private View createGameView(AndroidApplicationConfiguration cfg) {
-        gameView = initializeForView(new UniversalWarGame(this, generateIDDevice()), cfg);
+        toastAndroid = new ToastAndroid(this);
+        gameView = initializeForView(new UniversalWarGame(this, toastAndroid/*, generateIDDevice()*/), cfg);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
@@ -109,6 +107,7 @@ public class AndroidLauncher extends AndroidApplication implements Publicidad {
                 }
             });
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -151,7 +150,7 @@ public class AndroidLauncher extends AndroidApplication implements Publicidad {
         }
     }
 
-    private String generateIDDevice() {
+   /* private String generateIDDevice() {
         final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
 
         final String tmDevice, tmSerial, androidId;
@@ -161,5 +160,5 @@ public class AndroidLauncher extends AndroidApplication implements Publicidad {
 
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
         return deviceUuid.toString();
-    }
+    }*/
 }

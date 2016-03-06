@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 
 import cat.olivadevelop.universalwar.actors.enemies.Enemy;
 import cat.olivadevelop.universalwar.tools.ActorGame;
@@ -24,15 +25,24 @@ public class Shockwave extends ActorGame {
     Circle circle;
     float time;
     int speed;
+    Group[] gEnemy;
 
-    public Shockwave(GeneralScreen screen, float x, float y) {
+    /*public Shockwave(GeneralScreen screen, float x, float y) {
         super(screen);
         init(x, y, .8f);
+        this.gEnemy[0] = screen._groupEnemy;
     }
 
     public Shockwave(GeneralScreen screen, float x, float y, float time) {
         super(screen);
         init(x, y, time);
+        this.gEnemy[0] = screen._groupEnemy;
+    }
+*/
+    public Shockwave(GeneralScreen screen, Group[] enemy, float x, float y, float time) {
+        super(screen);
+        init(x, y, time);
+        this.gEnemy = enemy;
     }
 
     private void init(float x, float y, float time) {
@@ -73,10 +83,12 @@ public class Shockwave extends ActorGame {
         super.act(delta);
         expand((220 * getSpeed()) * delta);
         Enemy enemy;
-        for (Actor a : screen._groupEnemy.getChildren()) {
-            enemy = (Enemy) a;
-            if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {
-                enemy.kicked(1);
+        for (Group aGEnemy : gEnemy) {
+            for (Actor a : aGEnemy.getChildren()) {
+                enemy = (Enemy) a;
+                if (enemy.alive && IntersectorGame.overlaps(enemy.polygon, circle)) {
+                    enemy.kicked(1);
+                }
             }
         }
     }

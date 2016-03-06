@@ -22,6 +22,11 @@ public class LabelGame extends Label {
         setFontScale(1f);
     }
 
+    /*public LabelGame(CharSequence text, Skin skin, float scale) {
+        super(text, skin);
+        setFontScale(scale);
+    }*/
+
     public LabelGame(CharSequence text, float scale) {
         super(text, getSkin());
         setFontScale(scale);
@@ -38,8 +43,8 @@ public class LabelGame extends Label {
         return this;
     }
 
-    public LabelGame setPositionXY(float x, float y) {
+    /*public LabelGame setPositionXY(float x, float y) {
         setPosition(x, y);
         return this;
-    }
+    }*/
 }

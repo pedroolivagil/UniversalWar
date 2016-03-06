@@ -2,9 +2,6 @@ package cat.olivadevelop.universalwar;
 
 import com.badlogic.gdx.Game;
 
-import java.net.InetAddress;
-import java.security.MessageDigest;
-
 import cat.olivadevelop.universalwar.screens.GameArcadeScreen;
 import cat.olivadevelop.universalwar.screens.GameOverScreen;
 import cat.olivadevelop.universalwar.screens.MainMenuScreen;
@@ -16,6 +13,7 @@ import cat.olivadevelop.universalwar.screens.SplashScreen;
 import cat.olivadevelop.universalwar.tools.GameLogic;
 import cat.olivadevelop.universalwar.tools.GeneralScreen;
 import cat.olivadevelop.universalwar.tools.Publicidad;
+import cat.olivadevelop.universalwar.tools.ToastAction;
 
 public class UniversalWarGame extends Game {
     public GeneralScreen _splashScreen;
@@ -27,20 +25,22 @@ public class UniversalWarGame extends Game {
     public GeneralScreen _signUpScreen;
     public GeneralScreen _mapLevelScreen;
     public Publicidad actionResolver = null;
-    private String idDevice;
+    //private String idDevice;
+    private ToastAction toast;
 
-    public UniversalWarGame(Publicidad aResolver, String idDevice) {
-        setIdDevice(idDevice);
+    public UniversalWarGame(Publicidad aResolver, ToastAction toast/*, String idDevice*/) {
+        //setIdDevice(idDevice);
         actionResolver = aResolver;
+        this.toast = toast;
         GameLogic.setScreenHeight(1280);
         GameLogic.setScreenWidth(720);
     }
 
-    public String getIdDevice() {
+    /*public String getIdDevice() {
         return idDevice;
-    }
+    }*/
 
-    private void setIdDevice(String idDevice) {
+    /*private void setIdDevice(String idDevice) {
         if (idDevice.equals("PC_ID")) {
             try {
                 String id = InetAddress.getLocalHost().getHostName() + "_" + InetAddress.getLocalHost().getCanonicalHostName();
@@ -63,7 +63,7 @@ public class UniversalWarGame extends Game {
         } else {
             this.idDevice = idDevice;
         }
-    }
+    }*/
 
     @Override
     public void create() {
@@ -101,6 +101,10 @@ public class UniversalWarGame extends Game {
             actionResolver.showOrLoadInterstital();
         }
         super.dispose();
+    }
+
+    public ToastAction getToast() {
+        return toast;
     }
 /*
     @Override
