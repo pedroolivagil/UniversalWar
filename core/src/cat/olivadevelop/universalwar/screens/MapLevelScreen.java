@@ -165,6 +165,30 @@ public class MapLevelScreen extends GeneralScreen {
                             }
                         }
                     });
+                    ButtonGame btnSignUp = new ButtonGame(getString("btnSignUp"), .5f);
+                    btnSignUp.setWidth(700);
+                    btnSignUp.addListener(new Listener() {
+                        @Override
+                        public void action() {
+                            Gdx.net.openURI("http://codeduo.cat/index.php?controller=authentication");
+                        }
+                    });
+                    btnSignUp.setPosition(getScreenWidth() / 2 - btnSignUp.getWidth() / 2, 100);
+
+                    tbBack = new ButtonGame(getString("windowTbBack"), .5f);
+                    tbBack.setWidth(700);
+                    tbBack.addListener(new Listener() {
+                        @Override
+                        public void action() {
+                            getGame().setScreen(getGame()._mainMenuScreen);
+                        }
+                    });
+                    tbBack.setPosition(getScreenWidth() / 2 - tbBack.getWidth() / 2, 25);
+
+                    LabelGame newAcc = new LabelGame(getString("lNewAccount"), .3f);
+                    newAcc.setWidth(700);
+                    newAcc.center();
+                    newAcc.setPosition(getScreenWidth() / 2 - newAcc.getWidth() / 2, 80);
 
                     Table tLogin = new Table(getSkin());
                     tLogin.setWidth(getScreenWidth());
@@ -180,6 +204,9 @@ public class MapLevelScreen extends GeneralScreen {
                     tLogin.row().height(80).expandX().padBottom(50);
                     tLogin.add(btnSignIn).center().padRight(31);
                     getStage().addActor(tLogin);
+                    getStage().addActor(newAcc);
+                    getStage().addActor(btnSignUp);
+                    getStage().addActor(tbBack);
                 }
                 return true;
             }
@@ -313,8 +340,8 @@ public class MapLevelScreen extends GeneralScreen {
         });
 
         tSup.add(back).width(55).pad(10).padBottom(10).padTop(20);
-        tSup.add(new LabelGame("Mundo: " + current_level.getInt("world"), .4f).center()).width((getScreenWidth() / 2) - 200);
-        tSup.add(new LabelGame(GameLogic.getNumberFormated(totalpoints) + " puntos", .4f).center()).width((getScreenWidth() / 2) + 100);
+        tSup.add(new LabelGame(getString("lWorld") + ": " + current_level.getInt("world"), .4f).center()).width((getScreenWidth() / 2) - 200);
+        tSup.add(new LabelGame(GameLogic.getNumberFormated(totalpoints) + " " + getString("lPoints"), .4f).center()).width((getScreenWidth() / 2) + 100);
 
         ImageGame i = new ImageGame(getPlanets(Planet.planets[world_id]));
         int pad = 0;
@@ -416,6 +443,8 @@ public class MapLevelScreen extends GeneralScreen {
                         } else {
                             Gdx.app.log("SignIn", "FALSE");
                         }
+                    } else {
+                        hideDialog();
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
